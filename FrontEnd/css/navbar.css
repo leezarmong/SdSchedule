@@ -1,0 +1,10 @@
+.navbar{
+    height: 60px;
+}
+#excel-upload{
+    display: none;
+    cursor: pointer;
+}
+.fa-file-excel:before {
+    cursor: pointer;
+}
