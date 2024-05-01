@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>memberpage</title>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<!-- jQuery -->
 </head>
 <body>
 
@@ -20,10 +24,49 @@
 </table>
 
 
-<!-- <ul>
-    <li>th:text 사용 <span th:text="${data}"></span></li>
-    
-</ul>
- -->
+<div id="login">
+<input type="text" id="member_name" placeholder="직원 등록 해주세요.">
+ <button type="button" onclick="insert()">insert</button><br>
+</div>
+
+
+<!-- 임시 스크립트 -->
+<script type="text/javascript">
+
+/* 엔터키 이벤트 */
+$("#login").keypress(function(e) {
+		if (e.keyCode === 13) {
+			insert();
+		}
+	}); 
+
+
+/* 직원 등록 */ 
+ 
+function insert(){
+	var member_name = $("#member_name").val();
+	
+	console.log(member_name);
+	if(!$("#member_name").val())
+	
+	{
+		alert("필수항목이 비어있습니다. 입력해주세요.");		
+	}else{
+		$.ajax({
+			type : "POST",
+			url : "insert",
+			data : {
+				"member_name" : member_name
+			},
+			success : function(data) {
+				alert("입력 완료..!");
+				window.location.href="memberpage";
+			}
+		});
+	}
+}
+</script>
+
+
 </body>
 </html>

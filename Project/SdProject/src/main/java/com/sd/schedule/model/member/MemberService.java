@@ -5,6 +5,9 @@ import java.util.List;
 public interface MemberService {
 	
 	//멤버 리스트
-	public List<MemberVO>getMemberList() throws Exception;
+	public List<MemberVO>getMemberList();
+	
+	//멤버 입력
+	public void insertMember(MemberVO vo) ;
 
 }
