@@ -15,5 +15,8 @@ public interface MemberMapper {
 	
 	//멤버 입력
 	public void insertMember(MemberVO vo);
+	
+	//멤버 삭제
+	public void deleteMember(int member_no);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sd.schedule.model.member.MemberService;
 import com.sd.schedule.model.member.MemberVO;
@@ -38,7 +39,15 @@ public class MemberController {
 		
 		memberService.insertMember(vo);
 
-		return "member/memberpage";
+		return "redirect:memberpage";
+	}
+	
+	//멤버 삭제
+	@PostMapping("/delete")
+	public String delete(@RequestParam("member_no") int member_no) {
+		
+		memberService.deleteMember(member_no);
+		return "redirect:memberpage";
 	}
 
 }

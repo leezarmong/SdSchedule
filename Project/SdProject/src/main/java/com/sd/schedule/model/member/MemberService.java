@@ -8,6 +8,9 @@ public interface MemberService {
 	public List<MemberVO>getMemberList();
 	
 	//멤버 입력
-	public void insertMember(MemberVO vo) ;
+	public void insertMember(MemberVO vo);
+	
+	//멤버 삭제
+	public void deleteMember(int member_no);
 
 }

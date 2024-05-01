@@ -18,10 +18,15 @@
 	<tr>
         <th>memberName</th>
     </tr>
-	 <tr th:each="member : ${list}">
-        <td th:text="${member.member_name}"></td>
-    </tr>
+	<tr th:each="member : ${list}">
+    <td th:text="${member.member_name}"></td>
+    <td>
+        <input type="hidden" class="member_no" th:value="${member.member_no}" />
+        <input type="button" value="X" onclick="deleteMember(this)">
+    </td>
+</tr>
 </table>
+
 
 
 <div id="login">
@@ -41,8 +46,7 @@ $("#login").keypress(function(e) {
 	}); 
 
 
-/* 직원 등록 */ 
- 
+/* 멤버 등록 */  
 function insert(){
 	var member_name = $("#member_name").val();
 	
@@ -64,6 +68,24 @@ function insert(){
 			}
 		});
 	}
+}
+
+/* 멤버 삭제 */
+function deleteMember(button) {
+    var memberNo = parseInt($(button).closest('tr').find('.member_no').val());
+    				/* 해당 번호만 정확하게 지울수 있도록. <tr> */
+    
+    $.ajax({
+        type: "POST",
+        url: "delete",
+        data: {
+            "member_no": memberNo
+        },
+        success: function(data) {
+            alert("삭제완료..!");
+            window.location.href = "memberpage";
+        }
+    });
 }
 </script>
 

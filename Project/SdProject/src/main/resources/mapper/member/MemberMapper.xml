@@ -10,15 +10,18 @@
 	
 	<!-- 멤버 리스트 -->
 	<select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">
-	select * from member	
+	select * from member order by member_no
 	</select>
 	
-	 <!-- 멤버 입력 -->
+	<!-- 멤버 입력 -->
     <insert id="insertMember">
-        insert into member(member_name) values(#{member_name})
+        insert into member(member_name , member_no) values(#{member_name} , MEMBER_SEQ.NEXTVAL)
     </insert>
 
-
+	<!-- 멤버 삭제 -->
+	<delete id="deleteMember">
+		delete from member where member_no=${member_no}
+	</delete>
 
 
 

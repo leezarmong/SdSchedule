@@ -21,9 +21,15 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	// 멤버 입력
+	@Override
 	public void insertMember(MemberVO vo) {
 		memberMapper.insertMember(vo);
-		System.out.print(vo);
+	}
+	
+	//멤버 삭제
+	@Override
+	public void deleteMember(int member_no) {
+		memberMapper.deleteMember(member_no);
 	}
 
 }
