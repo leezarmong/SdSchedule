@@ -1,0 +1,14 @@
+table{
+    width: 800px;
+    border: 2px solid;
+}
+.btn {
+    width: 20vw;
+    height: 20vh;
+    display: block;
+    margin-left: 40vw;
+    margin-top: 30vh;
+}
+.btn i {
+    margin: 65px 0 30px;
+}
