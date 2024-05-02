@@ -8,8 +8,30 @@ const TextArea = document.getElementById("json_data");
 const wt_table_head = document.querySelector("thead");
 const wt_table_body = document.querySelector("tbody");
 
+
+
+//-----------------------------------------------------update 
+const memberList = [];
+let tdElements = document.querySelectorAll('li');
+							//li 요소를 모두 선택합니다.
+
+	tdElements.forEach(function(td) {
+		
+   	 const memberName = td.innerText;
+   	 memberList.push(memberName);
+   	 
+	});
+console.log(memberList);
+//-----------------------------------------------------
+
+
+
+
+
 Excel.onchange = function () {
-    const memberList = [
+  
+   /*
+     const memberList = [
         "김장현",
         "김해수",
         "최인화",
@@ -40,6 +62,7 @@ Excel.onchange = function () {
         "조관우",
         "홍지오"
     ];
+*/
     readXlsxFile(Excel.files[0]).then(data=>{
         // code for work table head
         let wt_table_head_html = `

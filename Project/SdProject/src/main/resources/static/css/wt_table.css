@@ -2,3 +2,11 @@ table{
     width: 800px;
     border: 2px solid;
 }
+.btn {
+    width: 50vw;
+    height: 50vh;
+    display: block;
+    margin-left: 25vw;
+    margin-top: 15vh;
+
+}
