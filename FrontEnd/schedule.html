@@ -10,16 +10,18 @@
 <body>
 	<div class="navbar navbar-dark bg-dark"></div>
 	<section>
-		<label for="excel-upload" class="btn btn-outline-success"> <i
-			class="fa-solid fa-file-excel fa-2xl"></i><br /> 스케쥴 표 업로드
+		<!-- BUTTON FOR UPLOAD SCHEDULE EXCEL -->
+		<label for="excel-upload" class="btn btn-outline-success"> 
+			<i class="fa-solid fa-file-excel fa-2xl"></i><br /> 스케쥴 표 업로드
 		</label> <input type="file" id="excel-upload" accept=".xlsx" />
 
-		<table class="table table-striped table-borderless table-hover">
+		<!-- TABLE FOR PRINT CONVERTED RESULT -->
+		<table id="weekPayTable" class="table table-striped table-borderless table-hover">
 			<thead></thead>
 			<tbody></tbody>
 		</table>
 
-		<!-- 데이터 호출 용 update -->
+		<!-- TAG FOR CALL db > java > html -->
 		<div class="hidden">
 			<ul>
 				<li th:each="member : ${list}" th:text="${member.member_name}"></li>
