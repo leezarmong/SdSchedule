@@ -12,42 +12,42 @@ const excel_download_btn = document.getElementById("excelDownload");
 const rosterTable = document.getElementById("rosterTable");
 
 // get member list from: db > java > html > js
-const memberList = [];
-tdElements.forEach(td=>{
-    const memberName = td.innerText;
-    memberList.push(memberName);
-});
-// const memberList = [
-//     "김장현",
-//     "김해수",
-//     "최인화",
-//     "유건희",
-//     "이희정",
-//     "강민지",
-//     "권태영",
-//     "김경민",
-//     "김무준",
-//     "김세희",
-//     "김영록",
-//     "김은경",
-//     "김지환",
-//     "박대용",
-//     "박현선",
-//     "복금현",
-//     "서준영",
-//     "안지연",
-//     "원동하",
-//     "유영현",
-//     "윤승관",
-//     "윤승관",
-//     "이상건",
-//     "이영현",
-//     "이재원",
-//     "전예준",
-//     "조경서",
-//     "조관우",
-//     "홍지오"
-// ];
+// const memberList = [];
+// tdElements.forEach(td=>{
+//     const memberName = td.innerText;
+//     memberList.push(memberName);
+// });
+const memberList = [
+    "김장현",
+    "김해수",
+    "최인화",
+    "유건희",
+    "이희정",
+    "강민지",
+    "권태영",
+    "김경민",
+    "김무준",
+    "김세희",
+    "김영록",
+    "김은경",
+    "김지환",
+    "박대용",
+    "박현선",
+    "복금현",
+    "서준영",
+    "안지연",
+    "원동하",
+    "유영현",
+    "윤승관",
+    "윤승관",
+    "이상건",
+    "이영현",
+    "이재원",
+    "전예준",
+    "조경서",
+    "조관우",
+    "홍지오"
+];
 
 // convert schedule excel > json
 const excelToJson = async (callback) => {

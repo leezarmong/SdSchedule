@@ -8,6 +8,9 @@
 body{
     background-color: #fff;
 }
+section{
+    display: flex;
+}
 html{
     --navbar-height: 60px;
     --main: #ff8f00;
