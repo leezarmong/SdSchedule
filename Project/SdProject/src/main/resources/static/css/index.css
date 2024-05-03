@@ -11,3 +11,6 @@ body{
 unit{
     color: rgb(255, 143, 0);
 }
+.hidden {
+	display: none;
+}

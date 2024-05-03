@@ -1,94 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"> 
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>memberpage</title>
+    <script src="./js/memberpage/memberpage.js"></script>
+    <!-- js -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- jQuery -->
+    <link rel="stylesheet" href="./css/memberpage/memberpage.css">
+    <!-- css -->
+
+    <meta charset="UTF-8">
+    <title>Memberpage</title>
 
 
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<!-- jQuery -->
+
 </head>
+
 <body>
 
-<h1>memberPage</h1>
+    <h1>memberPage</h1>
+    <a href="/"> mainPage</a>
+
+
+    <table>
+        <tr>
+            <th>memberName</th>
+        </tr>
+        <tr th:each="member : ${list}">
+            <td th:text="${member.member_name}"></td>
+            <td th:text="${member.member_grade}"></td>
+            <td>
+                <input type="hidden" class="member_no" th:value="${member.member_no}" />
+                <input type="button" value="X" onclick="deleteMember(this)">
+            </td>
+        </tr>
+    </table>
 
 
 
-<table>
-	<tr>
-        <th>memberName</th>
-    </tr>
-	<tr th:each="member : ${list}">
-    <td th:text="${member.member_name}"></td>
-    <td>
-        <input type="hidden" class="member_no" th:value="${member.member_no}" />
-        <input type="button" value="X" onclick="deleteMember(this)">
-    </td>
-</tr>
-</table>
+    <div id="login">
+        <input type="text" id="member_name" placeholder="직원 등록 해주세요.">
+        <select id="member_grade">
+            <option value="null">직급 선택</option>
+            <option value="SM">SM</option> <!-- Store Manager / 점장 -->
+            <option value="VSM">VSM</option> <!-- Vice Store Manager / 부점장 -->
+            <option value="MGR">MGR</option> <!-- Manager / 매니저 -->
+            <option value="CT">CT</option> <!-- Captain / 캡틴 -->
+            <option value="EMP">EMP</option> <!-- Employee / 정직원 -->
+            <option value="PT">PT</option> <!-- PartTime / 파트타임 -->
+        </select>
 
-
-
-<div id="login">
-<input type="text" id="member_name" placeholder="직원 등록 해주세요.">
- <button type="button" onclick="insert()">insert</button><br>
-</div>
-
-
-<!-- 임시 스크립트 -->
-<script type="text/javascript">
-
-/* 엔터키 이벤트 */
-$("#login").keypress(function(e) {
-		if (e.keyCode === 13) {
-			insert();
-		}
-	}); 
-
-
-/* 멤버 등록 */  
-function insert(){
-	var member_name = $("#member_name").val();
-	
-	console.log(member_name);
-	if(!$("#member_name").val())
-	
-	{
-		alert("필수항목이 비어있습니다. 입력해주세요.");		
-	}else{
-		$.ajax({
-			type : "POST",
-			url : "insert",
-			data : {
-				"member_name" : member_name
-			},
-			success : function(data) {
-				alert("입력 완료..!");
-				window.location.href="memberpage";
-			}
-		});
-	}
-}
-
-/* 멤버 삭제 */
-function deleteMember(button) {
-    var memberNo = parseInt($(button).closest('tr').find('.member_no').val());
-    				/* 해당 번호만 정확하게 지울수 있도록. <tr> */
-    
-    $.ajax({
-        type: "POST",
-        url: "delete",
-        data: {
-            "member_no": memberNo
-        },
-        success: function(data) {
-            alert("삭제완료..!");
-            window.location.href = "memberpage";
-        }
-    });
-}
-</script>
-
+        <button type="button" onclick="insert()">insert</button><br>
+    </div>
 
 </body>
+
 </html>

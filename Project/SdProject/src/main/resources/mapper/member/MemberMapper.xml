@@ -15,7 +15,7 @@
 	
 	<!-- 멤버 입력 -->
     <insert id="insertMember">
-        insert into member(member_name , member_no) values(#{member_name} , MEMBER_SEQ.NEXTVAL)
+        insert into member(member_name , member_no , member_grade) values(#{member_name} , MEMBER_SEQ.NEXTVAL , #{member_grade})
     </insert>
 
 	<!-- 멤버 삭제 -->
