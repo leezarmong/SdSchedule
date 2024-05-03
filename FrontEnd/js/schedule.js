@@ -4,16 +4,21 @@ import {
 } from "./util.js";
 
 const Excel = document.getElementById("excel-upload");
+const wt_table = document.getElementById("weekPayTable");
 const wt_table_head = document.querySelector("thead");
 const wt_table_body = document.querySelector("tbody");
 const excel_upload_btn = document.querySelector("label");
 const tdElements = document.querySelectorAll('li');
+const XLSX = import("https://cdn.sheetjs.com/xlsx-0.19.2/package/xlsx.mjs");
+
 // get member list from: db > java > html > js
 const memberList = [];
 tdElements.forEach(td=>{
     const memberName = td.innerText;
     memberList.push(memberName);
 });
+
+// run. if detected excel upload
 Excel.onchange = function () {
     const memberList = [
         "김장현",
@@ -178,6 +183,13 @@ Excel.onchange = function () {
             </tr>
         ` + wt_table_body_html;
         wt_table_body.innerHTML = wt_table_body_html;
+        // console.log(sortedJson);
+        // const worksheet = XLSX.utils.json_to_sheet(sortedJson);
+        // const workbook = XLSX.utils.book_new();
+        // XLSX.utils.book_append_sheet(workbook, worksheet, "ExcelExport");
     });
+
+    // when file uploaded, hide button and show result.
     excel_upload_btn.style.display = "none";
+    wt_table.style.display = "block";
 };
