@@ -15,7 +15,7 @@
     display: none;
 }
 #weekPayTable thead{
-    width: calc( 100% - 1em );
+    width: 100%;
 }
 #weekPayTable thead th{
     background: var(--grue300); 
@@ -43,4 +43,23 @@
     display: table;
     width: 100%;
     table-layout: fixed;
+}
+#buttons{
+    width: calc(100vw - 1000px);
+    height: calc( 100vh - var(--navbar-height));
+    padding: 16px 24px;
+    display: none;
+}
+#buttons i{
+    margin-top: 20px;
+}
+#buttons #excelDownload{
+    margin: 0;
+    width: 10vw;
+    height: 20vh;
+    display: block;
+    border: solid 2px var(--grue600);
+}
+#buttons #excelDownload #rosterTable{
+    display: none;
 }
