@@ -1,9 +1,4 @@
- /* 엔터키 이벤트 */
-        $("#login").keypress(function (e) {
-            if (e.keyCode === 13) {
-                insert();
-            }
-        });
+ 		
 
 
 

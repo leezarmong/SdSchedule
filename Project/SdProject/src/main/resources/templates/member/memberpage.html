@@ -9,50 +9,75 @@
     <link rel="stylesheet" href="./css/memberpage/memberpage.css">
     <!-- css -->
 
+    <!-- Bootstrap CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <meta charset="UTF-8">
     <title>Memberpage</title>
-
-
-
 </head>
 
 <body>
+    <div class="container mt-5">
+        <h1>Member Page</h1>
+        <a href="/" style="font-size: 20px;">Main Page</a>
+        <div class="row justify-content-end">
+            <div class="col-auto">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="MemberSearch" >
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<table class="table table-striped mt-3">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Member Name</th>
+                    <th>Member Grade</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="member : ${list}">
+                    <td th:text="${member.member_name}"></td>
+                    <td th:text="${member.member_grade}"></td>
+                    <td>
+                        <input type="hidden" class="member_no" th:value="${member.member_no}" />
+                        <button type="button" class="btn btn-danger" onclick="deleteMember(this)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <h1>memberPage</h1>
-    <a href="/"> mainPage</a>
-
-
-    <table>
-        <tr>
-            <th>memberName</th>
-        </tr>
-        <tr th:each="member : ${list}">
-            <td th:text="${member.member_name}"></td>
-            <td th:text="${member.member_grade}"></td>
-            <td>
-                <input type="hidden" class="member_no" th:value="${member.member_no}" />
-                <input type="button" value="X" onclick="deleteMember(this)">
-            </td>
-        </tr>
-    </table>
-
-
-
-    <div id="login">
-        <input type="text" id="member_name" placeholder="직원 등록 해주세요.">
-        <select id="member_grade">
-            <option value="null">직급 선택</option>
-            <option value="SM">SM</option> <!-- Store Manager / 점장 -->
-            <option value="VSM">VSM</option> <!-- Vice Store Manager / 부점장 -->
-            <option value="MGR">MGR</option> <!-- Manager / 매니저 -->
-            <option value="CT">CT</option> <!-- Captain / 캡틴 -->
-            <option value="EMP">EMP</option> <!-- Employee / 정직원 -->
-            <option value="PT">PT</option> <!-- PartTime / 파트타임 -->
-        </select>
-
-        <button type="button" onclick="insert()">insert</button><br>
+        <div id="login">
+            <input type="text" id="member_name" class="form-control" placeholder="Enter member name">
+            <select id="member_grade" class="form-control mt-2">
+                <option value="null">Select Member Grade</option>
+                <option value="SM">SM</option>
+                <option value="VSM">VSM</option>
+                <option value="MGR">MGR</option>
+                <option value="CT">CT</option>
+                <option value="EMP">EMP</option>
+                <option value="PT">PT</option>
+            </select>
+            <button type="button" style="margin-bottom: 130px;" class="btn btn-primary mt-2" onclick="insert()">Insert</button>
+        </div>
     </div>
+   
+   <script type="text/javascript">
+   /* 엔터키 이벤트 */
+   $(document).ready(function () {
+       $("#login").keypress(function (e) {
+           if (e.keyCode === 13) {
+               insert();
+           }
+       });
+   });
+   </script>
 
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
