@@ -27,20 +27,30 @@
             }
         }
 
-        /* 멤버 삭제 */
+         /* 멤버 삭제 */
         function deleteMember(button) {
-            var memberNo = parseInt($(button).closest('tr').find('.member_no').val());
-            /* 해당 번호만 정확하게 지울수 있도록. <tr> */
 
-            $.ajax({
-                type: "POST",
-                url: "delete",
-                data: {
-                    "member_no": memberNo
-                },
-                success: function (data) {
-                    alert("삭제완료..!");
-                    window.location.href = "memberpage";
-                }
-            });
+            var confirmDelete = confirm("정말로 삭제하시겠습니까?");
+
+            if (confirmDelete) {
+                // 클릭된 버튼이 속한 행에서 회원 번호를 가져옴
+                var memberNo = parseInt($(button).closest('tr').find('.member_no').val());
+
+                $.ajax({
+                    type: "POST",
+                    url: "delete",
+                    data: {
+                        "member_no": memberNo
+                    },
+                    success: function (data) {
+                        alert("삭제완료..!");
+                        window.location.href = "memberpage";
+                    },
+                    error: function (xhr, status, error) {
+                        alert("삭제 실패: " + error);
+                    }
+                });
+            } else {
+                console.log("삭제가 취소되었습니다.");
+            }
         }

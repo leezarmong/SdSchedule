@@ -4,63 +4,55 @@ import {
 } from "./util.js";
 
 const Excel = document.getElementById("excel-upload");
-const TextArea = document.getElementById("json_data");
-const wt_table_head = document.querySelector("thead");
-const wt_table_body = document.querySelector("tbody");
+const weekPayTable = document.getElementById("weekPayTable");
 const excel_upload_btn = document.querySelector("label");
 const tdElements = document.querySelectorAll('li');
+const buttons = document.getElementById("buttons");
+const excel_download_btn = document.getElementById("excelDownload");
+const rosterTable = document.getElementById("rosterTable");
+
 // get member list from: db > java > html > js
-const memberList = [];
-tdElements.forEach(td=>{
-    const memberName = td.innerText;
-    memberList.push(memberName);
-});
-Excel.onchange = function () {
-    // const memberList = [
-    //     "김장현",
-    //     "김해수",
-    //     "최인화",
-    //     "유건희",
-    //     "이희정",
-    //     "강민지",
-    //     "권태영",
-    //     "김경민",
-    //     "김무준",
-    //     "김세희",
-    //     "김영록",
-    //     "김은경",
-    //     "김지환",
-    //     "박대용",
-    //     "박현선",
-    //     "복금현",
-    //     "서준영",
-    //     "안지연",
-    //     "원동하",
-    //     "유영현",
-    //     "윤승관",
-    //     "윤승관",
-    //     "이상건",
-    //     "이영현",
-    //     "이재원",
-    //     "전예준",
-    //     "조경서",
-    //     "조관우",
-    //     "홍지오"
-    // ];
-    readXlsxFile(Excel.files[0]).then(data=>{
-        // code for work table head
-        let wt_table_head_html = `
-            <tr>
-                <th scope="col">직급</th>
-                <th scope="col">이름</th>
-                <th scope="col">닉네임</th>
-                <th scope="col">총 근무 시간</th>
-                <th scope="col">야간 근무 시간</th>
-                <th scope="col">주휴 발생 여부</th>
-                <th scope="col">주급</th>
-            </tr>
-        `;
-        wt_table_head.innerHTML = wt_table_head_html;
+ const memberList = [];
+ tdElements.forEach(td=>{
+     const memberName = td.innerText;
+     memberList.push(memberName);
+ });
+/*const memberList = [
+    "김장현",
+    "김해수",
+    "최인화",
+    "유건희",
+    "이희정",
+    "강민지",
+    "권태영",
+    "김경민",
+    "김무준",
+    "김세희",
+    "김영록",
+    "김은경",
+    "김지환",
+    "박대용",
+    "박현선",
+    "복금현",
+    "서준영",
+    "안지연",
+    "원동하",
+    "유영현",
+    "윤승관",
+    "윤승관",
+    "이상건",
+    "이영현",
+    "이재원",
+    "전예준",
+    "조경서",
+    "조관우",
+    "홍지오"
+];*/
+
+// convert schedule excel > json
+const excelToJson = async (callback) => {
+    let returnData;
+    await readXlsxFile(Excel.files[0]).then(data=>{
         // code for work table body
         // data > Json convert as I want
         const Json = [];
@@ -115,14 +107,44 @@ Excel.onchange = function () {
         sortedKeys.forEach(key=>{
             sortedJson[key] = Json[key];
         });
+        returnData = sortedJson;
+    });
+    callback(returnData)
+};
+
+// run. if detected excel upload
+Excel.onchange = () => {
+    excelToJson( data => {
+        const sortedJson = data;
+        const sortedJson_key = Object.keys(data);
+        console.log(sortedJson)
+        // code for work table head
+        let weekPayTable_head_html = `
+            <thead>
+                <tr>
+                <th scope="col">직급</th>
+                <th scope="col">이름</th>
+                <th scope="col">닉네임</th>
+                <th scope="col">총 근무 시간</th>
+                <th scope="col">야간 근무 시간</th>
+                <th scope="col">주휴 발생 여부</th>
+                <th scope="col">주급</th>
+                </tr>
+            </thead>
+        `;
         // Insert converted Json to table
-        let wt_table_body_html = "";
-        for(let w = 0; w < sortedKeys.length; w++){
+        let weekPayTable_body_html = "";
+        const total = {
+            weekWorkTime: 0,
+            nightWorkTime: 0,
+            weekPay: 0
+        };
+        for(let w = 0; w < sortedJson_key.length; w++){
             // get weekly work time, night work time
             let weekWorkTime = 0;
             let nightWorkTime = 0;
             for(let d = 0; d < 7; d++){
-                let workData = sortedJson[sortedKeys[w]][d];
+                let workData = sortedJson[sortedJson_key[w]][d];
                 if(workData!=null){
                     if(workData[1]-workData[0]>=9){
                         weekWorkTime+=workData[1]-workData[0]-1
@@ -138,25 +160,118 @@ Excel.onchange = function () {
             };
             // get isOver, weekPay
             let isOver = 'O';
+            let classPay = 9875;
             let weekPay = 0;
             if(weekWorkTime>=15){
                 isOver = 'O';
+                weekPay = Math.round((weekWorkTime * 1.2 + nightWorkTime * 0.5) * classPay);
             }else{
                 isOver = 'X';
+                weekPay = Math.round((weekWorkTime + nightWorkTime * 0.5) * classPay);
             };
-            wt_table_body_html += `
+            weekPayTable_body_html += `
                 <tr>
                     <td>연동x</td>
-                    <td>${sortedKeys[w]}</td>
+                    <td>${sortedJson_key[w]}</td>
                     <td>연동x</td>
                     <td>${weekWorkTime} h</td>
                     <td>${nightWorkTime} h</td>
                     <td>${isOver}</td>
-                    <td>${'아직 급여 계산 방식을 이해 못했음'} ₩</td>
+                    <td>${numberWithCommas(weekPay)} ₩</td>
                 </tr>
             `;
+            total.weekWorkTime += weekWorkTime;
+            total.nightWorkTime += nightWorkTime;
+            total.weekPay += weekPay;
         };
-        wt_table_body.innerHTML = wt_table_body_html;
+        weekPayTable_body_html = `
+            <tbody>
+                <tr class="bold">
+                    <td>합계</td>
+                    <td></td>
+                    <td></td>
+                    <td>${total.weekWorkTime} h</td>
+                    <td>${total.nightWorkTime} h</td>
+                    <td></td>
+                    <td>${numberWithCommas(total.weekPay)} ₩</td>
+                </tr>
+                ${weekPayTable_body_html}
+            </tbody>
+        `;
+        weekPayTable.innerHTML = weekPayTable_head_html + weekPayTable_body_html;
     });
+    // when file uploaded, hide button and show result.
     excel_upload_btn.style.display = "none";
+    weekPayTable.style.display = "block";
+    buttons.style.display = "block";
 };
+
+// code for export roster sheet
+excel_download_btn.addEventListener("click", () => {
+    excelToJson( data => {
+        const sortedJson = data;
+        const sortedJson_key = Object.keys(data);
+        const sortedJson_value = Object.values(data);
+        let rosterTable_head_html = `
+            <thead>
+                <tr>
+                    <th rowspan="2">NO</th>
+                    <th rowspan="2">성명</th>
+                    <th rowspan="2">Nick Name</th>
+                    <th rowspan="2">직무</th>
+                    <th colspan="3">스케줄</th>
+                    <th colspan="3">실근무시간</th>
+                    <th rowspan="2">비고</th>
+                </tr>
+                <tr>
+                    <th rowspan="1">출근</th>
+                    <th rowspan="1">퇴근</th>
+                    <th rowspan="1">휴게</th>
+                    <th rowspan="1">출근</th>
+                    <th rowspan="1">퇴근</th>
+                    <th rowspan="1">휴게</th>
+                </tr>
+            </thead>
+        `;
+        // convert shape of json data
+        const rosterbody = [];
+        let i = 0;
+        for(let memb = 0; memb < sortedJson_value.length; memb++){
+            
+            if(sortedJson_value[memb][0]!=null){
+                i++;
+                let tempArr = [
+                    i,
+                    sortedJson_key[memb],
+                    '',
+                    ''
+                ];
+                let time_start = sortedJson_value[memb][0][0];
+                let time_finish = sortedJson_value[memb][0][1];
+                if(sortedJson_value[memb][0][1]-sortedJson_value[memb][0][0])
+                tempArr.push(
+                    time_start,
+                    time_finish,
+                    time_finish-time_start>=9?"01:00":"00:30",
+                    '',
+                    '',
+                    '',
+                    ''
+                );
+                rosterbody.push(tempArr);
+            };
+        };
+        let rosterTable_body_html = ``;
+        for(let b = 0; b < rosterbody.length; b++){
+            let temp_html = ``;
+            for(let t = 0; t < Object.keys(rosterbody[0]).length; t++){
+                temp_html += `<td>${Object.values(rosterbody[b])[t]}</td>`
+            };
+            rosterTable_body_html += `<tr>${temp_html}</tr>`;
+        };
+        rosterTable_body_html = `<tbody>${rosterTable_body_html}</tbody>`
+        rosterTable.innerHTML = rosterTable_head_html + rosterTable_body_html;
+        const wb = XLSX.utils.table_to_book(rosterTable);
+        XLSX.writeFile(wb, "test.xlsx");
+    });
+});

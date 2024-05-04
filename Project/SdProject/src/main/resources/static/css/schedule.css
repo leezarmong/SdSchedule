@@ -1,7 +1,3 @@
-table{
-    width: 800px;
-    border: 2px solid;
-}
 .btn {
     width: 20vw;
     height: 20vh;
@@ -11,4 +7,59 @@ table{
 }
 .btn i {
     margin: 65px 0 30px;
+}
+#weekPayTable {
+    width: 1000px;
+    border-right: 2px solid;
+    margin: 0;
+    display: none;
+}
+#weekPayTable thead{
+    width: 100%;
+}
+#weekPayTable thead th{
+    background: var(--grue300); 
+}
+#weekPayTable thead th:first-of-type{
+    border-top-left-radius: 0px; 
+}
+#weekPayTable thead th:last-of-type{
+    border-top-right-radius: 0px; 
+}
+#weekPayTable tbody{
+    display: block;
+    height: calc( 100vh - var(--navbar-height) - 40px );
+    overflow: auto;
+}
+#weekPayTable tbody::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+#weekPayTable tbody {
+    -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none;  /* Hide scrollbar for Firefox */
+}
+#weekPayTable thead,
+#weekPayTable tbody tr{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+#buttons{
+    width: calc(100vw - 1000px);
+    height: calc( 100vh - var(--navbar-height));
+    padding: 16px 24px;
+    display: none;
+}
+#buttons i{
+    margin-top: 20px;
+}
+#buttons #excelDownload{
+    margin: 0;
+    width: 10vw;
+    height: 20vh;
+    display: block;
+    border: solid 2px var(--grue600);
+}
+#buttons #excelDownload #rosterTable{
+    display: none;
 }

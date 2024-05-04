@@ -8,9 +8,29 @@
 body{
     background-color: #fff;
 }
+section{
+    display: flex;
+}
+html{
+    --navbar-height: 60px;
+    --main: #ff8f00;
+    --none: #00000000;
+    --grue100: #fefeff;
+    --grue200: #ebebec;
+    --grue300: #cbcbcf;
+    --grue400: #aeaeb8;
+    --grue500: #85858f;
+    --grue600: #4a4a53;
+    --grue700: #343438;
+    --grue800: #29292e;
+    --grue900: #141418;
+}
 unit{
     color: rgb(255, 143, 0);
 }
 .hidden {
 	display: none;
+}
+.bold {
+	font-weight: 700;
 }
