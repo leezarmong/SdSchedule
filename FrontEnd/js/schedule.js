@@ -6,23 +6,42 @@ import {
 const Excel = document.getElementById("excel-upload");
 const weekPayTable = document.getElementById("weekPayTable");
 const excel_upload_btn = document.querySelector("label");
-const tdElements = document.querySelectorAll('li');
 const buttons = document.getElementById("buttons");
 const excel_download_btn = document.getElementById("excelDownload");
 const rosterTable = document.getElementById("rosterTable");
 
 // get member list from: db > java > html > js
+
+/*
 const memberList = [];
-tdElements.forEach( td => {
-    const memberName = td.innerText;
+
+
+liElements.forEach( li => {
+    const memberName = li.innerText;
     const memberGrade = "";
-    memberList.push(memberName);
+
+    memberList.push({
+        name: memberName,
+        grade: memberGrade
+    });
+});*/
+
+const memberList = [];
+const mNameElements = document.querySelectorAll('.hidden .mname');
+const mGradeElements = document.querySelectorAll('.hidden .mgrade');
+
+mNameElements.forEach((nameElement, index) => {
+    const memberName = nameElement.innerText;
+    const memberGrade = mGradeElements[index].innerText;
 
     memberList.push({
         name: memberName,
         grade: memberGrade
     });
 });
+
+console.log(memberList);
+
 
 // convert schedule excel > json
 const excelToJson = async (callback) => {
@@ -34,7 +53,7 @@ const excelToJson = async (callback) => {
         for(let i = 0; i < data.length; i++){
             // data[i][0], data[i][11] = 이름
             if(
-                memberList.includes(String(data[i][0]).split('\n')[0])
+                memberList.map(el=>el.name).includes(String(data[i][0]).split('\n')[0])
             ){
                 const arrid = String(data[i][0]).split('\n')[0];
                 Json[arrid] = [];
@@ -55,7 +74,7 @@ const excelToJson = async (callback) => {
                 Json[arrid]=tempArr;
             };
             if(
-                memberList.includes(String(data[i][11]).split('\n')[0])
+                memberList.map(el=>el.name).includes(String(data[i][11]).split('\n')[0])
             ){
                 const arrid = String(data[i][11]).split('\n')[0];
                 Json[arrid]=[];
@@ -146,7 +165,7 @@ Excel.onchange = () => {
             };
             weekPayTable_body_html += `
                 <tr>
-                    <td>${memberList.find(el=>el.name === sortedJson_key[w]).class}</td>
+                    <td>${memberList.find(el=>el.name === sortedJson_key[w]).grade}</td>
                     <td>${sortedJson_key[w]}</td>
                     <td>연동x</td>
                     <td>${weekWorkTime} h</td>
