@@ -12,42 +12,17 @@ const excel_download_btn = document.getElementById("excelDownload");
 const rosterTable = document.getElementById("rosterTable");
 
 // get member list from: db > java > html > js
-// const memberList = [];
-// tdElements.forEach(td=>{
-//     const memberName = td.innerText;
-//     memberList.push(memberName);
-// });
-const memberList = [
-    "김장현",
-    "김해수",
-    "최인화",
-    "유건희",
-    "이희정",
-    "강민지",
-    "권태영",
-    "김경민",
-    "김무준",
-    "김세희",
-    "김영록",
-    "김은경",
-    "김지환",
-    "박대용",
-    "박현선",
-    "복금현",
-    "서준영",
-    "안지연",
-    "원동하",
-    "유영현",
-    "윤승관",
-    "윤승관",
-    "이상건",
-    "이영현",
-    "이재원",
-    "전예준",
-    "조경서",
-    "조관우",
-    "홍지오"
-];
+const memberList = [];
+tdElements.forEach( td => {
+    const memberName = td.innerText;
+    const memberGrade = "";
+    memberList.push(memberName);
+
+    memberList.push({
+        name: memberName,
+        grade: memberGrade
+    });
+});
 
 // convert schedule excel > json
 const excelToJson = async (callback) => {
@@ -171,7 +146,7 @@ Excel.onchange = () => {
             };
             weekPayTable_body_html += `
                 <tr>
-                    <td>연동x</td>
+                    <td>${memberList.find(el=>el.name === sortedJson_key[w]).class}</td>
                     <td>${sortedJson_key[w]}</td>
                     <td>연동x</td>
                     <td>${weekWorkTime} h</td>
@@ -208,70 +183,82 @@ Excel.onchange = () => {
 
 // code for export roster sheet
 excel_download_btn.addEventListener("click", () => {
-    excelToJson( data => {
-        const sortedJson = data;
-        const sortedJson_key = Object.keys(data);
-        const sortedJson_value = Object.values(data);
-        let rosterTable_head_html = `
-            <thead>
-                <tr>
-                    <th rowspan="2">NO</th>
-                    <th rowspan="2">성명</th>
-                    <th rowspan="2">Nick Name</th>
-                    <th rowspan="2">직무</th>
-                    <th colspan="3">스케줄</th>
-                    <th colspan="3">실근무시간</th>
-                    <th rowspan="2">비고</th>
-                </tr>
-                <tr>
-                    <th rowspan="1">출근</th>
-                    <th rowspan="1">퇴근</th>
-                    <th rowspan="1">휴게</th>
-                    <th rowspan="1">출근</th>
-                    <th rowspan="1">퇴근</th>
-                    <th rowspan="1">휴게</th>
-                </tr>
-            </thead>
-        `;
-        // convert shape of json data
-        const rosterbody = [];
-        let i = 0;
-        for(let memb = 0; memb < sortedJson_value.length; memb++){
+    // window.print();
+    // excelToJson( data => {
+    //     const sortedJson = data;
+    //     const sortedJson_key = Object.keys(data);
+    //     const sortedJson_value = Object.values(data);
+    //     let rosterTable_head_html = `
+    //         <thead>
+    //             <tr>
+    //                 <th rowspan="2">NO</th>
+    //                 <th rowspan="2">성명</th>
+    //                 <th rowspan="2">Nick Name</th>
+    //                 <th rowspan="2">직무</th>
+    //                 <th colspan="3">스케줄</th>
+    //                 <th colspan="3">실근무시간</th>
+    //                 <th rowspan="2">비고</th>
+    //             </tr>
+    //             <tr>
+    //                 <th rowspan="1">출근</th>
+    //                 <th rowspan="1">퇴근</th>
+    //                 <th rowspan="1">휴게</th>
+    //                 <th rowspan="1">출근</th>
+    //                 <th rowspan="1">퇴근</th>
+    //                 <th rowspan="1">휴게</th>
+    //             </tr>
+    //         </thead>
+    //     `;
+
+    //     // convert shape of json data
+    //     const rosterbody = [];
+    //     let i = 0;
+    //     for(let memb = 0; memb < sortedJson_value.length; memb++){
             
-            if(sortedJson_value[memb][0]!=null){
-                i++;
-                let tempArr = [
-                    i,
-                    sortedJson_key[memb],
-                    '',
-                    ''
-                ];
-                let time_start = sortedJson_value[memb][0][0];
-                let time_finish = sortedJson_value[memb][0][1];
-                if(sortedJson_value[memb][0][1]-sortedJson_value[memb][0][0])
-                tempArr.push(
-                    time_start,
-                    time_finish,
-                    time_finish-time_start>=9?"01:00":"00:30",
-                    '',
-                    '',
-                    '',
-                    ''
-                );
-                rosterbody.push(tempArr);
-            };
-        };
-        let rosterTable_body_html = ``;
-        for(let b = 0; b < rosterbody.length; b++){
-            let temp_html = ``;
-            for(let t = 0; t < Object.keys(rosterbody[0]).length; t++){
-                temp_html += `<td>${Object.values(rosterbody[b])[t]}</td>`
-            };
-            rosterTable_body_html += `<tr>${temp_html}</tr>`;
-        };
-        rosterTable_body_html = `<tbody>${rosterTable_body_html}</tbody>`
-        rosterTable.innerHTML = rosterTable_head_html + rosterTable_body_html;
-        const wb = XLSX.utils.table_to_book(rosterTable);
-        XLSX.writeFile(wb, "test.xlsx");
-    });
+    //         if(sortedJson_value[memb][0]!=null){
+    //             i++;
+    //             let tempArr = [
+    //                 i,
+    //                 sortedJson_key[memb],
+    //                 '',
+    //                 ''
+    //             ];
+    //             let time_start = sortedJson_value[memb][0][0];
+    //             let time_finish = sortedJson_value[memb][0][1];
+    //             if(sortedJson_value[memb][0][1]-sortedJson_value[memb][0][0])
+    //             tempArr.push(
+    //                 time_start,
+    //                 time_finish,
+    //                 time_finish-time_start>=9?"01:00":"00:30",
+    //                 '',
+    //                 '',
+    //                 '',
+    //                 ''
+    //             );
+    //             rosterbody.push(tempArr);
+    //         };
+    //     };
+
+    //     // create html table for excel sheet
+    //     let rosterTable_body_html = ``;
+    //     for(let b = 0; b < rosterbody.length; b++){
+    //         let temp_html = ``;
+    //         for(let t = 0; t < Object.keys(rosterbody[0]).length; t++){
+    //             temp_html += `<td>${Object.values(rosterbody[b])[t]}</td>`
+    //         };
+    //         rosterTable_body_html += `<tr>${temp_html}</tr>`;
+    //     };
+    //     rosterTable_body_html = `<tbody>${rosterTable_body_html}</tbody>`
+    //     rosterTable.innerHTML = rosterTable_head_html + rosterTable_body_html;
+
+    //     // change html table to excel sheet        
+    //     const workbookbody = XLSX.utils.table_to_book(rosterTable);
+
+    //     const localExcel = XLSX.readFile("../../Excel/sdschedule.xlsx");
+
+    //     XLSX.utils.sheet_add_aoa(worksheet, [excelHeader], { origin: "A7" });
+    //     XLSX.utils.book_append_sheet(localExcel, workbookbody, "test");
+        
+    //     XLSX.writeFile(localExcel, "test.xlsx", { compression: true });
+    // });
 });
