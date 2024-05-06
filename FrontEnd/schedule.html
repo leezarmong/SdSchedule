@@ -22,16 +22,17 @@
 		<!-- TAG FOR CALL db > java > html -->
 		<div class="hidden">
 			<ul>
-				<li th:each="member : ${list}" th:text="${member.member_name}"></li>
+				<li class="mname" th:each="member : ${list}" th:text="${member.member_name}"></li>
+				<li class="mgrade" th:each="member : ${list}" th:text="${member.member_grade}"></li>
 			</ul>
 		</div>
 		
 		<div id="buttons">
 			<!-- BUTTON FOR EXPORT ROSTER EXCEL -->
 			<button type="button" id="excelDownload"class="btn btn-secondary">
-				<i class="fa-solid fa-file-arrow-down fa-2xl"></i><br/>로스터 다운로드
-				<table id="rosterTable"></table>
+				<i class="fa-solid fa-print fa-lg"></i>로스터 인쇄
 			</button>
+			<table id="rosterTable"></table>
 		</div>
 	</section>
 	<script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>

@@ -44,22 +44,44 @@
     width: 100%;
     table-layout: fixed;
 }
-#buttons{
+#roster{
     width: calc(100vw - 1000px);
     height: calc( 100vh - var(--navbar-height));
     padding: 16px 24px;
     display: none;
+    position: relative;
 }
-#buttons i{
-    margin-top: 20px;
-}
-#buttons #excelDownload{
+#roster button{
+    position: absolute;
+    right: 24px;
     margin: 0;
-    width: 10vw;
-    height: 20vh;
-    display: block;
-    border: solid 2px var(--grue600);
+    width: 160px;
+    height: 54px;
+    font-size: 16px;
 }
-#buttons #excelDownload #rosterTable{
-    display: none;
+#roster button i{
+    margin: 0 8px 0 0;
+}
+@media print {
+    body {
+      visibility: hidden;
+    }
+    #roster {
+      visibility: visible;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 210mm;
+      height: 297mm;
+    }
+    /* .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+    } */
 }
