@@ -57,6 +57,9 @@
 .rosterPage{
     height: 297mm;
 }
+.rosterPage:last-child{
+    height: 200mm;
+}
 .rosterHeader{
     font-size: 40px;
     text-align: center;
