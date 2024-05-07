@@ -6,56 +6,59 @@ import {
 
 const Excel = document.getElementById("excel-upload");
 const weekPayTable = document.getElementById("weekPayTable");
+const payPerDayTable = document.getElementById("payPerDayTable");
 const excel_upload_btn = document.querySelector("label");
 const roster = document.getElementById("roster");
 const roster_print_btn = document.getElementById("rosterPrint");
 
+const weekend = ["일","월","화","수","목","금","토"];
+
 // get member list from: db > java > html > js
 
-const memberList = [];
-const mNameElements = document.querySelectorAll('.hidden .mname');
-const mGradeElements = document.querySelectorAll('.hidden .mgrade');
+// const memberList = [];
+// const mNameElements = document.querySelectorAll('.hidden .mname');
+// const mGradeElements = document.querySelectorAll('.hidden .mgrade');
 
-mNameElements.forEach((nameElement, index) => {
-    const memberName = nameElement.innerText;
-    const memberGrade = mGradeElements[index].innerText;
+// mNameElements.forEach((nameElement, index) => {
+//     const memberName = nameElement.innerText;
+//     const memberGrade = mGradeElements[index].innerText;
 
-    memberList.push({
-        name: memberName,
-        grade: memberGrade
-    });
-});
+//     memberList.push({
+//         name: memberName,
+//         grade: memberGrade
+//     });
+// });
 
-// const memberList = [
-//     {name: '김장현', grade: 'SM'},
-//     {name: '김해수', grade: 'VSM'},
-//     {name: '최인화', grade: 'MGR'},
-//     {name: '유건희', grade: 'CT'},
-//     {name: '이희정', grade: 'CT'},
-//     {name: '강민지', grade: 'EMP'},
-//     {name: '권태영', grade: 'PT'},
-//     {name: '김경민', grade: 'PT'},
-//     {name: '김무준', grade: 'PT'},
-//     {name: '김세희', grade: 'PT'},
-//     {name: '김영록', grade: 'PT'},
-//     {name: '김은경', grade: 'PT'},
-//     {name: '김지환', grade: 'PT'},
-//     {name: '박대용', grade: 'PT'},
-//     {name: '박현선', grade: 'PT'},
-//     {name: '복금현', grade: 'PT'},
-//     {name: '서준영', grade: 'PT'},
-//     {name: '안지연', grade: 'PT'},
-//     {name: '원동하', grade: 'PT'},
-//     {name: '유영현', grade: 'PT'},
-//     {name: '윤승관', grade: 'PT'},
-//     {name: '이상건', grade: 'PT'},
-//     {name: '이영현', grade: 'PT'},
-//     {name: '이재원', grade: 'PT'},
-//     {name: '전예준', grade: 'PT'},
-//     {name: '조경서', grade: 'PT'},
-//     {name: '조관우', grade: 'PT'},
-//     {name: '홍지오', grade: 'PT'}
-// ];
+const memberList = [
+    {name: '김장현', grade: 'SM'},
+    {name: '김해수', grade: 'VSM'},
+    {name: '최인화', grade: 'MGR'},
+    {name: '유건희', grade: 'CT'},
+    {name: '이희정', grade: 'CT'},
+    {name: '강민지', grade: 'EMP'},
+    {name: '권태영', grade: 'PT'},
+    {name: '김경민', grade: 'PT'},
+    {name: '김무준', grade: 'PT'},
+    {name: '김세희', grade: 'PT'},
+    {name: '김영록', grade: 'PT'},
+    {name: '김은경', grade: 'PT'},
+    {name: '김지환', grade: 'PT'},
+    {name: '박대용', grade: 'PT'},
+    {name: '박현선', grade: 'PT'},
+    {name: '복금현', grade: 'PT'},
+    {name: '서준영', grade: 'PT'},
+    {name: '안지연', grade: 'PT'},
+    {name: '원동하', grade: 'PT'},
+    {name: '유영현', grade: 'PT'},
+    {name: '윤승관', grade: 'PT'},
+    {name: '이상건', grade: 'PT'},
+    {name: '이영현', grade: 'PT'},
+    {name: '이재원', grade: 'PT'},
+    {name: '전예준', grade: 'PT'},
+    {name: '조경서', grade: 'PT'},
+    {name: '조관우', grade: 'PT'},
+    {name: '홍지오', grade: 'PT'}
+];
 
 // convert schedule excel > json
 const excelToJson = async (callback) => {
@@ -132,7 +135,9 @@ Excel.onchange = () => {
     excelToJson( data => {
         delete data['tableDate'];
         const sortedJson = data;
+        console.log(sortedJson)
         const sortedJson_key = Object.keys(sortedJson);
+        const sortedJson_value = Object.values(sortedJson);
         // code for work table head
         let weekPayTable_head_html = `
             <thead>
@@ -214,10 +219,36 @@ Excel.onchange = () => {
             </tbody>
         `;
         weekPayTable.innerHTML = weekPayTable_head_html + weekPayTable_body_html;
+        // code for payPerDayTable head
+        let payPerDayTable_head_html = `
+            <tr>
+                <th scope="col">요일</th>
+                <th scope="col">급여</th>
+            </tr>
+        `;
+        let payPerDayTable_body_html = ``;
+        for(let d = 0; d < 7; d++){
+            const dayJson = sortedJson_value.map(el=>{
+                if(el[d] != null){
+                    return (el[d][1] - el[d][0])
+                }else{
+                    return null
+                }
+            });
+            const sumOfDay = numberWithCommas(Math.round(dayJson.reduce((partialSum, a) => partialSum + a, 0)*9875));
+            payPerDayTable_body_html += `
+                <tr>
+                    <td>${weekend[d]}</td>
+                    <td>${sumOfDay} ₩</td>
+                </tr>
+            `;
+        }
+        payPerDayTable.innerHTML = payPerDayTable_head_html + payPerDayTable_body_html;
     });
     // when file uploaded, hide button and show result.
     excel_upload_btn.style.display = "none";
     weekPayTable.style.display = "block";
+    payPerDayTable.style.display = "block";
     roster.style.display = "block";
     excelToJson( data => {
         const tableDate =  data.tableDate;

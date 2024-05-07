@@ -8,9 +8,12 @@
 .btn i {
     margin: 65px 0 30px;
 }
+#tables {
+    width: 1000px;
+    height: 100%;
+}
 #weekPayTable {
     height: 100%;
-    width: 1000px;
     border-bottom: 2px solid;
     margin: 0;
     display: none;
@@ -35,6 +38,22 @@
     display: table;
     width: 100%;
     table-layout: fixed;
+}
+#payPerDayTable{
+    height: 100%;
+    border-bottom: 2px solid;
+    display: none;
+}
+#payPerDayTable tr {
+    display: block;
+    float: left;
+}
+#payPerDayTable th, #payPerDayTable td {
+    display: block;
+}
+#payPerDayTable td {
+    text-align: right;
+    width: 134px;
 }
 #roster{
     width: calc(100vw - 1000px);
