@@ -30,21 +30,20 @@ public class MemberController {
 	
 	//멤버 리스트
 	@GetMapping("/memberpage")
-	public String memberpage(@RequestParam(defaultValue = "1") int curPage, MemberVO vo , Model model)  {
+    public String memberpage(@RequestParam(defaultValue = "1") int curPage, MemberVO vo, Model model) {
 		int count =memberService.countMember(vo);
-		Pager pager = new Pager(count, curPage);
-		int start = pager.getPageBegin();
-		int end = pager.getPageEnd();
-		
-		List<MemberVO> list =memberService.getMemberList(vo, start, end);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("count", count);
-		map.put("pager", pager);
-		model.addAttribute("map",map);
-		
-		return "member/memberpage";
-	}
+        Pager pager = new Pager(count, curPage);
+        int start = pager.getPageBegin();
+        int end = pager.getPageEnd();
+
+    	List<MemberVO> list =memberService.getMemberList(vo, start, end);
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("list", list);
+        map.put("count", count);
+        map.put("pager", pager);
+        model.addAttribute("map", map);
+        return "member/memberpage";
+    }
 	
 	//멤버 추가
 	@PostMapping("/insert")
@@ -67,24 +66,23 @@ public class MemberController {
 	@GetMapping("/searchMember")
 	public String searchMember(Model model, HttpSession session, String sPrd, @RequestParam(defaultValue = "1") int curPage) {
 		int count = memberService.countSearch(sPrd);
-		
-		Pager pager = new Pager(count, curPage);
-		int start = pager.getPageBegin();
-		int end = pager.getPageEnd();
-		
-		session.setAttribute("sPrd", sPrd);
-		session.setAttribute("curPage", curPage);
-		List<MemberVO> list = memberService.searchMember(sPrd, start, end);
-		HashMap<String, Object> map = new HashMap<String , Object>();
-		
-		map.put("list",list);
-		map.put("count", count);
-		map.put("pager", pager);
-		map.put("sPrd", sPrd);
-		model.addAttribute("map", map);
-		
-		return "member/searchmember";
-	}
-		
+	       
+	        Pager pager = new Pager(count, curPage);
+	        int start = pager.getPageBegin();
+	        int end = pager.getPageEnd();
+	        
+	        session.setAttribute("sPrd",sPrd);	// 아이디 검색
+	        session.setAttribute("curPage", curPage);
+
+	        List<MemberVO> list = memberService.searchMember(sPrd, start, end);
+	        HashMap<String, Object> map = new HashMap<String, Object>();
+	        map.put("list", list);
+	        map.put("count", count);
+	        map.put("pager", pager);
+	        map.put("sPrd", sPrd);
+	        model.addAttribute("map", map);
+	        
+	    	return "member/searchmember";
+	    }
 
 }

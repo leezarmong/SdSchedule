@@ -68,27 +68,24 @@
             </select>
             <button type="button" class="btn btn-primary mt-2" onclick="insert()">Insert</button>
         </div>
-        <!-- pager -->
-        <div class="pagination justify-content-center" style="margin-bottom: 120px;">
-            <ul class="pagination">
-                <th:block th:if="${map.pager.curBlock > 1}">
-                    <li class="page-item"><a class="page-link" th:href="@{searchMember(curPage=1)}">처음</a></li>
-                    <li class="page-item"><a class="page-link"
-                            th:href="@{searchMember(curPage=${map.pager.prevPage})}">이전</a></li>
-                </th:block>
-                <th:block th:each="num : ${#numbers.sequence(map.pager.blockBegin, map.pager.blockEnd)}">
-                    <li class="page-item" th:classappend="${num == map.pager.curPage} ? 'active'">
-                        <a class="page-link" th:href="@{searchMember(curPage=${num})}" th:text="${num}"></a>
-                    </li>
-                </th:block>
-                <th:block th:if="${map.pager.curBlock < map.pager.totBlock}">
-                    <li class="page-item"><a class="page-link"
-                            th:href="@{searchMember(curPage=${map.pager.nextPage})}">다음</a></li>
-                    <li class="page-item"><a class="page-link"
-                            th:href="@{searchMember(curPage=${map.pager.totPage})}">끝</a></li>
-                </th:block>
-            </ul>
-        </div>
+       	 <!-- pager -->
+	        <div class="pagination justify-content-center">
+		    <ul class="pagination">
+		        <th:block th:if="${map.pager.curBlock > 1}">
+		            <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=1)}">처음</a></li>
+		            <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=${map.pager.prevPage})}">이전</a></li>
+		        </th:block>
+		        <th:block th:each="num : ${#numbers.sequence(map.pager.blockBegin, map.pager.blockEnd)}">
+		            <li class="page-item" th:classappend="${num == map.pager.curPage} ? 'active'">
+		                <a class="page-link" th:href="@{/searchMember(curPage=${num})}" th:text="${num}"></a>
+		            </li>
+		        </th:block>
+		        <th:block th:if="${map.pager.curBlock < map.pager.totBlock}">
+		            <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=${map.pager.nextPage})}">다음</a></li>
+		            <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=${map.pager.totPage})}">끝</a></li>
+		        </th:block>
+		    </ul>
+		</div>
     </div>
 
 
