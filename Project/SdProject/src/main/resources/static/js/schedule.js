@@ -1,53 +1,64 @@
 import { 
     numberWithCommas,
-    halfMinuteConverter
+    halfMinuteConverter,
+    numToHourMinuteConverter
 } from "./util.js";
 
 const Excel = document.getElementById("excel-upload");
 const weekPayTable = document.getElementById("weekPayTable");
+const payPerDayTable = document.getElementById("payPerDayTable");
 const excel_upload_btn = document.querySelector("label");
-const tdElements = document.querySelectorAll('li');
-const buttons = document.getElementById("buttons");
-const excel_download_btn = document.getElementById("excelDownload");
-const rosterTable = document.getElementById("rosterTable");
+const roster = document.getElementById("roster");
+const roster_print_btn = document.getElementById("rosterPrint");
+
+const weekend = ["일","월","화","수","목","금","토"];
 
 // get member list from: db > java > html > js
- const memberList = [];
- tdElements.forEach(td=>{
-     const memberName = td.innerText;
-     memberList.push(memberName);
- });
-/*const memberList = [
-    "김장현",
-    "김해수",
-    "최인화",
-    "유건희",
-    "이희정",
-    "강민지",
-    "권태영",
-    "김경민",
-    "김무준",
-    "김세희",
-    "김영록",
-    "김은경",
-    "김지환",
-    "박대용",
-    "박현선",
-    "복금현",
-    "서준영",
-    "안지연",
-    "원동하",
-    "유영현",
-    "윤승관",
-    "윤승관",
-    "이상건",
-    "이영현",
-    "이재원",
-    "전예준",
-    "조경서",
-    "조관우",
-    "홍지오"
-];*/
+
+// const memberList = [];
+// const mNameElements = document.querySelectorAll('.hidden .mname');
+// const mGradeElements = document.querySelectorAll('.hidden .mgrade');
+
+// mNameElements.forEach((nameElement, index) => {
+//     const memberName = nameElement.innerText;
+//     const memberGrade = mGradeElements[index].innerText;
+
+//     memberList.push({
+//         name: memberName,
+//         grade: memberGrade
+//     });
+// });
+
+const memberList = [
+    {name: '김장현', grade: 'SM'},
+    {name: '김해수', grade: 'VSM'},
+    {name: '최인화', grade: 'MGR'},
+    {name: '유건희', grade: 'CT'},
+    {name: '이희정', grade: 'CT'},
+    {name: '강민지', grade: 'EMP'},
+    {name: '권태영', grade: 'PT'},
+    {name: '김경민', grade: 'PT'},
+    {name: '김무준', grade: 'PT'},
+    {name: '김세희', grade: 'PT'},
+    {name: '김영록', grade: 'PT'},
+    {name: '김은경', grade: 'PT'},
+    {name: '김지환', grade: 'PT'},
+    {name: '박대용', grade: 'PT'},
+    {name: '박현선', grade: 'PT'},
+    {name: '복금현', grade: 'PT'},
+    {name: '서준영', grade: 'PT'},
+    {name: '안지연', grade: 'PT'},
+    {name: '원동하', grade: 'PT'},
+    {name: '유영현', grade: 'PT'},
+    {name: '윤승관', grade: 'PT'},
+    {name: '이상건', grade: 'PT'},
+    {name: '이영현', grade: 'PT'},
+    {name: '이재원', grade: 'PT'},
+    {name: '전예준', grade: 'PT'},
+    {name: '조경서', grade: 'PT'},
+    {name: '조관우', grade: 'PT'},
+    {name: '홍지오', grade: 'PT'}
+];
 
 // convert schedule excel > json
 const excelToJson = async (callback) => {
@@ -56,10 +67,11 @@ const excelToJson = async (callback) => {
         // code for work table body
         // data > Json convert as I want
         const Json = [];
+        let tableDate = [];
         for(let i = 0; i < data.length; i++){
             // data[i][0], data[i][11] = 이름
             if(
-                memberList.includes(String(data[i][0]).split('\n')[0])
+                memberList.map(el=>el.name).includes(String(data[i][0]).split('\n')[0])
             ){
                 const arrid = String(data[i][0]).split('\n')[0];
                 Json[arrid] = [];
@@ -80,7 +92,7 @@ const excelToJson = async (callback) => {
                 Json[arrid]=tempArr;
             };
             if(
-                memberList.includes(String(data[i][11]).split('\n')[0])
+                memberList.map(el=>el.name).includes(String(data[i][11]).split('\n')[0])
             ){
                 const arrid = String(data[i][11]).split('\n')[0];
                 Json[arrid]=[];
@@ -100,6 +112,11 @@ const excelToJson = async (callback) => {
                 }
                 Json[arrid]=tempArr;
             };
+            if(String(data[i][1])==="주차" && tableDate.length < 7){
+                for(let d = 0; d < 7; d++){
+                    tableDate.push(String(data[i][d+2]));
+                }
+            };
         };
         // sort converted Json as key by 가나다
         const sortedJson = {};
@@ -108,6 +125,7 @@ const excelToJson = async (callback) => {
             sortedJson[key] = Json[key];
         });
         returnData = sortedJson;
+        returnData.tableDate = tableDate;
     });
     callback(returnData)
 };
@@ -115,9 +133,11 @@ const excelToJson = async (callback) => {
 // run. if detected excel upload
 Excel.onchange = () => {
     excelToJson( data => {
+        delete data['tableDate'];
         const sortedJson = data;
-        const sortedJson_key = Object.keys(data);
         console.log(sortedJson)
+        const sortedJson_key = Object.keys(sortedJson);
+        const sortedJson_value = Object.values(sortedJson);
         // code for work table head
         let weekPayTable_head_html = `
             <thead>
@@ -171,7 +191,7 @@ Excel.onchange = () => {
             };
             weekPayTable_body_html += `
                 <tr>
-                    <td>연동x</td>
+                    <td>${memberList.find(el=>el.name === sortedJson_key[w]).grade}</td>
                     <td>${sortedJson_key[w]}</td>
                     <td>연동x</td>
                     <td>${weekWorkTime} h</td>
@@ -199,16 +219,40 @@ Excel.onchange = () => {
             </tbody>
         `;
         weekPayTable.innerHTML = weekPayTable_head_html + weekPayTable_body_html;
+        // code for payPerDayTable head
+        let payPerDayTable_head_html = `
+            <tr>
+                <th scope="col">요일</th>
+                <th scope="col">급여</th>
+            </tr>
+        `;
+        let payPerDayTable_body_html = ``;
+        for(let d = 0; d < 7; d++){
+            const dayJson = sortedJson_value.map(el=>{
+                if(el[d] != null){
+                    return (el[d][1] - el[d][0])
+                }else{
+                    return null
+                }
+            });
+            const sumOfDay = numberWithCommas(Math.round(dayJson.reduce((partialSum, a) => partialSum + a, 0)*9875));
+            payPerDayTable_body_html += `
+                <tr>
+                    <td>${weekend[d]}</td>
+                    <td>${sumOfDay} ₩</td>
+                </tr>
+            `;
+        }
+        payPerDayTable.innerHTML = payPerDayTable_head_html + payPerDayTable_body_html;
     });
     // when file uploaded, hide button and show result.
     excel_upload_btn.style.display = "none";
     weekPayTable.style.display = "block";
-    buttons.style.display = "block";
-};
-
-// code for export roster sheet
-excel_download_btn.addEventListener("click", () => {
+    payPerDayTable.style.display = "block";
+    roster.style.display = "block";
     excelToJson( data => {
+        const tableDate =  data.tableDate;
+        delete data['tableDate'];
         const sortedJson = data;
         const sortedJson_key = Object.keys(data);
         const sortedJson_value = Object.values(data);
@@ -234,44 +278,60 @@ excel_download_btn.addEventListener("click", () => {
             </thead>
         `;
         // convert shape of json data
-        const rosterbody = [];
-        let i = 0;
-        for(let memb = 0; memb < sortedJson_value.length; memb++){
-            
-            if(sortedJson_value[memb][0]!=null){
-                i++;
-                let tempArr = [
-                    i,
-                    sortedJson_key[memb],
-                    '',
-                    ''
-                ];
-                let time_start = sortedJson_value[memb][0][0];
-                let time_finish = sortedJson_value[memb][0][1];
-                if(sortedJson_value[memb][0][1]-sortedJson_value[memb][0][0])
-                tempArr.push(
-                    time_start,
-                    time_finish,
-                    time_finish-time_start>=9?"01:00":"00:30",
-                    '',
-                    '',
-                    '',
-                    ''
-                );
-                rosterbody.push(tempArr);
+        for(let date = tableDate.length-1; date >= 0; date--){
+            const rosterbody = [];
+            for(let memb = 0; memb < sortedJson_value.length; memb++){
+                if(sortedJson_value[memb][date]!=null){
+                    let tempArr = [
+                        sortedJson_key[memb],
+                        '',
+                        ''
+                    ];
+                    let time_start = sortedJson_value[memb][date][0];
+                    let time_finish = sortedJson_value[memb][date][1];
+                    if(sortedJson_value[memb][date][1]-sortedJson_value[memb][date][0])
+                    tempArr.push(
+                        time_start,
+                        time_finish,
+                        time_finish-time_start>=9?"01:00":"00:30",
+                        '',
+                        '',
+                        '',
+                        ''
+                    );
+                    rosterbody.push(tempArr);
+                };
             };
-        };
-        let rosterTable_body_html = ``;
-        for(let b = 0; b < rosterbody.length; b++){
-            let temp_html = ``;
-            for(let t = 0; t < Object.keys(rosterbody[0]).length; t++){
-                temp_html += `<td>${Object.values(rosterbody[b])[t]}</td>`
+            let sortedRosterbody = rosterbody.sort((a, b)=>a[3] - b[3]);
+            sortedRosterbody.map((el,i)=>el.unshift(i+1))
+            // create html table for excel sheet
+            let rosterTable_body_html = ``;
+            for(let b = 0; b < sortedRosterbody.length; b++){
+                let temp_html = ``;
+                for(let t = 0; t < Object.keys(sortedRosterbody[0]).length; t++){
+                    if(t===4 || t===5){
+                        temp_html += `<td>${numToHourMinuteConverter(Object.values(sortedRosterbody[b])[t])}</td>`;
+                    }else{
+                        temp_html += `<td>${Object.values(sortedRosterbody[b])[t]}</td>`;
+                    }
+                };
+                rosterTable_body_html += `<tr>${temp_html}</tr>`;
             };
-            rosterTable_body_html += `<tr>${temp_html}</tr>`;
+            rosterTable_body_html = `<tbody>${rosterTable_body_html}</tbody>`;
+            roster.insertAdjacentHTML('beforeend',`
+                <div class="rosterPage">
+                    <div class="rosterHeader">FOH Roster</div>
+                    <div class="rosterDate">근무일자 : 2024년 ${tableDate[date]}</div>
+                    <table class="rosterTable">
+                        ${rosterTable_head_html}${rosterTable_body_html}
+                    </table>
+                </div>
+            `);
         };
-        rosterTable_body_html = `<tbody>${rosterTable_body_html}</tbody>`
-        rosterTable.innerHTML = rosterTable_head_html + rosterTable_body_html;
-        const wb = XLSX.utils.table_to_book(rosterTable);
-        XLSX.writeFile(wb, "test.xlsx");
     });
+};
+
+// code for export roster sheet
+roster_print_btn.addEventListener("click", () => {
+    window.print();
 });

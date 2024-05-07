@@ -7,10 +7,20 @@
 
 
 	
-	
 	<!-- 멤버 리스트 -->
+	<select id="memberList" resultType="com.sd.schedule.model.member.MemberVO">
+			select * from member order by member_no
+	</select>
+	
+	<!-- 멤버 리스트(페이지) -->
 	<select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">
-	select * from member order by member_no
+	  <![CDATA[
+			SELECT 
+			MEMBER_GRADE,
+			MEMBER_NAME
+			FROM (SELECT ROWNUM AS RN, A.* FROM (SELECT * FROM MEMBER ORDER BY MEMBER_NO)A) 
+			WHERE RN BETWEEN #{start} AND #{end}
+		]]>
 	</select>
 	
 	<!-- 멤버 입력 -->
@@ -22,6 +32,30 @@
 	<delete id="deleteMember">
 		delete from member where member_no=${member_no}
 	</delete>
+	
+	<!-- 검색창 pager -->
+	<!-- 멤버 수 카운트 -->
+	<select id="countMember" resultType="java.lang.Integer">
+	select count(*) from member
+	</select>
+	
+	<!-- 멤버 수 불러오기(검색) -->
+	<select id="countSearch" resultType="java.lang.Integer">
+    	SELECT COUNT(*) 
+		FROM MEMBER
+		WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{sPrd}||'%') 
+		OR LOWER(MEMBER_NAME) LIKE LOWER('%'||#{sPrd}||'%')
+	</select>
+	
+	<!-- 멤버 검색 -->
+	<select id="searchMember" resultType="com.sd.schedule.model.member.MemberVO">
+			SELECT * FROM (
+			SELECT ROWNUM AS RN, A.* FROM (
+				SELECT * FROM MEMBER
+				WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{sPrd}||'%') OR LOWER(MEMBER_NAME) LIKE LOWER('%'||#{sPrd}||'%')
+			) A
+		) WHERE RN BETWEEN #{start} AND #{end}
+	</select>
 
 
 

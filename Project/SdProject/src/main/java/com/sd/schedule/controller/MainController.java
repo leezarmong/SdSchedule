@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sd.schedule.model.member.MemberService;
 import com.sd.schedule.model.member.MemberVO;
@@ -24,13 +23,13 @@ public class MainController {
 	}
 
 	// 스케줄
-	@GetMapping("/schedule")
-	public String schedule(Model model) {
-		
-		List<MemberVO> list = memberService.getMemberList();
-		model.addAttribute("list", list);
-		
-		return "menu/schedule";
-	}
+		@GetMapping("/schedule")
+		public String schedule(Model model) {
+			
+			List<MemberVO> list = memberService.memberList();
+			model.addAttribute("list", list);
+			
+			return "menu/schedule";
+		}
 
 }

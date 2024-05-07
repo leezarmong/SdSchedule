@@ -8,9 +8,13 @@
 .btn i {
     margin: 65px 0 30px;
 }
-#weekPayTable {
+#tables {
     width: 1000px;
-    border-right: 2px solid;
+    height: 100%;
+}
+#weekPayTable {
+    height: 100%;
+    border-bottom: 2px solid;
     margin: 0;
     display: none;
 }
@@ -28,15 +32,6 @@
 }
 #weekPayTable tbody{
     display: block;
-    height: calc( 100vh - var(--navbar-height) - 40px );
-    overflow: auto;
-}
-#weekPayTable tbody::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
-}
-#weekPayTable tbody {
-    -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
-    scrollbar-width: none;  /* Hide scrollbar for Firefox */
 }
 #weekPayTable thead,
 #weekPayTable tbody tr{
@@ -44,22 +39,102 @@
     width: 100%;
     table-layout: fixed;
 }
-#buttons{
+#payPerDayTable{
+    height: 100%;
+    border-bottom: 2px solid;
+    display: none;
+}
+#payPerDayTable tr {
+    display: block;
+    float: left;
+}
+#payPerDayTable th, #payPerDayTable td {
+    display: block;
+}
+#payPerDayTable td {
+    text-align: right;
+    width: 134px;
+}
+#roster{
     width: calc(100vw - 1000px);
-    height: calc( 100vh - var(--navbar-height));
     padding: 16px 24px;
     display: none;
+    position: relative;
+    border-left: 2px solid black;
 }
-#buttons i{
-    margin-top: 20px;
-}
-#buttons #excelDownload{
+#roster button{
+    position: fixed;
+    right: 24px;
     margin: 0;
-    width: 10vw;
-    height: 20vh;
-    display: block;
-    border: solid 2px var(--grue600);
+    width: 160px;
+    height: 54px;
+    font-size: 16px;
 }
-#buttons #excelDownload #rosterTable{
-    display: none;
+#roster button i{
+    margin: 0 8px 0 0;
+}
+.rosterPage{
+    height: 297mm;
+}
+.rosterPage:last-child{
+    height: 200mm;
+}
+.rosterHeader{
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.rosterDate{
+    font-size: 16px;
+    text-align: right;
+    margin: 0 8px 8px;
+}
+.rosterTable{
+    margin-right: auto;
+    margin-left: auto;
+}
+.rosterTable,.rosterTable tr,.rosterTable th,.rosterTable td{
+    border: 1px solid black;
+    text-align: center;
+    font-weight: 400;
+    margin: 0;
+}
+.rosterTable tr{
+    height: 32px;
+}
+.rosterTable td{
+    width: 80px;
+}
+.rosterTable td:first-child{
+    width: 32px;
+}
+.rosterTable td:last-child{
+    width: 120px;
+}
+@media print {
+    body {
+        visibility: hidden;
+    }
+    #roster {
+        visibility: visible;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 210mm;
+        height: 297mm;
+        border-left: none;
+    }
+    #roster button{
+        visibility: hidden;
+    }
+    /* .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+    } */
 }

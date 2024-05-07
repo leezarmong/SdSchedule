@@ -14,13 +14,20 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
 
-	// 멤버 리스트
+	
+	//멤버 리스트
 	@Override
-	public List<MemberVO> getMemberList() {
-		return memberMapper.getMemberList();
+	public List<MemberVO> memberList (){
+		return memberMapper.memberList();
+	}
+	
+	//멤버 리스트(페이지)
+	@Override
+	public List<MemberVO> getMemberList(MemberVO vo, int start, int end){
+		return memberMapper.getMemberList(vo, start, end);
 	}
 
-	// 멤버 입력
+	//멤버 입력
 	@Override
 	public void insertMember(MemberVO vo) {
 		memberMapper.insertMember(vo);
@@ -30,6 +37,24 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void deleteMember(int member_no) {
 		memberMapper.deleteMember(member_no);
+	}
+	
+	//멤버 수 카운트
+	@Override
+	public int countMember (MemberVO vo) {
+		return memberMapper.countMember(vo);
+	}
+	
+	//멤버 수 불러오기(검색)
+	@Override
+	public int countSearch (String sPrd) {
+		return memberMapper.countSearch(sPrd);
+	}
+	
+	//멤버 검색
+	@Override
+	public List<MemberVO> searchMember (String sPrd, int start, int end){
+		return memberMapper.searchMember(sPrd, start, end);
 	}
 
 }
