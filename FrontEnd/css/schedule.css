@@ -9,8 +9,9 @@
     margin: 65px 0 30px;
 }
 #weekPayTable {
+    height: 100%;
     width: 1000px;
-    border-right: 2px solid;
+    border-bottom: 2px solid;
     margin: 0;
     display: none;
 }
@@ -28,15 +29,6 @@
 }
 #weekPayTable tbody{
     display: block;
-    height: calc( 100vh - var(--navbar-height) - 40px );
-    overflow: auto;
-}
-#weekPayTable tbody::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
-}
-#weekPayTable tbody {
-    -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
-    scrollbar-width: none;  /* Hide scrollbar for Firefox */
 }
 #weekPayTable thead,
 #weekPayTable tbody tr{
@@ -46,13 +38,13 @@
 }
 #roster{
     width: calc(100vw - 1000px);
-    height: calc( 100vh - var(--navbar-height));
     padding: 16px 24px;
     display: none;
     position: relative;
+    border-left: 2px solid black;
 }
 #roster button{
-    position: absolute;
+    position: fixed;
     right: 24px;
     margin: 0;
     width: 160px;
@@ -62,17 +54,56 @@
 #roster button i{
     margin: 0 8px 0 0;
 }
+.rosterPage{
+    height: 297mm;
+}
+.rosterHeader{
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.rosterDate{
+    font-size: 16px;
+    text-align: right;
+    margin: 0 8px 8px;
+}
+.rosterTable{
+    margin-right: auto;
+    margin-left: auto;
+}
+.rosterTable,.rosterTable tr,.rosterTable th,.rosterTable td{
+    border: 1px solid black;
+    text-align: center;
+    font-weight: 400;
+    margin: 0;
+}
+.rosterTable tr{
+    height: 32px;
+}
+.rosterTable td{
+    width: 80px;
+}
+.rosterTable td:first-child{
+    width: 32px;
+}
+.rosterTable td:last-child{
+    width: 120px;
+}
 @media print {
     body {
-      visibility: hidden;
+        visibility: hidden;
     }
     #roster {
-      visibility: visible;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 210mm;
-      height: 297mm;
+        visibility: visible;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 210mm;
+        height: 297mm;
+        border-left: none;
+    }
+    #roster button{
+        visibility: hidden;
     }
     /* .page {
         margin: 0;
