@@ -41,6 +41,16 @@
 		]]>
 	</select>
 	
+	
+	<!-- 멤버 수 카운트 -->
+	<!-- <select id="countMember" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*) FROM MEMBER
+			WHERE MEMBER_NAME=#{member_name}
+		]]>
+	</select> -->
+	
+	
 	<!-- 멤버 수 불러오기(검색) -->
 	<select id="countSearch" resultType="java.lang.Integer">
     	<![CDATA[

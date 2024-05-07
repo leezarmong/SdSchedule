@@ -24,37 +24,12 @@
             <div class="col-auto">
                 <div class="input-group">
                     <input type="text" class="form-control" name="sPrd" id="sPrd" placeholder="MemberSearch">
-                    <div class="input-group-append">
+                    <div class="input-group-append" style="margin-bottom: 10px;">
                         <button class="btn btn-outline-secondary" onclick="searchMember()" type="button">Search</button>
                     </div>
                 </div>
             </div>
         </div>
-        <table class="table table-striped mt-3">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Member Name</th>
-                    <th>Member Grade</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody th:if="${map.list.size() == 0}">
-                <tr>
-                    <td colspan="3">등록된 멤버가 없습니다.</td>
-                </tr>
-            </tbody>
-            <tbody th:unless="${map.list.size() == 0}">
-                <tr th:each="member : ${map.list}">
-                    <td th:text="${member.member_name}"></td>
-                    <td th:text="${member.member_grade}"></td>
-                    <td>
-                        <input type="hidden" class="member_no" th:value="${member.member_no}" />
-                        <button type="button" class="btn btn-danger" onclick="deleteMember(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
         <div id="login">
             <input type="text" id="member_name" class="form-control" placeholder="Enter member name">
             <select id="member_grade" class="form-control mt-2">
@@ -68,29 +43,50 @@
             </select>
             <button type="button" class="btn btn-primary mt-2" onclick="insert()">Insert</button>
         </div>
-       	 <!-- pager -->
-	        <div class="pagination justify-content-center">
-		    <ul class="pagination">
-		        <th:block th:if="${map.pager.curBlock > 1}">
-		            <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=1)}">처음</a></li>
-		            <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=${map.pager.prevPage})}">이전</a></li>
-		        </th:block>
-		        <th:block th:each="num : ${#numbers.sequence(map.pager.blockBegin, map.pager.blockEnd)}">
-		            <li class="page-item" th:classappend="${num == map.pager.curPage} ? 'active'">
-		                <a class="page-link" th:href="@{/searchMember(curPage=${num})}" th:text="${num}"></a>
-		            </li>
-		        </th:block>
-		        <th:block th:if="${map.pager.curBlock < map.pager.totBlock}">
-		            <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=${map.pager.nextPage})}">다음</a></li>
-		            <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=${map.pager.totPage})}">끝</a></li>
-		        </th:block>
-		    </ul>
-		</div>
-    </div>
+        <table class="table table-striped mt-2">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Member Name</th>
+                    <th>Member Grade</th>
+                    <!-- <th>Action</th> -->
+                </tr>
+            </thead>
+            <tbody th:if="${map.list.size() == 0}">
+                <tr>
+                    <td colspan="3">등록된 멤버가 없습니다.</td>
+                </tr>
+            </tbody>
+            <tbody th:unless="${map.list.size() == 0}">
+                <tr th:each="member : ${map.list}">
+                    <td>
+					    <a th:href="'searchMember?sPrd=' + ${member.member_name}">
+					        <span th:text="${member.member_name}"></span>
+					    </a>
+					</td>
+					<td th:text="${member.member_grade}"></td>
+                </tr>
+            </tbody>
+        </table>
 
-
-
-
+        <!-- pager -->
+        <!--   <div class="pagination justify-content-center">
+            <ul class="pagination">
+                <th:block th:if="${map.pager.curBlock > 1}">
+                    <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=1)}">처음</a></li>
+                    <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=${map.pager.prevPage})}">이전</a></li>
+                </th:block>
+                <th:block th:each="num : ${#numbers.sequence(map.pager.blockBegin, map.pager.blockEnd)}">
+                    <li class="page-item" th:classappend="${num == map.pager.curPage} ? 'active'">
+                        <a class="page-link" th:href="@{/searchMember(curPage=${num})}" th:text="${num}"></a>
+                    </li>
+                </th:block>
+                <th:block th:if="${map.pager.curBlock < map.pager.totBlock}">
+                    <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=${map.pager.nextPage})}">다음</a></li>
+                    <li class="page-item"><a class="page-link" th:href="@{/searchMember(curPage=${map.pager.totPage})}">끝</a></li>
+                </th:block>
+            </ul>
+        </div> -->
+    </div> 
     <script type="text/javascript">
         /* 엔터키 이벤트 */
         $(document).ready(function () {

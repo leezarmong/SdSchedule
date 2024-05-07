@@ -3,6 +3,7 @@
 
 
         /* 멤버 등록 */
+        
         function insert() {
             var member_name = $("#member_name").val();
             var member_grade = $("#member_grade").val();
@@ -26,6 +27,48 @@
                 });
             }
         }
+        
+        /*
+   function insert() {
+    var member_name = $("#member_name").val();
+    var member_grade = $("#member_grade").val();
+
+    console.log(member_name);
+
+    if (!member_name || !member_grade || member_grade === "null") {
+        alert("직원 이름 또는 직급을 선택 해 주세요.");
+    } else {
+        // Check if the member already exists
+        $.ajax({
+            type: "POST",
+            url: "check",
+            data: {
+                "member_name": member_name
+            },
+            success: function (data) {
+                if (data.exists) {
+                    // Member already exists, show popup
+                    alert("해당 직원은 이미 존재합니다.");
+                } else {
+                    // Member doesn't exist, proceed with insertion
+                    $.ajax({
+                        type: "POST",
+                        url: "insert",
+                        data: {
+                            "member_name": member_name,
+                            "member_grade": member_grade
+                        },
+                        success: function (data) {
+                            alert("입력 완료..!");
+                            window.location.href = "memberpage";
+                        }
+                    });
+                }
+            }
+        });
+    }
+}
+*/
 
          /* 멤버 삭제 */
         function deleteMember(button) {

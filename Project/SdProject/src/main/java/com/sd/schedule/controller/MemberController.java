@@ -2,6 +2,7 @@ package com.sd.schedule.controller;
 
 import java.util.HashMap;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,15 @@ public class MemberController {
 
 		return "redirect:memberpage";
 	}
+	
+	//멤버 중복 확인
+//	@ResponseBody
+//	@PostMapping("/check")
+//	public int checkID(MemberVO vo) {
+//		int result = memberService.countMember(vo);
+//		return result;
+//	}
+//	
 	
 	//멤버 삭제
 	@PostMapping("/delete")
