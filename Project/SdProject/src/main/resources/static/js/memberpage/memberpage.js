@@ -1,4 +1,6 @@
-/* 멤버 등록 */
+		
+		
+		/* 멤버 등록 */
         function insert() {
             var member_name = $("#member_name").val();
             var member_grade = $("#member_grade").val();
@@ -68,9 +70,7 @@
             }
         }
 
-        /* 멤버 업데이트 */
-        
-        
+        	/* 멤버 업데이트 */
 			function update(button) {
 			    var member_name = $(button).closest('tr').find('.member_name').val();
 			    var member_grade = $(button).closest('tr').find('.member_grade').val();
