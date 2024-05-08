@@ -62,5 +62,11 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberVO> searchMember (String sPrd, int start, int end){
 		return memberMapper.searchMember(sPrd, start, end);
 	}
+	
+	//멤버 업데이트
+	@Override
+	public void updateMember (MemberVO vo) {
+		memberMapper.updateMember(vo);
+	}
 
 }

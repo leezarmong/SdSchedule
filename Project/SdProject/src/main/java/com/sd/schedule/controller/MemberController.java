@@ -95,5 +95,13 @@ public class MemberController {
 	        
 	    	return "member/searchmember";
 	    }
+	
+	//멤버 업데이트
+	@GetMapping("/updateMember")
+	public String updateMember (MemberVO vo) {
+		System.out.print("컨트롤러 접속");
+		memberService.updateMember(vo);
+		return  "redirect:memberpage";
+	}
 
 }

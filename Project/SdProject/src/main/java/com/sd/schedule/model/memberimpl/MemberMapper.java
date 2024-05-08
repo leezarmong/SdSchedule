@@ -34,5 +34,8 @@ public interface MemberMapper {
 	//멤버 검색
 	public List<MemberVO> searchMember (String sPrd, int start, int end);
 	
+	//멤버 업데이트
+	public void updateMember (MemberVO vo);
+	
 
 }

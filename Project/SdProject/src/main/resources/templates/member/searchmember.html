@@ -33,19 +33,6 @@
          	  </div>  
             </div>
         </div>
-        <div id="login">
-            <input type="text" id="member_name" class="form-control" placeholder="Enter member name">
-            <select id="member_grade" class="form-control mt-2">
-                <option value="null">Select Member Grade</option>
-                <option value="SM">SM</option>
-                <option value="VSM">VSM</option>
-                <option value="MGR">MGR</option>
-                <option value="CT">CT</option>
-                <option value="EMP">EMP</option>
-                <option value="PT">PT</option>
-            </select>
-            <button type="button" class="btn btn-primary mt-2" onclick="insert()">Insert</button>
-        </div>
         
         <table class="table table-striped mt-2">
             <thead class="thead-dark">
@@ -60,17 +47,28 @@
                     <td colspan="3">등록된 멤버가 없습니다.</td>
                 </tr>
             </tbody>
-            <tbody th:unless="${map.list.size() == 0}">
-                <tr th:each="member : ${map.list}">
-                    <td th:text="${member.member_name}"></td>
-                    <td th:text="${member.member_grade}"></td>
-                     <td>
-                        <input type="hidden" class="member_no" th:value="${member.member_no}" />
-                        <input type="hidden" class="member_name" th:value="${member.member_name}" />
-                        <button type="button" class="btn btn-danger" onclick="deleteMember(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
+            <tbody th:if="${not #lists.isEmpty(map.list)}">
+		    <tr th:each="member : ${map.list}">
+		        <td><input type="text" class="member_name" th:value="${member.member_name}" /></td>
+		        <td>
+		            <select class="member_grade" th:value="${member.member_grade}">
+		                <option value="null">Select Member Grade</option>
+		                <option th:selected="${member.member_grade == 'SM'}" value="SM">SM</option>
+		                <option th:selected="${member.member_grade == 'VSM'}" value="VSM">VSM</option>
+		                <option th:selected="${member.member_grade == 'MGR'}" value="MGR">MGR</option>
+		                <option th:selected="${member.member_grade == 'CT'}" value="CT">CT</option>
+		                <option th:selected="${member.member_grade == 'EMP'}" value="EMP">EMP</option>
+		                <option th:selected="${member.member_grade == 'PT'}" value="PT">PT</option>
+		            </select>
+		        </td>
+		        <td>
+		            <input type="hidden" class="member_no" th:value="${member.member_no}" />
+		            <input type="hidden" th:value="${member.member_name}" />
+		            <button type="button" class="btn btn-primary update-btn" onclick="update(this)">Update</button>
+		            <button type="button" class="btn btn-danger delete-btn" onclick="deleteMember(this)">Delete</button>
+		        </td>
+		    </tr>
+		</tbody>
         </table>
 
         <!-- pager -->

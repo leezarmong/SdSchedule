@@ -71,8 +71,15 @@
 		) WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 
-
-
+	<!-- 멤버 업데이트 -->
+	<update id="updateMember">
+		UPDATE MEMBER
+		SET
+		MEMBER_NAME = #{member_name},
+		MEMBER_GRADE = #{member_grade}
+		WHERE
+		MEMBER_NO = #{member_no}
+	</update>
 
 
 	
