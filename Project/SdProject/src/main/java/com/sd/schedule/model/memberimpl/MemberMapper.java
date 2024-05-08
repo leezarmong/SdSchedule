@@ -25,6 +25,9 @@ public interface MemberMapper {
 	//멤버 수 카운트
 	public int countMember (MemberVO vo);
 	
+	//이름 중복 검사
+	public int nameCount (MemberVO vo);
+	
 	//멤버 수 불러오기(검색)
 	public int countSearch (String sPrd);
 	

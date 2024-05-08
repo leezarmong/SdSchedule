@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sd.schedule.model.member.MemberService;
 import com.sd.schedule.model.member.MemberVO;
@@ -56,13 +57,13 @@ public class MemberController {
 	}
 	
 	//멤버 중복 확인
-//	@ResponseBody
-//	@PostMapping("/check")
-//	public int checkID(MemberVO vo) {
-//		int result = memberService.countMember(vo);
-//		return result;
-//	}
-//	
+	@ResponseBody
+	@PostMapping("/check")
+	public int checkID(MemberVO vo) {
+		int result = memberService.nameCount(vo);
+		return result;
+	}
+	
 	
 	//멤버 삭제
 	@PostMapping("/delete")

@@ -3,7 +3,7 @@
 
 
         /* 멤버 등록 */
-        
+        /*
         function insert() {
             var member_name = $("#member_name").val();
             var member_grade = $("#member_grade").val();
@@ -27,9 +27,9 @@
                 });
             }
         }
+        */
         
-        /*
-   function insert() {
+  function insert() {
     var member_name = $("#member_name").val();
     var member_grade = $("#member_grade").val();
 
@@ -46,7 +46,7 @@
                 "member_name": member_name
             },
             success: function (data) {
-                if (data.exists) {
+                if (data != 0) {
                     // Member already exists, show popup
                     alert("해당 직원은 이미 존재합니다.");
                 } else {
@@ -68,7 +68,7 @@
         });
     }
 }
-*/
+
 
          /* 멤버 삭제 */
         function deleteMember(button) {

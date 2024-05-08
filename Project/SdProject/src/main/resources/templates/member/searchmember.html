@@ -22,14 +22,15 @@
         <a href="/" style="font-size: 20px;">Main Page</a>
         <div class="row justify-content-end">
             <div class="col-auto">
+            
+          		<div id="search">
                 <div class="input-group">
                     <input type="text" class="form-control" name="sPrd" id="sPrd" placeholder="MemberSearch">
-                     
                     <div class="input-group-append" style="margin-bottom: 10px;">
                         <button class="btn btn-outline-secondary" onclick="searchMember()" type="button">Search</button>
                     </div>
-                    
                 </div>
+         	  </div>  
             </div>
         </div>
         <div id="login">
@@ -92,7 +93,8 @@
         </div> -->
     </div>
     <script type="text/javascript">
-        /* 엔터키 이벤트 */
+       
+    	/* 엔터키 이벤트 */
         $(document).ready(function () {
             $("#login").keypress(function (e) {
                 if (e.keyCode === 13) {
@@ -100,7 +102,14 @@
                 }
             });
         });
-       
+        
+        $(document).ready(function () {
+            $("#search").keypress(function (e) {
+                if (e.keyCode === 13) {
+                	searchMember();
+                }
+            });
+        });
 
 
         /* searchMember */
