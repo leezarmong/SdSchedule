@@ -16,50 +16,50 @@ const weekend = ["일","월","화","수","목","금","토"];
 
 // get member list from: db > java > html > js
 
-const memberList = [];
-const mNameElements = document.querySelectorAll('.hidden .mname');
-const mGradeElements = document.querySelectorAll('.hidden .mgrade');
+// const memberList = [];
+// const mNameElements = document.querySelectorAll('.hidden .mname');
+// const mGradeElements = document.querySelectorAll('.hidden .mgrade');
 
-mNameElements.forEach((nameElement, index) => {
-    const memberName = nameElement.innerText;
-    const memberGrade = mGradeElements[index].innerText;
+// mNameElements.forEach((nameElement, index) => {
+//     const memberName = nameElement.innerText;
+//     const memberGrade = mGradeElements[index].innerText;
 
-    memberList.push({
-        name: memberName,
-        grade: memberGrade
-    });
-});
+//     memberList.push({
+//         name: memberName,
+//         grade: memberGrade
+//     });
+// });
 
-// const memberList = [
-//     {name: '김장현', grade: 'SM'},
-//     {name: '김해수', grade: 'VSM'},
-//     {name: '최인화', grade: 'MGR'},
-//     {name: '유건희', grade: 'CT'},
-//     {name: '이희정', grade: 'CT'},
-//     {name: '강민지', grade: 'EMP'},
-//     {name: '권태영', grade: 'PT'},
-//     {name: '김경민', grade: 'PT'},
-//     {name: '김무준', grade: 'PT'},
-//     {name: '김세희', grade: 'PT'},
-//     {name: '김영록', grade: 'PT'},
-//     {name: '김은경', grade: 'PT'},
-//     {name: '김지환', grade: 'PT'},
-//     {name: '박대용', grade: 'PT'},
-//     {name: '박현선', grade: 'PT'},
-//     {name: '복금현', grade: 'PT'},
-//     {name: '서준영', grade: 'PT'},
-//     {name: '안지연', grade: 'PT'},
-//     {name: '원동하', grade: 'PT'},
-//     {name: '유영현', grade: 'PT'},
-//     {name: '윤승관', grade: 'PT'},
-//     {name: '이상건', grade: 'PT'},
-//     {name: '이영현', grade: 'PT'},
-//     {name: '이재원', grade: 'PT'},
-//     {name: '전예준', grade: 'PT'},
-//     {name: '조경서', grade: 'PT'},
-//     {name: '조관우', grade: 'PT'},
-//     {name: '홍지오', grade: 'PT'}
-// ];
+const memberList = [
+    {name: '김장현', grade: 'SM'},
+    {name: '김해수', grade: 'VSM'},
+    {name: '최인화', grade: 'MGR'},
+    {name: '유건희', grade: 'CT'},
+    {name: '이희정', grade: 'CT'},
+    {name: '강민지', grade: 'EMP'},
+    {name: '권태영', grade: 'PT'},
+    {name: '김경민', grade: 'PT'},
+    {name: '김무준', grade: 'PT'},
+    {name: '김세희', grade: 'PT'},
+    {name: '김영록', grade: 'PT'},
+    {name: '김은경', grade: 'PT'},
+    {name: '김지환', grade: 'PT'},
+    {name: '박대용', grade: 'PT'},
+    {name: '박현선', grade: 'PT'},
+    {name: '복금현', grade: 'PT'},
+    {name: '서준영', grade: 'PT'},
+    {name: '안지연', grade: 'PT'},
+    {name: '원동하', grade: 'PT'},
+    {name: '유영현', grade: 'PT'},
+    {name: '윤승관', grade: 'PT'},
+    {name: '이상건', grade: 'PT'},
+    {name: '이영현', grade: 'PT'},
+    {name: '이재원', grade: 'PT'},
+    {name: '전예준', grade: 'PT'},
+    {name: '조경서', grade: 'PT'},
+    {name: '조관우', grade: 'PT'},
+    {name: '홍지오', grade: 'PT'}
+];
 
 // convert schedule excel > json
 const excelToJson = async (callback) => {
@@ -71,47 +71,38 @@ const excelToJson = async (callback) => {
         let tableDate = [];
         for(let i = 0; i < data.length; i++){
             // data[i][0], data[i][11] = 이름
-            if(
-                memberList.map(el=>el.name).includes(String(data[i][0]).split('\n')[0])
-            ){
-                const arrid = String(data[i][0]).split('\n')[0];
-                Json[arrid] = [];
-                const tempArr = [];
-                for(let j = 2; j < 9; j++){
-                    if(data[i][j]!=null){
-                        if(data[i][j].includes("~")){
-                            let time_start = halfMinuteConverter(data[i][j].split('~')[0]);
-                            let time_finish = halfMinuteConverter(data[i][j].split('~')[1]);
-                            tempArr.push([time_start, time_finish])
+            let arrid = '';
+            for(let f = 0; f < 2; f++){
+                if(
+                    memberList.map(el=>el.name).includes(String(data[i][11*f]).split('\n')[0])
+                ){
+                    arrid = String(data[i][11*f]).split('\n')[0];
+                }else if(
+                    memberList.map(el=>el.name).includes(String(data[i][11*f]).split(' ')[0])
+                ){
+                    arrid = String(data[i][11*f]).split(' ')[0];
+                };
+                if(
+                    arrid != ''
+                ){
+                    Json[arrid] = [];
+                    const tempArr = [];
+                    for(let j = 11*f+2; j < 11*f+9; j++){
+                        if(data[i][j]!=null){
+                            if(data[i][j].includes("~")){
+                                let time_start = halfMinuteConverter(data[i][j].split('~')[0]);
+                                let time_finish = halfMinuteConverter(data[i][j].split('~')[1]);
+                                tempArr.push([time_start, time_finish])
+                            }else{
+                                tempArr.push(null)
+                            }
                         }else{
                             tempArr.push(null)
-                        }
-                    }else{
-                        tempArr.push(null)
-                    }
-                }
-                Json[arrid]=tempArr;
-            };
-            if(
-                memberList.map(el=>el.name).includes(String(data[i][11]).split('\n')[0])
-            ){
-                const arrid = String(data[i][11]).split('\n')[0];
-                Json[arrid]=[];
-                const tempArr = [];
-                for(let j = 13; j < 20; j++){
-                    if(data[i][j]!=null){
-                        if(data[i][j].includes("~")){
-                            let time_start = halfMinuteConverter(data[i][j].split('~')[0]);
-                            let time_finish = halfMinuteConverter(data[i][j].split('~')[1]);
-                            tempArr.push([time_start, time_finish])
-                        }else{
-                            tempArr.push(null)
-                        }
-                    }else{
-                        tempArr.push(null)
-                    }
-                }
-                Json[arrid]=tempArr;
+                        };
+                    };
+                    Json[arrid]=tempArr;
+                    arrid = '';
+                };
             };
             if(String(data[i][1])==="주차" && tableDate.length < 7){
                 for(let d = 0; d < 7; d++){
@@ -254,7 +245,6 @@ Excel.onchange = () => {
     excelToJson( data => {
         const tableDate =  data.tableDate;
         delete data['tableDate'];
-        const sortedJson = data;
         const sortedJson_key = Object.keys(data);
         const sortedJson_value = Object.values(data);
         let rosterTable_head_html = `
@@ -328,7 +318,6 @@ Excel.onchange = () => {
                     </table>
                 </div>
             `);
-            console.log(getDateFromExcel(45131))
         };
     });
 };
