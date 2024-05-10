@@ -189,8 +189,8 @@ Excel.onchange = () => {
                     <td>${memberList.find(el=>el.name === sortedJson_key[w]).grade}</td>
                     <td>${sortedJson_key[w]}</td>
                     <td>연동x</td>
-                    <td>${weekWorkTime} h</td>
-                    <td>${nightWorkTime} h</td>
+                    <td>${Math.round(weekWorkTime*10)/10} h</td>
+                    <td>${Math.round(nightWorkTime*10)/10} h</td>
                     <td>${isOver}</td>
                     <td>${numberWithCommas(weekPay)} ₩</td>
                 </tr>
