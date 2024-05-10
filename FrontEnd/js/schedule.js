@@ -16,20 +16,21 @@ const weekend = ["일","월","화","수","목","금","토"];
 
 // get member list from: db > java > html > js
 
-// const memberList = [];
-// const mNameElements = document.querySelectorAll('.hidden .mname');
-// const mGradeElements = document.querySelectorAll('.hidden .mgrade');
+ const memberList = [];
+ const mNameElements = document.querySelectorAll('.hidden .mname');
+ const mGradeElements = document.querySelectorAll('.hidden .mgrade');
 
-// mNameElements.forEach((nameElement, index) => {
-//     const memberName = nameElement.innerText;
-//     const memberGrade = mGradeElements[index].innerText;
+ mNameElements.forEach((nameElement, index) => {
+     const memberName = nameElement.innerText;
+     const memberGrade = mGradeElements[index].innerText;
 
-//     memberList.push({
-//         name: memberName,
-//         grade: memberGrade
-//     });
-// });
+     memberList.push({
+         name: memberName,
+         grade: memberGrade
+     });
+ });
 
+/*
 const memberList = [
     {name: '김장현', grade: 'SM'},
     {name: '김해수', grade: 'VSM'},
@@ -60,6 +61,8 @@ const memberList = [
     {name: '조관우', grade: 'PT'},
     {name: '홍지오', grade: 'PT'}
 ];
+
+*/
 
 // convert schedule excel > json
 const excelToJson = async (callback) => {
@@ -227,7 +230,7 @@ Excel.onchange = () => {
                     return null
                 }
             });
-            const sumOfDay = numberWithCommas(Math.round(dayJson.reduce((partialSum, a) => partialSum + a, 0)*9875));
+            const sumOfDay = numberWithCommas(Math.round(dayJson.reduce((partialSum, a) => partialSum + a, 0)*12000));
             payPerDayTable_body_html += `
                 <tr>
                     <td>${weekend[d]}</td>
