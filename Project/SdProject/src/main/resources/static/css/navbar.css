@@ -1,10 +1,20 @@
-.navbar{
+#navbar{
     height: 60px;
+    justify-content: flex-start;
 }
-#excel-upload{
+#excel-upload{ 
     display: none;
     cursor: pointer;
 }
 .fa-file-excel:before {
     cursor: pointer;
+}
+#navbar a{
+    padding: 0 0 0 80px;
+    font-size: 24px;
+    color: var(--grue200);
+    text-decoration: none;
+}
+#navbar a:link {
+    text-decoration: none;
 }

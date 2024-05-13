@@ -1,7 +1,8 @@
 import { 
     numberWithCommas,
     halfMinuteConverter,
-    numToHourMinuteConverter
+    numToHourMinuteConverter,
+    getDateFromExcel
 } from "./util.js";
 
 const Excel = document.getElementById("excel-upload");
@@ -60,6 +61,7 @@ const memberList = [
     {name: '조관우', grade: 'PT'},
     {name: '홍지오', grade: 'PT'}
 ];
+
 */
 
 // convert schedule excel > json
@@ -72,47 +74,38 @@ const excelToJson = async (callback) => {
         let tableDate = [];
         for(let i = 0; i < data.length; i++){
             // data[i][0], data[i][11] = 이름
-            if(
-                memberList.map(el=>el.name).includes(String(data[i][0]).split('\n')[0])
-            ){
-                const arrid = String(data[i][0]).split('\n')[0];
-                Json[arrid] = [];
-                const tempArr = [];
-                for(let j = 2; j < 9; j++){
-                    if(data[i][j]!=null){
-                        if(data[i][j].includes("~")){
-                            let time_start = halfMinuteConverter(data[i][j].split('~')[0]);
-                            let time_finish = halfMinuteConverter(data[i][j].split('~')[1]);
-                            tempArr.push([time_start, time_finish])
+            let arrid = '';
+            for(let f = 0; f < 2; f++){
+                if(
+                    memberList.map(el=>el.name).includes(String(data[i][11*f]).split('\n')[0])
+                ){
+                    arrid = String(data[i][11*f]).split('\n')[0];
+                }else if(
+                    memberList.map(el=>el.name).includes(String(data[i][11*f]).split(' ')[0])
+                ){
+                    arrid = String(data[i][11*f]).split(' ')[0];
+                };
+                if(
+                    arrid != ''
+                ){
+                    Json[arrid] = [];
+                    const tempArr = [];
+                    for(let j = 11*f+2; j < 11*f+9; j++){
+                        if(data[i][j]!=null){
+                            if(data[i][j].includes("~")){
+                                let time_start = halfMinuteConverter(data[i][j].split('~')[0]);
+                                let time_finish = halfMinuteConverter(data[i][j].split('~')[1]);
+                                tempArr.push([time_start, time_finish])
+                            }else{
+                                tempArr.push(null)
+                            }
                         }else{
                             tempArr.push(null)
-                        }
-                    }else{
-                        tempArr.push(null)
-                    }
-                }
-                Json[arrid]=tempArr;
-            };
-            if(
-                memberList.map(el=>el.name).includes(String(data[i][11]).split('\n')[0])
-            ){
-                const arrid = String(data[i][11]).split('\n')[0];
-                Json[arrid]=[];
-                const tempArr = [];
-                for(let j = 13; j < 20; j++){
-                    if(data[i][j]!=null){
-                        if(data[i][j].includes("~")){
-                            let time_start = halfMinuteConverter(data[i][j].split('~')[0]);
-                            let time_finish = halfMinuteConverter(data[i][j].split('~')[1]);
-                            tempArr.push([time_start, time_finish])
-                        }else{
-                            tempArr.push(null)
-                        }
-                    }else{
-                        tempArr.push(null)
-                    }
-                }
-                Json[arrid]=tempArr;
+                        };
+                    };
+                    Json[arrid]=tempArr;
+                    arrid = '';
+                };
             };
             if(String(data[i][1])==="주차" && tableDate.length < 7){
                 for(let d = 0; d < 7; d++){
@@ -196,8 +189,8 @@ Excel.onchange = () => {
                     <td>${memberList.find(el=>el.name === sortedJson_key[w]).grade}</td>
                     <td>${sortedJson_key[w]}</td>
                     <td>연동x</td>
-                    <td>${weekWorkTime} h</td>
-                    <td>${nightWorkTime} h</td>
+                    <td>${Math.round(weekWorkTime*10)/10} h</td>
+                    <td>${Math.round(nightWorkTime*10)/10} h</td>
                     <td>${isOver}</td>
                     <td>${numberWithCommas(weekPay)} ₩</td>
                 </tr>
@@ -237,7 +230,7 @@ Excel.onchange = () => {
                     return null
                 }
             });
-            const sumOfDay = numberWithCommas(Math.round(dayJson.reduce((partialSum, a) => partialSum + a, 0)*9875));
+            const sumOfDay = numberWithCommas(Math.round(dayJson.reduce((partialSum, a) => partialSum + a, 0)*12000));
             payPerDayTable_body_html += `
                 <tr>
                     <td>${weekend[d]}</td>
@@ -255,7 +248,6 @@ Excel.onchange = () => {
     excelToJson( data => {
         const tableDate =  data.tableDate;
         delete data['tableDate'];
-        const sortedJson = data;
         const sortedJson_key = Object.keys(data);
         const sortedJson_value = Object.values(data);
         let rosterTable_head_html = `
@@ -323,7 +315,7 @@ Excel.onchange = () => {
             roster.insertAdjacentHTML('beforeend',`
                 <div class="rosterPage">
                     <div class="rosterHeader">FOH Roster</div>
-                    <div class="rosterDate">근무일자 : 2024년 ${tableDate[date]}</div>
+                    <div class="rosterDate">근무일자 : ${getDateFromExcel(tableDate[date])}</div>
                     <table class="rosterTable">
                         ${rosterTable_head_html}${rosterTable_body_html}
                     </table>
