@@ -1,15 +1,14 @@
-CREATE TABLE member (
-    member_name VARCHAR2(10)
-);
-
-insert into member(member_name) values('유건희');
-
-select * from member;
-
-select member_name from member;
+select * from member
+order by member_no;
 
 
-select member_name from member;
-
-
-insert into member values('원동하');
+SELECT *
+FROM (
+    SELECT ROWNUM AS RN, A.* 
+    FROM (
+        SELECT * 
+        FROM MEMBER 
+        ORDER BY MEMBER_NO
+    ) A
+)
+ORDER BY RN;
