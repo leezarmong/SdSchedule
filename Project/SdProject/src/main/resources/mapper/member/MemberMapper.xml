@@ -6,23 +6,15 @@
 <mapper namespace="com.sd.schedule.model.memberimpl.MemberMapper">
 
 
-	
+
 	<!-- 멤버 리스트 -->
-	<select id="memberList" resultType="com.sd.schedule.model.member.MemberVO">
-			select * from member order by member_no
+	<select id="memberList"
+		resultType="com.sd.schedule.model.member.MemberVO">
+		select * from member order by member_no
 	</select>
-	
+
 	<!-- 멤버 리스트(페이지) -->
 	<!-- <select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">
-	    <![CDATA[
-			SELECT 
-			MEMBER_NAME,
-			MEMBER_GRADE
-			FROM (SELECT ROWNUM AS RN, A.* FROM (SELECT * FROM MEMBER ORDER BY MEMBER_NO)A) 
-			WHERE RN BETWEEN #{start} AND #{end}
-		]]>
-	</select> -->
-	<select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">
     <![CDATA[
         SELECT 
             MEMBER_NAME,
@@ -46,22 +38,46 @@
             ELSE 7 
         END
     ]]>
-</select>
+	</select> -->
+	
+	<select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">
+    <![CDATA[
+    SELECT 
+        MEMBER_NAME,
+        MEMBER_GRADE
+    FROM (
+        SELECT ROWNUM AS RN, A.* 
+        FROM (
+            SELECT * 
+            FROM MEMBER 
+            ORDER BY MEMBER_GRADE, MEMBER_NO
+        ) A
+    ) 
+    WHERE RN BETWEEN #{start} AND #{end}
+    ORDER BY CASE 
+        WHEN MEMBER_GRADE = 'SM' THEN 1 
+        WHEN MEMBER_GRADE = 'VSM' THEN 2 
+        WHEN MEMBER_GRADE = 'MGR' THEN 3 
+        WHEN MEMBER_GRADE = 'CT' THEN 4 
+        WHEN MEMBER_GRADE = 'EMP' THEN 5 
+        WHEN MEMBER_GRADE = 'PT' THEN 6 
+        ELSE 7 
+    END, MEMBER_NO
+]]>
 
-	
-	
-	
-	
+	</select>
+
 	<!-- 멤버 입력 -->
-    <insert id="insertMember">
-        insert into member(member_name , member_no , member_grade) values(#{member_name} , MEMBER_SEQ.NEXTVAL , #{member_grade})
-    </insert>
+	<insert id="insertMember">
+		insert into member(member_name , member_no , member_grade)
+		values(#{member_name} , MEMBER_SEQ.NEXTVAL , #{member_grade})
+	</insert>
 
 	<!-- 멤버 삭제 -->
 	<delete id="deleteMember">
 		delete from member where member_no=${member_no}
 	</delete>
-	
+
 	<!-- 검색창 pager -->
 	<!-- 멤버 수 카운트 -->
 	<select id="countMember" resultType="java.lang.Integer">
@@ -69,17 +85,17 @@
 			SELECT COUNT(*) FROM MEMBER
 		]]>
 	</select>
-	
-	
+
+
 	<!-- 이름 중복 검사 -->
-	 <select id="nameCount" resultType="java.lang.Integer">
+	<select id="nameCount" resultType="java.lang.Integer">
 		<![CDATA[
 			SELECT COUNT(*) FROM MEMBER
 			WHERE MEMBER_NAME=#{member_name}
 		]]>
-	</select> 
-	
-	
+	</select>
+
+
 	<!-- 멤버 수 불러오기(검색) -->
 	<select id="countSearch" resultType="java.lang.Integer">
     	<![CDATA[
@@ -89,14 +105,16 @@
 		OR LOWER(MEMBER_NAME) LIKE LOWER('%'||#{sPrd}||'%')
 		]]>
 	</select>
-	
+
 	<!-- 멤버 검색 -->
-	<select id="searchMember" resultType="com.sd.schedule.model.member.MemberVO">
-			SELECT * FROM (
-			SELECT ROWNUM AS RN, A.* FROM (
-				SELECT * FROM MEMBER
-				WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{sPrd}||'%') OR LOWER(MEMBER_NAME) LIKE LOWER('%'||#{sPrd}||'%')
-			) A
+	<select id="searchMember"
+		resultType="com.sd.schedule.model.member.MemberVO">
+		SELECT * FROM (
+		SELECT ROWNUM AS RN, A.* FROM (
+		SELECT * FROM MEMBER
+		WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{sPrd}||'%') OR
+		LOWER(MEMBER_NAME) LIKE LOWER('%'||#{sPrd}||'%')
+		) A
 		) WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 
@@ -111,5 +129,5 @@
 	</update>
 
 
-	
+
 </mapper>
