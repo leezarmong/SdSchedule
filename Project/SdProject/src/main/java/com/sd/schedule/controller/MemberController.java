@@ -44,6 +44,10 @@ public class MemberController {
         map.put("count", count);
         map.put("pager", pager);
         model.addAttribute("map", map);
+        
+        System.out.print(curPage);
+        System.out.print(vo);
+        
         return "member/memberpage";
     }
 	
