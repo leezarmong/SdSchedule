@@ -71,17 +71,16 @@
 
 	<!-- 멤버 수 불러오기(검색) -->
 	<select id="countSearch" resultType="java.lang.Integer">
-    	<![CDATA[
+    	
     	SELECT COUNT(*) 
 		FROM MEMBER
 		WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{sPrd}||'%') 
 		OR LOWER(MEMBER_NAME) LIKE LOWER('%'||#{sPrd}||'%')
-		]]>
+		
 	</select>
 
 	<!-- 멤버 검색 -->
-	<select id="searchMember"
-		resultType="com.sd.schedule.model.member.MemberVO">
+	<select id="searchMember" resultType="com.sd.schedule.model.member.MemberVO">
 		SELECT * FROM (
 		SELECT ROWNUM AS RN, A.* FROM (
 		SELECT * FROM MEMBER
