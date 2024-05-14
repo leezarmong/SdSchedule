@@ -96,6 +96,10 @@ const excelToJson = async (callback) => {
                                 let time_start = halfMinuteConverter(data[i][j].split('~')[0]);
                                 let time_finish = halfMinuteConverter(data[i][j].split('~')[1]);
                                 tempArr.push([time_start, time_finish])
+                            }else if(data[i][j].includes("-")){
+                                let time_start = halfMinuteConverter(data[i][j].split('-')[0]);
+                                let time_finish = halfMinuteConverter(data[i][j].split('-')[1]);
+                                tempArr.push([time_start, time_finish])
                             }else{
                                 tempArr.push(null)
                             }
@@ -230,7 +234,7 @@ Excel.onchange = () => {
                     return null
                 }
             });
-            const sumOfDay = numberWithCommas(Math.round(dayJson.reduce((partialSum, a) => partialSum + a, 0)*12000));
+            const sumOfDay = numberWithCommas(Math.round(dayJson.reduce((partialSum, a) => partialSum + a, 0)*14451));
             payPerDayTable_body_html += `
                 <tr>
                     <td>${weekend[d]}</td>

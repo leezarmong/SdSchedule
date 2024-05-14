@@ -14,32 +14,6 @@
 	</select>
 
 	<!-- 멤버 리스트(페이지) -->
-	<!-- <select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">
-    <![CDATA[
-        SELECT 
-            MEMBER_NAME,
-            MEMBER_GRADE
-        FROM (
-            SELECT ROWNUM AS RN, A.* 
-            FROM (
-                SELECT * 
-                FROM MEMBER 
-                ORDER BY MEMBER_GRADE
-            ) A
-        ) 
-        WHERE RN BETWEEN #{start} AND #{end}
-        ORDER BY CASE 
-            WHEN MEMBER_GRADE = 'SM' THEN 1 
-            WHEN MEMBER_GRADE = 'VSM' THEN 2 
-            WHEN MEMBER_GRADE = 'MGR' THEN 3 
-            WHEN MEMBER_GRADE = 'CT' THEN 4 
-            WHEN MEMBER_GRADE = 'EMP' THEN 5 
-            WHEN MEMBER_GRADE = 'PT' THEN 6 
-            ELSE 7 
-        END
-    ]]>
-	</select> -->
-	
 	<select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">
     <![CDATA[
     SELECT 
@@ -63,8 +37,7 @@
         WHEN MEMBER_GRADE = 'PT' THEN 6 
         ELSE 7 
     END, MEMBER_NO
-]]>
-
+	]]>
 	</select>
 
 	<!-- 멤버 입력 -->
