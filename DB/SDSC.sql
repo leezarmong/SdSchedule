@@ -12,3 +12,9 @@ FROM (
     ) A
 )
 ORDER BY RN;
+
+
+
+select * from ( select rownum as RN, A.*
+from(select * from member order by member_no)a )
+order by RN;
