@@ -40,6 +40,12 @@ body{
 	  left: 50%;
 }
 
+#version{
+	  position: absolute;
+	  top: 20%;
+	  left: 20%;
+}
+
 @keyframes menu-ani{
     0%{
         transform: translateX(-100px);
