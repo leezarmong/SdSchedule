@@ -22,7 +22,7 @@
             
           		<div id="search">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="sPrd" id="sPrd" placeholder="MemberSearch">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="MemberSearch">
                     <div class="input-group-append" style="margin-bottom: 10px;">
                         <button class="btn btn-outline-secondary" onclick="searchMember()" type="button">Search</button>
                     </div>
@@ -93,8 +93,12 @@
 
         /* searchMember */
         function searchMember() {
-            var sea = $("#sPrd").val();
-            self.location = "searchMember?sPrd=" + sea;
+            var name = $("#name").val();
+            if(name === ""){
+            	alert("직원을 입력 해주세요.");
+            }else{
+            self.location = "searchMember?name=" + name;
+            }
         }
     </script>
 

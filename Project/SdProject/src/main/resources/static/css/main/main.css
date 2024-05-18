@@ -42,8 +42,8 @@ body{
 
 #version{
 	  position: absolute;
-	  top: 20%;
-	  left: 20%;
+	  top: 25%;
+	  left: 15%;
 }
 
 @keyframes menu-ani{

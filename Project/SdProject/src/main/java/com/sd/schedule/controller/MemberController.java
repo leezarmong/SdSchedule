@@ -78,22 +78,22 @@ public class MemberController {
 	
 	//멤버 검색 후 페이지
 	@GetMapping("/searchMember")
-	public String searchMember(Model model, HttpSession session, String sPrd, @RequestParam(defaultValue = "1") int curPage) {
-		int count = memberService.countSearch(sPrd);
+	public String searchMember(Model model, HttpSession session, String name, @RequestParam(defaultValue = "1") int curPage) {
+		int count = memberService.countSearch(name);
 	       
 	        Pager pager = new Pager(count, curPage);
 	        int start = pager.getPageBegin();
 	        int end = pager.getPageEnd();
 	        
-	        session.setAttribute("sPrd",sPrd);	// 아이디 검색
+	        session.setAttribute("name",name);	// 아이디 검색
 	        session.setAttribute("curPage", curPage);
 
-	        List<MemberVO> list = memberService.searchMember(sPrd, start, end);
+	        List<MemberVO> list = memberService.searchMember(name, start, end);
 	        HashMap<String, Object> map = new HashMap<String, Object>();
 	        map.put("list", list);
 	        map.put("count", count);
 	        map.put("pager", pager);
-	        map.put("sPrd", sPrd);
+	        map.put("name", name);
 	        model.addAttribute("map", map);
 	        
 	    	return "member/searchmember";

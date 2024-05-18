@@ -29,10 +29,10 @@ public interface MemberMapper {
 	public int nameCount (MemberVO vo);
 	
 	//멤버 수 불러오기(검색)
-	public int countSearch (String sPrd);
+	public int countSearch (String name);
 	
 	//멤버 검색
-	public List<MemberVO> searchMember (String sPrd, int start, int end);
+	public List<MemberVO> searchMember (String name, int start, int end);
 	
 	//멤버 업데이트
 	public void updateMember (MemberVO vo);

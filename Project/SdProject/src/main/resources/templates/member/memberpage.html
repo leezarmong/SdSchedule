@@ -22,7 +22,7 @@
             
            	<div id="search">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="sPrd" id="sPrd" placeholder="MemberSearch">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="MemberSearch">
                     <div class="input-group-append" style="margin-bottom: 10px;">
                         <button class="btn btn-outline-secondary" onclick="searchMember()" type="button">Search</button>
                     </div>
@@ -59,7 +59,7 @@
             <tbody th:unless="${map.list.size() == 0}">
                 <tr th:each="member : ${map.list}">
                     <td>
-					    <a th:href="'searchMember?sPrd=' + ${member.member_name}">
+					    <a th:href="'searchMember?name=' + ${member.member_name}">
 					        <span th:text="${member.member_name}"></span>
 					    </a>
 					</td>
@@ -110,9 +110,13 @@
         });
 
         /* searchMember */
-        function searchMember() {
-            var sea = $("#sPrd").val();
-            self.location = "searchMember?sPrd=" + sea;
+          function searchMember() {
+            var name = $("#name").val();
+            if(name === ""){
+            	alert("직원을 입력 해주세요.");
+            }else{
+            self.location = "searchMember?name=" + name;
+            }
         }
       
         

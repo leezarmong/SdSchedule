@@ -53,14 +53,14 @@ public class MemberServiceImpl implements MemberService {
 	
 	//멤버 수 불러오기(검색)
 	@Override
-	public int countSearch (String sPrd) {
-		return memberMapper.countSearch(sPrd);
+	public int countSearch (String name) {
+		return memberMapper.countSearch(name);
 	}
 	
 	//멤버 검색
 	@Override
-	public List<MemberVO> searchMember (String sPrd, int start, int end){
-		return memberMapper.searchMember(sPrd, start, end);
+	public List<MemberVO> searchMember (String name, int start, int end){
+		return memberMapper.searchMember(name, start, end);
 	}
 	
 	//멤버 업데이트

@@ -74,8 +74,8 @@
     	
     	SELECT COUNT(*) 
 		FROM MEMBER
-		WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{sPrd}||'%') 
-		OR LOWER(MEMBER_NAME) LIKE LOWER('%'||#{sPrd}||'%')
+		WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{name}||'%') 
+		OR LOWER(MEMBER_NAME) LIKE LOWER('%'||#{name}||'%')
 		
 	</select>
 
@@ -84,8 +84,8 @@
 		SELECT * FROM (
 		SELECT ROWNUM AS RN, A.* FROM (
 		SELECT * FROM MEMBER
-		WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{sPrd}||'%') OR
-		LOWER(MEMBER_NAME) LIKE LOWER('%'||#{sPrd}||'%')
+		WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{name}||'%') OR
+		LOWER(MEMBER_NAME) LIKE LOWER('%'||#{name}||'%')
 		) A
 		) WHERE RN BETWEEN #{start} AND #{end}
 	</select>
