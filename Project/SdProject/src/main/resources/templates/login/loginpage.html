@@ -1,66 +1,87 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="height: 100vh;">
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">로그인</h3>
+                        
+                        <!-- login event key -->
+                       <div id="login_event">
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="username">아이디</label>
+                                <input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">비밀번호</label>
+                                <input type="password" class="form-control" id="user_pass" name="user_pass" placeholder="비밀번호" required>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-block" onclick="login()">로그인</button>
+                        </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-		    
-		        <form id="loginForm">
-		            <label for="username">Username:</label>
-		            <input type="text" id="user_id" name="user_id" placeholder="아이디" required>
-		            
-		            <label for="password">Password:</label>
-		            <input type="password" id="user_pass" name="user_pass" placeholder="비밀번호" required>
-		            
-		            <input type="button" value="로그인" onclick="login()" style="cursor: pointer;">
-		        </form>
-		   
-	
-		
-		
-
-<script type="text/javascript">
-  
-function login() {
-    var user_id = $("#user_id").val();
-    var user_pass = $("#user_pass").val();
-    if (!user_id || !user_pass) {
-        alert("입력 확인 해주세요.");
-    } else {
-        $.ajax({
-            type: "POST",
-            url: "checkMember",
-            data: {
-                "user_id": user_id,
-                "user_pass": user_pass
-            },
-            success: function(data) {
-                if (data != 0) {
-                    $.ajax({
-                        type: "POST",
-                        url: "login",
-                        data: {
-                            "user_id": user_id,
-                            "user_pass": user_pass
-                        },
-                        success: function() {
-                            window.opener.location.reload(); // 메인 페이지 새로고침
-                            window.close(); // 팝업 창 닫기
-                        }
-                    });
-                } else {
-                    alert("아이디 비밀번호를 다시 확인해 주세요.");
-                }
+    <script type="text/javascript">
+    
+    /* 엔터키 멤버 수정 */
+    $(document).ready(function () {
+        $("#login_event").keypress(function (e) {
+            if (e.keyCode === 13) {
+            	login();
             }
         });
-    }
-}
-
-</script>
-
+    });
+    
+    /* 로그인 */
+        function login() {
+            var user_id = $("#user_id").val();
+            var user_pass = $("#user_pass").val();
+            if (!user_id || !user_pass) {
+                alert("입력 확인 해주세요.");
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "checkMember",
+                    data: {
+                        "user_id": user_id,
+                        "user_pass": user_pass
+                    },
+                    success: function(data) {
+                        if (data != 0) {
+                            $.ajax({
+                                type: "POST",
+                                url: "login",
+                                data: {
+                                    "user_id": user_id,
+                                    "user_pass": user_pass
+                                },
+                                success: function() {
+                                    window.opener.location.reload(); // 메인 페이지 새로고침
+                                    window.close(); // 팝업 창 닫기
+                                }
+                            });
+                        } else {
+                            alert("아이디 비밀번호를 다시 확인해 주세요.");
+                        }
+                    }
+                });
+            }
+        }
+    </script>
 </body>
 </html>
