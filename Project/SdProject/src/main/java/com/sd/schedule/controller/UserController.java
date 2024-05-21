@@ -2,6 +2,7 @@ package com.sd.schedule.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sd.schedule.model.user.UserService;
 import com.sd.schedule.model.user.UserVO;
 
+import jakarta.security.auth.message.callback.PrivateKeyCallback.Request;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -32,12 +35,14 @@ public class UserController {
 	
 	// 로그인
 	@PostMapping("/login")
-	public String login(UserVO vo, HttpSession session) {
+	public String login(UserVO vo , HttpSession session) {
 	    UserVO user = userService.login(vo);
 
+	  
+	    
 	    if (user != null) {
 	        session.setAttribute("user", user);
-	        return "index"; // URL을 '/'로 리디렉션하여 홈 페이지로 이동
+	        return "index";
 	    } else {
 	        return "login/loginpage";
 	    }
@@ -57,7 +62,7 @@ public class UserController {
 	 @GetMapping("/logout")
 	    public String logout(HttpSession session) {
 	        session.invalidate();
-	        return "redirect:index"; 
+	        return "redirect:/"; 
 	    }
 	
 	

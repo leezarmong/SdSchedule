@@ -51,25 +51,44 @@
 
 </div>
 
-
-
+	
+ 	<script type="text/javascript">
+ 	
+		/* 로그인 팝업 */ 		
+        function openLoginPopup() {
+            var width = 400;
+            var height = 400;
+            var left = (screen.width - width) / 2;
+            var top = (screen.height - height) / 2;
+            window.open('loginpage', 'loginPopup', `width=${width},height=${height},top=${top},left=${left}`);
+        }
+        
+        
+        /* 로그아웃 팝업 */
+        function confirmLogout() {
+            if (confirm("로그아웃하시겠습니까?")) {
+                location.href = 'logout';
+            }
+        }
+    </script>
 
 
  		<!-- 로그인 안된 경우 -->
-	<div th:if="${user == null}">
+		<div th:if="${session.user == null}">
 	    <div id="login">
-	        <button class="signup-btn" onclick="location.href='loginpage'">login</button>
+	        <button class="signup-btn" onclick="openLoginPopup()">login</button>
 	    </div>
 	</div>
 	
-	<!-- 로그인 된 경우 -->
-	<div th:if="${user != null}">
-	    <div id="login">
-	        <p th:text="'Hello, ' + ${user.user_id} + '!'"></p>
-	    </div>
-	    <button class="signup-btn" onclick="location.href='logout'">Logout</button>
-	</div>
+	
 
+	<!-- 로그인 된 경우 -->
+	<div th:if="${session.user != null}">
+	    <div id="login">
+	        <p th:text="'Hello, ' + ${session.user.user_id} + '!'"></p>
+	          <button class="signup-btn" onclick="confirmLogout()">Logout</button>
+	    </div>
+	</div>
 
 
 

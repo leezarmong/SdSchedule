@@ -28,7 +28,7 @@
 function login() {
     var user_id = $("#user_id").val();
     var user_pass = $("#user_pass").val();
-    if(!user_id || !user_pass){
+    if (!user_id || !user_pass) {
         alert("입력 확인 해주세요.");
     } else {
         $.ajax({
@@ -39,7 +39,7 @@ function login() {
                 "user_pass": user_pass
             },
             success: function(data) {
-                if(data != 0) {
+                if (data != 0) {
                     $.ajax({
                         type: "POST",
                         url: "login",
@@ -48,7 +48,8 @@ function login() {
                             "user_pass": user_pass
                         },
                         success: function() {
-                            window.location.href = "/";
+                            window.opener.location.reload(); // 메인 페이지 새로고침
+                            window.close(); // 팝업 창 닫기
                         }
                     });
                 } else {
@@ -57,7 +58,8 @@ function login() {
             }
         });
     }
-}    
+}
+
 </script>
 
 </body>
