@@ -3,6 +3,7 @@ package com.sd.schedule.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sd.schedule.model.user.UserService;
 import com.sd.schedule.model.user.UserVO;
 
-import jakarta.security.auth.message.callback.PrivateKeyCallback.Request;
-import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
