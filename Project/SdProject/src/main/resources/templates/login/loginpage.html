@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+ <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+
+		    
+		        <form id="loginForm">
+		            <label for="username">Username:</label>
+		            <input type="text" id="user_id" name="user_id" placeholder="아이디" required>
+		            
+		            <label for="password">Password:</label>
+		            <input type="password" id="user_pass" name="user_pass" placeholder="비밀번호" required>
+		            
+		            <input type="button" value="로그인" onclick="login()" style="cursor: pointer;">
+		        </form>
+		   
+	
+		
+		
+
+<script type="text/javascript">
+  
+function login() {
+    var user_id = $("#user_id").val();
+    var user_pass = $("#user_pass").val();
+    if(!user_id || !user_pass){
+        alert("입력 확인 해주세요.");
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "checkMember",
+            data: {
+                "user_id": user_id,
+                "user_pass": user_pass
+            },
+            success: function(data) {
+                if(data != 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: "login",
+                        data: {
+                            "user_id": user_id,
+                            "user_pass": user_pass
+                        },
+                        success: function() {
+                            window.location.href = "/";
+                        }
+                    });
+                } else {
+                    alert("아이디 비밀번호를 다시 확인해 주세요.");
+                }
+            }
+        });
+    }
+}    
+</script>
+
+</body>
+</html>

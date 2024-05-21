@@ -46,6 +46,12 @@ body{
 	  left: 15%;
 }
 
+#login{
+	  position: absolute;
+	  top: 25%;
+	  left: 75%;
+}
+
 @keyframes menu-ani{
     0%{
         transform: translateX(-100px);

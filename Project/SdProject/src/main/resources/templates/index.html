@@ -49,9 +49,29 @@
 <span style="font-size: 20px;">4. SearchMember 에서 공백 상태에 Search 를 누를 경우 다수가 출력 되던 부분을 alert 팝업이 뜨게 하여 예외 를 방지할수 있게 하였습니다. </span><br>
 <span style="font-size: 20px;"><b>5. 로그인 기능을 도입하여 각 매장에서 사용할수 있도록 구현 할 예정입니다. (고민중)</b></span><br>
 
-
-
 </div>
+
+
+
+
+
+ 		<!-- 로그인 안된 경우 -->
+	<div th:if="${user == null}">
+	    <div id="login">
+	        <button class="signup-btn" onclick="location.href='loginpage'">login</button>
+	    </div>
+	</div>
+	
+	<!-- 로그인 된 경우 -->
+	<div th:if="${user != null}">
+	    <div id="login">
+	        <p th:text="'Hello, ' + ${user.user_id} + '!'"></p>
+	    </div>
+	    <button class="signup-btn" onclick="location.href='logout'">Logout</button>
+	</div>
+
+
+
 
 </body>
 </html>

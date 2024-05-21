@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.sd.schedule.model.userimpl.UserMapper">
+
+
+
+	<!-- 로그인 시 확인, 유저 체크 -->
+	<select id="checkMember" resultType="java.lang.Integer">
+	    SELECT COUNT(*) FROM USERC
+	    WHERE USER_ID=#{user_id} AND USER_PASS=#{user_pass}
+	</select>
+	
+	<!-- 로그인 -->
+	<select id="login" resultType="com.sd.schedule.model.user.UserVO">
+	    SELECT * FROM USERC
+	    WHERE USER_ID=#{user_id} AND USER_PASS=#{user_pass}
+	</select>
+
+</mapper>
