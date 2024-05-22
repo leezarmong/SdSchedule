@@ -41,8 +41,10 @@ public class MemberController {
         int start = pager.getPageBegin();
         int end = pager.getPageEnd();
         
-        
+    	// select where 에서 user_id 기준 검색하기위해 session 에 저장된 user 의 정보를 get 하여
+        // user_id 의 정보를 가져온 후 setUser_id로 파라미터를 지정
         UserVO user = (UserVO) session.getAttribute("user");
+        
 		String user_id = user.getUser_id();
 		vo.setUser_id(user_id);
 
@@ -95,6 +97,9 @@ public class MemberController {
 	//멤버 검색 후 페이지
 	@GetMapping("/searchMember")
 	public String searchMember(Model model, HttpSession session, String name, @RequestParam(defaultValue = "1") int curPage) {
+		
+		
+		
 		int count = memberService.countSearch(name);
 	       
 	        Pager pager = new Pager(count, curPage);

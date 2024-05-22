@@ -40,8 +40,7 @@
 	
 	<![CDATA[
   SELECT 
-    MEMBER_GRADE, 
-    MEMBER_NAME
+    *
 FROM (
     SELECT 
         ROWNUM AS RN, A.* 

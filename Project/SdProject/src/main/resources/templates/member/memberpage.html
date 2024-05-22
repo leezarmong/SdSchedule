@@ -52,16 +52,16 @@
                 <tr>
                     <th>Member Name</th>
                     <th>Member Grade</th>
-                    
+                     <th>TEST</th>
                    
                      
                 </tr>
             </thead>
             <tbody th:if="${map.list.isEmpty()}">
-			    <tr>
-			        <td colspan="3">등록된 멤버가 없습니다.</td>
-			    </tr>
-			</tbody>
+		    <tr>
+		        <td colspan="3">등록된 멤버가 없습니다.</td>
+		    </tr>
+		</tbody>
             <tbody th:unless="${map.list.size() == 0}">
                 <tr th:each="member : ${map.list}">
                     <td>
@@ -71,7 +71,7 @@
 					</td>
 					<td th:text="${member.member_grade}"></td>
 					<!-- test -->
-					<!-- <td><input type="text" id="user_id" th:value="${member.user_id}" readonly style="border: none; outline: none; width: 20px;" /></td> -->
+					<td><input type="text" id="user_id" th:value="${member.user_id}" readonly style="border: none; outline: none; width: 20px;" /></td>
 					
                 </tr>
             </tbody>

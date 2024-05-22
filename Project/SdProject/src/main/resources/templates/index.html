@@ -47,7 +47,9 @@
 <span style="font-size: 20px;">2. 로그인 한 매장 에서 맴버를 추가할 경우 해당 매장 의 값이 db 에 input 되도록 수정 하였습니다. </span><br>
 <span style="font-size: 20px;">3. 조건(1)서로 다른 매장에서 조건(2)동명이인일 경우 name count 로 중복 처리가 되지 않았던 부분을 user_id 의 카운를 추가, </span><br>
 <span style="font-size: 20px;">RequestParam 어노테이션을 사용하여서 동명이인 일 시 user_id 의 서로다른 조건에서는 등록 되도록 허용 하였습니다.</span><br>
-<span style="font-size: 20px;"><b>6. 로그인 된 매장 에서 해당 매장 직원 만 memeberList 에 등록 / 출력 되도록 SQL 수정 할 예정입니다.</b></span><br>
+<span style="font-size: 20px;"><b>오류 1 memberPage 에 매장이 a 든 b 든 똑같은 카운트로 인식하여 page 수가 늘어남 </b></span><br>
+<span style="font-size: 20px;"><b>오류 2 b 매장으로 편임 되어도 a roster 에 인식됨 </b></span><br>
+<span style="font-size: 20px;"><b>오류 3 a 로그인시 b 멤버의 이름을 검색창에서 search 하게되면 검색 됨. </b></span><br>
 
 </div>
 
