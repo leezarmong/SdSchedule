@@ -33,7 +33,7 @@
         </div>
         <div id="login">
         
-        <!-- <input type="text" th:value="${session.user.user_id}" /> 매장 -->
+        <input type="text" id="user_id" th:value="${session.user.user_id}" readonly style="border: none; outline: none; width: 20px;" /> 매장 입니다.
         
             <input type="text" id="member_name" class="form-control" placeholder="Enter member name">
             <select id="member_grade" class="form-control mt-2">
@@ -52,13 +52,16 @@
                 <tr>
                     <th>Member Name</th>
                     <th>Member Grade</th>
+                    
+                   
+                     
                 </tr>
             </thead>
-            <tbody th:if="${map.list.size() == 0}">
-                <tr>
-                    <td colspan="3">등록된 멤버가 없습니다.</td>
-                </tr>
-            </tbody>
+            <tbody th:if="${map.list.isEmpty()}">
+			    <tr>
+			        <td colspan="3">등록된 멤버가 없습니다.</td>
+			    </tr>
+			</tbody>
             <tbody th:unless="${map.list.size() == 0}">
                 <tr th:each="member : ${map.list}">
                     <td>
@@ -67,6 +70,9 @@
 					    </a>
 					</td>
 					<td th:text="${member.member_grade}"></td>
+					<!-- test -->
+					<!-- <td><input type="text" id="user_id" th:value="${member.user_id}" readonly style="border: none; outline: none; width: 20px;" /></td> -->
+					
                 </tr>
             </tbody>
         </table>

@@ -3,10 +3,12 @@ package com.sd.schedule.controller;
 import java.util.HashMap;
 
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sd.schedule.model.member.MemberService;
 import com.sd.schedule.model.member.MemberVO;
+import com.sd.schedule.model.user.UserVO;
 import com.sd.schedule.pager.Pager;
 
 import jakarta.servlet.http.HttpSession;
@@ -32,11 +35,16 @@ public class MemberController {
 	
 	//멤버 리스트
 	@GetMapping("/memberpage")
-    public String memberpage(@RequestParam(defaultValue = "1") int curPage, MemberVO vo, Model model) {
+    public String memberpage(@RequestParam(defaultValue = "1") int curPage, MemberVO vo, Model model, HttpSession session) {
 		int count =memberService.countMember(vo);
         Pager pager = new Pager(count, curPage);
         int start = pager.getPageBegin();
         int end = pager.getPageEnd();
+        
+        
+        UserVO user = (UserVO) session.getAttribute("user");
+		String user_id = user.getUser_id();
+		vo.setUser_id(user_id);
 
     	List<MemberVO> list =memberService.getMemberList(vo, start, end);
         HashMap<String, Object> map = new HashMap<String, Object>();
@@ -60,11 +68,19 @@ public class MemberController {
 	}
 	
 	//멤버 중복 확인
+//	@ResponseBody
+//	@PostMapping("/check")
+//	public int checkID(MemberVO vo) {
+//		int result = memberService.nameCount(vo);
+//		return result;
+//	}
 	@ResponseBody
 	@PostMapping("/check")
-	public int checkID(MemberVO vo) {
-		int result = memberService.nameCount(vo);
-		return result;
+	public ResponseEntity<Integer> checkMember(@RequestParam String member_name, @RequestParam String user_id) {
+	    int count = memberService.countMemberByNameAndUserId(member_name, user_id);
+	    return new ResponseEntity<>(count, HttpStatus.OK);
+	    			//HttpStatus.OK =  중복된 멤버가 존재하지 않을경우 OK 상태 코드를 반환 .
+	    			//ResponseEntity<> = Spring의 클래스로, HTTP 응답을 나타낸다.
 	}
 	
 	

@@ -15,10 +15,9 @@
 
 	<!-- 멤버 리스트(페이지) -->
 	<select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">
-    <![CDATA[
+   <!--  <![CDATA[
     SELECT 
-        MEMBER_NAME,
-        MEMBER_GRADE
+       *
     FROM (
         SELECT ROWNUM AS RN, A.* 
         FROM (
@@ -37,13 +36,46 @@
         WHEN MEMBER_GRADE = 'PT' THEN 6 
         ELSE 7 
     END, MEMBER_NO
-	]]>
+	]]> -->
+	
+	<![CDATA[
+  SELECT 
+    MEMBER_GRADE, 
+    MEMBER_NAME
+FROM (
+    SELECT 
+        ROWNUM AS RN, A.* 
+    FROM (
+        SELECT 
+            * 
+        FROM 
+            MEMBER 
+        WHERE 
+            USER_ID = #{vo.user_id}
+        ORDER BY 
+            MEMBER_GRADE, MEMBER_NO
+    ) A
+) 
+WHERE 
+    RN BETWEEN #{start} AND #{end}
+ORDER BY 
+    CASE 
+        WHEN MEMBER_GRADE = 'SM' THEN 1 
+        WHEN MEMBER_GRADE = 'VSM' THEN 2 
+        WHEN MEMBER_GRADE = 'MGR' THEN 3 
+        WHEN MEMBER_GRADE = 'CT' THEN 4 
+        WHEN MEMBER_GRADE = 'EMP' THEN 5 
+        WHEN MEMBER_GRADE = 'PT' THEN 6 
+        ELSE 7 
+    END, MEMBER_NO
+]]>
+	
 	</select>
 
 	<!-- 멤버 입력 -->
 	<insert id="insertMember">
-		insert into member(member_name , member_no , member_grade)
-		values(#{member_name} , MEMBER_SEQ.NEXTVAL , #{member_grade})
+		  insert into member(member_name, member_no, member_grade, user_id)
+   			 values(#{member_name}, MEMBER_SEQ.NEXTVAL, #{member_grade}, #{user_id})	
 	</insert>
 
 	<!-- 멤버 삭제 -->
@@ -61,11 +93,18 @@
 
 
 	<!-- 이름 중복 검사 -->
-	<select id="nameCount" resultType="java.lang.Integer">
+	<!-- <select id="nameCount" resultType="java.lang.Integer">
 		<![CDATA[
 			SELECT COUNT(*) FROM MEMBER
 			WHERE MEMBER_NAME=#{member_name}
 		]]>
+	</select> -->
+	
+	<select id="countMemberByNameAndUserId" parameterType="map" resultType="java.lang.Integer">
+	    SELECT COUNT(*)
+	    FROM member
+	    WHERE member_name = #{member_name}
+	      AND user_id = #{user_id}
 	</select>
 
 

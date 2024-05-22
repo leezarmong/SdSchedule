@@ -46,10 +46,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	//이름 중복 검사
+//	@Override
+//	public int nameCount (MemberVO vo) {
+//		return memberMapper.nameCount(vo);
+//		}
+	// Service class에서 해당 메소드 추가
 	@Override
-	public int nameCount (MemberVO vo) {
-		return memberMapper.nameCount(vo);
-		}
+	public int countMemberByNameAndUserId(String member_name, String user_id) {
+	    return memberMapper.countMemberByNameAndUserId(member_name, user_id);
+	}
+
 	
 	//멤버 수 불러오기(검색)
 	@Override

@@ -2,6 +2,8 @@ package com.sd.schedule.model.member;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface MemberService {
 	
 	//멤버 리스트
@@ -20,7 +22,10 @@ public interface MemberService {
 	public int countMember (MemberVO vo);
 	
 	//이름 중복 검사
-	public int nameCount (MemberVO vo);
+		//public int nameCount (MemberVO vo);
+		
+	// Mapper interface에서 해당 메소드 추가
+	int countMemberByNameAndUserId(@Param("member_name") String member_name, @Param("user_id") String user_id);
 	
 	//멤버 수 불러오기(검색)
 	public int countSearch (String name);
