@@ -37,3 +37,5 @@ select count(*) from userc where
 user_id='a' and user_pass='a';
 
 select member_name , member_grade from member natural join userc where user_id='b';
+
+select * from member natural join userc where user_id = 'b';
