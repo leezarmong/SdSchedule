@@ -48,7 +48,7 @@ FROM (
         SELECT 
             * 
         FROM 
-            MEMBER 
+            MEMBER NATURAL JOIN USERC
         WHERE 
             USER_ID = #{vo.user_id}
         ORDER BY 
@@ -85,9 +85,10 @@ ORDER BY
 	<!-- 검색창 pager -->
 	<!-- 멤버 수 카운트 -->
 	<select id="countMember" resultType="java.lang.Integer">
-		<![CDATA[
-			SELECT COUNT(*) FROM MEMBER
-		]]>
+		 <![CDATA[
+        SELECT COUNT(*) FROM MEMBER
+        WHERE USER_ID = #{user_id}
+    ]]>
 	</select>
 
 

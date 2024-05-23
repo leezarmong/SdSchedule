@@ -36,17 +36,19 @@ public class MemberController {
 	//멤버 리스트
 	@GetMapping("/memberpage")
     public String memberpage(@RequestParam(defaultValue = "1") int curPage, MemberVO vo, Model model, HttpSession session) {
-		int count =memberService.countMember(vo);
-        Pager pager = new Pager(count, curPage);
-        int start = pager.getPageBegin();
-        int end = pager.getPageEnd();
+		
         
     	// select where 에서 user_id 기준 검색하기위해 session 에 저장된 user 의 정보를 get 하여
         // user_id 의 정보를 가져온 후 setUser_id로 파라미터를 지정
         UserVO user = (UserVO) session.getAttribute("user");
-        
 		String user_id = user.getUser_id();
 		vo.setUser_id(user_id);
+		
+		int count =memberService.countMember(vo);
+        Pager pager = new Pager(count, curPage);
+        int start = pager.getPageBegin();
+        int end = pager.getPageEnd();
+		
 
     	List<MemberVO> list =memberService.getMemberList(vo, start, end);
         HashMap<String, Object> map = new HashMap<String, Object>();

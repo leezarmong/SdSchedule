@@ -19,6 +19,9 @@ select * from ( select rownum as RN, A.*
 from(select * from member order by member_no)a )
 order by RN;
 
+select * from USERC natural join member where user_id = 'a';
+
+
 
 
 create table USERC(
@@ -39,3 +42,9 @@ user_id='a' and user_pass='a';
 select member_name , member_grade from member natural join userc where user_id='b';
 
 select * from member natural join userc where user_id = 'b';
+
+select count(*) from member where user_id='a';
+
+select count(*) from member;
+
+select * from member where user_id ='a';
