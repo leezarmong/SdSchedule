@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 public interface MemberService {
 	
 	//멤버 리스트
-	public List<MemberVO>memberList();
+	public List<MemberVO>memberList(String user_id);
 	
 	//멤버 리스트(페이)
 	public List<MemberVO> getMemberList(MemberVO vo, int start, int end);

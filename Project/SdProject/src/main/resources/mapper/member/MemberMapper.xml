@@ -10,7 +10,7 @@
 	<!-- 멤버 리스트 -->
 	<select id="memberList"
 		resultType="com.sd.schedule.model.member.MemberVO">
-		select * from member order by member_no
+		 select * from member where user_id = #{user_id} order by member_no
 	</select>
 
 	<!-- 멤버 리스트(페이지) -->

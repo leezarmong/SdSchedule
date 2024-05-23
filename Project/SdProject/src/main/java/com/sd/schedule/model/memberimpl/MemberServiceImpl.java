@@ -17,8 +17,8 @@ public class MemberServiceImpl implements MemberService {
 	
 	//멤버 리스트
 	@Override
-	public List<MemberVO> memberList (){
-		return memberMapper.memberList();
+	public List<MemberVO> memberList (String user_id){
+		return memberMapper.memberList(user_id);
 	}
 	
 	//멤버 리스트(페이지)
