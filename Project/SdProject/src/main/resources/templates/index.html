@@ -38,19 +38,17 @@
  
  <!-- Notice -->
 <div id="version">
-<span style="font-size: 100px;">Alpha Version 1.03</span><br><br>
+<span style="font-size: 100px;">Alpha Version 1.04</span><br><br>
 <span style="font-size: 35px;">Made by Jaewon and Yejun ( 2024.4.25 ~ )</span><br><br><br><br>
 <!-- --------------------------------------------------------------------------------------- -->
 <span style="font-size: 25px; color: red;"> <b>UPDATE</b> </span><br>
 <!-- --------------------------------------------------------------------------------------- -->
-<span style="font-size: 20px;">1. 로그인 / 아웃 기능이 추가 되었습니다. </span><br>
-<span style="font-size: 20px;">2. 로그인 한 매장 에서 맴버를 추가할 경우 해당 매장 의 값이 db 에 input 되도록 수정 하였습니다. </span><br>
-<span style="font-size: 20px;">3. 조건(1)서로 다른 매장에서 조건(2)동명이인일 경우 name count 로 중복 처리가 되지 않았던 부분을 user_id 의 카운를 추가, </span><br>
-<span style="font-size: 20px;">RequestParam 어노테이션을 사용하여서 동명이인 일 시 user_id 의 서로다른 조건에서는 등록 되도록 허용 하였습니다.</span><br>
-<span style="font-size: 20px;"><b>오류 1 memberPage 에 매장이 a 든 b 든 똑같은 카운트로 인식하여 page 수가 늘어남 </b></span><br>
-<span style="font-size: 20px;"><b>오류 2 b 매장으로 편임 되어도 a roster 에 인식됨 </b></span><br>
-<span style="font-size: 20px;"><b>즉 데이터는 그대로 이고 쿼리문에서 걸러내는것이기 때문에 데이트가 바뀌는것은 아님.. js 에서 매장 이름에 따른 excel 출력 조건을 만들어야 될듯..?  </b></span><br>
-<span style="font-size: 20px;"><b>오류 3 a 로그인시 b 멤버의 이름을 검색창에서 search 하게되면 검색 됨. </b></span><br>
+
+<span style="font-size: 20px;">1. memberPage 에 매장이 a 든 b 든 똑같은 카운트로 인식하여 page 수가 늘어나는 현상을 수정하였습니다.</span><br>
+<span style="font-size: 20px;">2. b 매장으로 편입 되어도 a roster 에 인식되는 문제를 where user_id 를 통해수정 하였습니다.</span><br>
+<span style="font-size: 20px;"><b>오류 search 를 할경우 다른매장의 멤버도 검색 결과에 출력 되는것을 수정 할것</b></span><br>
+<span style="font-size: 20px;"><b>오류 로그인 시에만 메뉴 사용할수 있도록 팝업 설정할것</b></span><br>
+<span style="font-size: 20px;"><b>오류 어드민 계정 만들것</b></span><br>
 
 
 </div>

@@ -48,3 +48,6 @@ select count(*) from member where user_id='a';
 select count(*) from member;
 
 select * from member where user_id ='a';
+
+
+select * from member;

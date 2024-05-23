@@ -93,13 +93,6 @@ ORDER BY
 
 
 	<!-- 이름 중복 검사 -->
-	<!-- <select id="nameCount" resultType="java.lang.Integer">
-		<![CDATA[
-			SELECT COUNT(*) FROM MEMBER
-			WHERE MEMBER_NAME=#{member_name}
-		]]>
-	</select> -->
-	
 	<select id="countMemberByNameAndUserId" parameterType="map" resultType="java.lang.Integer">
 	    SELECT COUNT(*)
 	    FROM member
@@ -109,13 +102,21 @@ ORDER BY
 
 
 	<!-- 멤버 수 불러오기(검색) -->
-	<select id="countSearch" resultType="java.lang.Integer">
+	<!-- <select id="countSearch" resultType="java.lang.Integer">
     	
     	SELECT COUNT(*) 
 		FROM MEMBER
 		WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{name}||'%') 
 		OR LOWER(MEMBER_NAME) LIKE LOWER('%'||#{name}||'%')
 		
+	</select> -->
+	<select id="countSearch" resultType="java.lang.Integer">
+    	 <![CDATA[
+    	 SELECT COUNT(*) 
+        FROM MEMBER
+        WHERE (UPPER(MEMBER_NAME) LIKE UPPER('%'||#{name}||'%') 
+        OR LOWER(MEMBER_NAME) LIKE LOWER('%'||#{name}||'%'))
+        ]]>
 	</select>
 
 	<!-- 멤버 검색 -->

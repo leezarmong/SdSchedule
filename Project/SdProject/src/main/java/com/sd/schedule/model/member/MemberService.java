@@ -21,9 +21,6 @@ public interface MemberService {
 	//멤버 수 카운트
 	public int countMember (MemberVO vo);
 	
-	//이름 중복 검사
-		//public int nameCount (MemberVO vo);
-		
 	// Mapper interface에서 해당 메소드 추가
 	int countMemberByNameAndUserId(@Param("member_name") String member_name, @Param("user_id") String user_id);
 	

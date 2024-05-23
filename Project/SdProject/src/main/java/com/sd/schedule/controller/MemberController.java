@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -101,7 +102,6 @@ public class MemberController {
 	public String searchMember(Model model, HttpSession session, String name, @RequestParam(defaultValue = "1") int curPage) {
 		
 		
-		
 		int count = memberService.countSearch(name);
 	       
 	        Pager pager = new Pager(count, curPage);
@@ -110,7 +110,9 @@ public class MemberController {
 	        
 	        session.setAttribute("name",name);	// 아이디 검색
 	        session.setAttribute("curPage", curPage);
-
+	        
+	      
+	        
 	        List<MemberVO> list = memberService.searchMember(name, start, end);
 	        HashMap<String, Object> map = new HashMap<String, Object>();
 	        map.put("list", list);
