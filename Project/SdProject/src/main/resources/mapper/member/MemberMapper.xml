@@ -111,23 +111,27 @@ ORDER BY
 		
 	</select> -->
 	<select id="countSearch" resultType="java.lang.Integer">
-    	 <![CDATA[
-    	 SELECT COUNT(*) 
-        FROM MEMBER
-        WHERE (UPPER(MEMBER_NAME) LIKE UPPER('%'||#{name}||'%') 
-        OR LOWER(MEMBER_NAME) LIKE LOWER('%'||#{name}||'%'))
-        ]]>
+    <![CDATA[
+	    SELECT COUNT(*) 
+	    FROM MEMBER
+	    WHERE user_id = #{user_id}
+	    AND (UPPER(MEMBER_NAME) LIKE UPPER('%' || #{name} || '%') 
+	    OR LOWER(MEMBER_NAME) LIKE LOWER('%' || #{name} || '%'))
+    ]]>
 	</select>
 
 	<!-- 멤버 검색 -->
 	<select id="searchMember" resultType="com.sd.schedule.model.member.MemberVO">
-		SELECT * FROM (
-		SELECT ROWNUM AS RN, A.* FROM (
-		SELECT * FROM MEMBER
-		WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{name}||'%') OR
-		LOWER(MEMBER_NAME) LIKE LOWER('%'||#{name}||'%')
-		) A
-		) WHERE RN BETWEEN #{start} AND #{end}
+		 <![CDATA[
+    SELECT * FROM (
+        SELECT ROWNUM AS RN, A.* FROM (
+            SELECT * FROM MEMBER
+            WHERE user_id = #{user_id}
+            AND (UPPER(MEMBER_NAME) LIKE UPPER('%' || #{name} || '%') 
+            OR LOWER(MEMBER_NAME) LIKE LOWER('%' || #{name} || '%'))
+        ) A
+    ) WHERE RN BETWEEN #{start} AND #{end}
+    ]]>
 	</select>
 
 	<!-- 멤버 업데이트 -->

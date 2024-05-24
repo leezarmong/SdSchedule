@@ -102,7 +102,12 @@ public class MemberController {
 	public String searchMember(Model model, HttpSession session, String name, @RequestParam(defaultValue = "1") int curPage) {
 		
 		
-		int count = memberService.countSearch(name);
+		UserVO user = (UserVO) session.getAttribute("user");
+		String user_id = user.getUser_id();
+		
+		
+		int count = memberService.countSearch(name , user_id);
+		System.out.print(count);
 	       
 	        Pager pager = new Pager(count, curPage);
 	        int start = pager.getPageBegin();
@@ -113,7 +118,8 @@ public class MemberController {
 	        
 	      
 	        
-	        List<MemberVO> list = memberService.searchMember(name, start, end);
+	        List<MemberVO> list = memberService.searchMember(name, start, end, user_id);
+	        System.out.print(user_id);
 	        HashMap<String, Object> map = new HashMap<String, Object>();
 	        map.put("list", list);
 	        map.put("count", count);

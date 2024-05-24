@@ -25,10 +25,10 @@ public interface MemberService {
 	int countMemberByNameAndUserId(@Param("member_name") String member_name, @Param("user_id") String user_id);
 	
 	//멤버 수 불러오기(검색)
-	public int countSearch (String name);
+	public int countSearch(String name, String user_id);
 		
 	//멤버 검색
-	public List<MemberVO> searchMember (String name, int start, int end);
+	public List<MemberVO> searchMember (String name, int start, int end, String user_id);
 	
 	//멤버 업데이트
 	public void updateMember (MemberVO vo);
