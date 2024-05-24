@@ -107,7 +107,7 @@ public class MemberController {
 		
 		
 		int count = memberService.countSearch(name , user_id);
-		System.out.print(count);
+//		System.out.print(count);
 	       
 	        Pager pager = new Pager(count, curPage);
 	        int start = pager.getPageBegin();
@@ -119,7 +119,7 @@ public class MemberController {
 	      
 	        
 	        List<MemberVO> list = memberService.searchMember(name, start, end, user_id);
-	        System.out.print(user_id);
+//	        System.out.print(user_id);
 	        HashMap<String, Object> map = new HashMap<String, Object>();
 	        map.put("list", list);
 	        map.put("count", count);
