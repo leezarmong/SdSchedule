@@ -13,22 +13,23 @@
 </head>
 <body>
 
-<div class="container">
-    <div><h3>MENU</h3></div>
-    <ul class="li-con">
-        <li class="li-item">
-            <a href="schedule" style="color: white;"><h2>Schedule</h2></a>
-        </li>
-        <li class="li-item">
-            <a href="memberpage" style="color: white;"><h2>Memberpage</h2></a>
-        </li>
-        <li class="li-item">
-            
-        </li>
-        <li class="li-item">
-            
-        </li>
-    </ul>
+
+ <!-- 로그인 된 경우만 메뉴 발생 -->
+<div th:if="${session.user != null}">
+	<div class="container">
+	    <div><h3>MENU</h3></div>	     
+	    <ul class="li-con">
+	        <li class="li-item">
+	            <a href="schedule" onclick="login()" style="color: white;"><h2>Schedule</h2></a>
+	        </li>
+	        <li class="li-item">
+	            <a href="memberpage" onclick="login()" style="color: white;"><h2>Memberpage</h2></a>
+	        </li>
+	        <li class="li-item">   
+	        <!-- 메뉴 추가 -->         
+	        </li>	       
+	    </ul> 
+	</div>
 </div>
     
     
@@ -38,7 +39,7 @@
  
  <!-- Notice -->
 <div id="version">
-<span style="font-size: 100px;">Alpha Version 1.04</span><br><br>
+<span style="font-size: 100px;">Alpha Version 1.05</span><br><br>
 <span style="font-size: 35px;">Made by Jaewon and Yejun ( 2024.4.25 ~ )</span><br><br><br><br>
 <!-- --------------------------------------------------------------------------------------- -->
 <span style="font-size: 25px; color: red;"> <b>UPDATE</b> </span><br>
@@ -46,8 +47,8 @@
 
 <span style="font-size: 20px;">1. memberPage 에 매장이 a 든 b 든 똑같은 카운트로 인식하여 page 수가 늘어나는 현상을 수정하였습니다.</span><br>
 <span style="font-size: 20px;">2. b 매장으로 편입 되어도 a roster 에 인식되는 문제를 where user_id 를 통해수정 하였습니다.</span><br>
-<span style="font-size: 20px;"><b>오류 search 를 할경우 다른매장의 멤버도 검색 결과에 출력 되는것을 수정 할것</b></span><br>
-<span style="font-size: 20px;"><b>오류 로그인 시에만 메뉴 사용할수 있도록 팝업 설정할것</b></span><br>
+<span style="font-size: 20px;">3. search 를 할경우 다른매장의 멤버도 검색 결과에 출력 되는것을 수정 하였습니다.</span><br>
+<span style="font-size: 20px;">4. 로그인 시에만 메뉴를 이용할수 있도록 설정 하였습니다.</span><br>
 <span style="font-size: 20px;"><b>오류 어드민 계정 만들것</b></span><br>
 
 
@@ -55,6 +56,8 @@
 
 	
  	<script type="text/javascript">
+ 	
+ 		
  	
 		/* 로그인 팝업 */ 		
         function openLoginPopup() {
