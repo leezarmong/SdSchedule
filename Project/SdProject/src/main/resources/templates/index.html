@@ -101,8 +101,11 @@
     <div id="login">
         <button class="signup-btn logout-btn" onclick="confirmLogout()">Logout</button>
     </div>
-    <div id="login_hello">
-    <p style="font-size: 20px;" th:text="'안녕하세요! ' + ${session.user.user_id}+' 매장 입니다.'"></p>
+    
+    <div id="login_hello" style="margin-top: 10px; margin-left: 80px;">
+    <div th:if="${session.user.user_id == 'admin'}" style="font-size: 20px;">어서오세요 관리자님.!</div>
+    	<div th:if="${session.user.user_id == 'a'}" style="font-size: 20px;">안녕하세요! 강남점 입니다. (a)</div>
+        <div th:if="${session.user.user_id == 'b'}" style="font-size: 20px;">안녕하세요! 코엑스점 입니다. (b)</div>
     </div>
 </div>
 

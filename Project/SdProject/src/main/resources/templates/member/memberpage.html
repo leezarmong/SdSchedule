@@ -33,7 +33,12 @@
         </div>
         <div id="login">
         
-        <input type="text" id="user_id" th:value="${session.user.user_id}" readonly style="border: none; outline: none; width: 20px; font-size: 25px;" /> <span style="font-size: 25px;">매장 입니다.</span>
+        <!-- 매장 필터 -->
+        <div th:if="${session.user.user_id == 'a'}" style="font-size: 25px;">강남점 입니다. (a)</div>
+        <div th:if="${session.user.user_id == 'b'}" style="font-size: 25px;">코엑스점 입니다. (b)</div>
+        <!--  -->
+        
+        <!-- <input type="text" id="user_id" th:value="${session.user.user_id}" readonly style="border: none; outline: none; width: 20px; font-size: 25px;" /> <span style="font-size: 25px;">매장 입니다. (TEST)</span> -->
         
             <input type="text" id="member_name" class="form-control" placeholder="Enter member name">
             <select id="member_grade" class="form-control mt-2">
@@ -65,7 +70,7 @@
             <tbody th:unless="${map.list.size() == 0}">
                 <tr th:each="member : ${map.list}">
                     <td>
-					    <a th:href="'adminsearchmember?name=' + ${member.member_name}">
+					    <a th:href="'searchMember?name=' + ${member.member_name}">
 					        <span th:text="${member.member_name}"></span>
 					    </a>
 					</td>
