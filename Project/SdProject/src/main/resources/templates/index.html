@@ -20,11 +20,20 @@
 	    <div><h3>MENU</h3></div>	     
 	    <ul class="li-con">
 	        <li class="li-item">
-	            <a href="schedule" onclick="login()" style="color: white;"><h2>Schedule</h2></a>
+	            <a href="schedule"  style="color: white;"><h2>Schedule</h2></a>
 	        </li>
+	        
+		<div th:if="${session.user.user_id != 'admin'}">	        
 	        <li class="li-item">
-	            <a href="memberpage" onclick="login()" style="color: white;"><h2>Memberpage</h2></a>
+	            <a href="memberpage"  style="color: white;"><h2>Memberpage</h2></a>
 	        </li>
+        </div>
+        <div th:if="${session.user.user_id == 'admin'}">	        
+	        <li class="li-item">
+	            <a href="adminpage"  style="color: white;"><h2>Adminpage</h2></a>
+	        </li>
+        </div>
+	        
 	        <li class="li-item">   
 	        <!-- 메뉴 추가 -->         
 	        </li>	       
