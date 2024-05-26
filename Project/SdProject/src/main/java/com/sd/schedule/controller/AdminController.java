@@ -1,6 +1,7 @@
 package com.sd.schedule.controller;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sd.schedule.model.admin.AdminService;
 import com.sd.schedule.model.member.MemberVO;
-import com.sd.schedule.model.user.UserVO;
 import com.sd.schedule.pager.Pager;
 
 import jakarta.servlet.http.HttpSession;
