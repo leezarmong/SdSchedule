@@ -40,7 +40,9 @@
 	</select>
 	
 	
-	<!-- 멤버 수 불러오기(검색) -->
+	
+	<!--  검색된 멤버  -->
+	<!-- 관리자 전용 멤버 수 불러오기(검색) -->
 	<select id="adminCountSearch" resultType="java.lang.Integer">
     	
     	SELECT COUNT(*) 
@@ -50,7 +52,7 @@
 		
 	</select>
 	
-	<!-- 멤버 검색 -->
+	<!-- 관리자 전용 멤버 검색 -->
 	<select id="adminSearchMember" resultType="com.sd.schedule.model.member.MemberVO">
 		 <![CDATA[
     SELECT * FROM (

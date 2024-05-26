@@ -65,7 +65,7 @@
             <tbody th:unless="${map.list.size() == 0}">
                 <tr th:each="member : ${map.list}">
                     <td>
-					    <a th:href="'searchMember?name=' + ${member.member_name}">
+					    <a th:href="'adminsearchmember?name=' + ${member.member_name}">
 					        <span th:text="${member.member_name}"></span>
 					    </a>
 					</td>

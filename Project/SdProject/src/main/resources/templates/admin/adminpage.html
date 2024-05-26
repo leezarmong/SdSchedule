@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-     <script src="./js/memberpage/memberpage.js"></script>
+     <script src="./js/admin/adminpage.js"></script>
     <!-- js -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <!-- jQuery -->
@@ -15,7 +15,7 @@
 
 <body>
     <div class="container mt-5">
-        <h1>Member Page</h1>
+        <h1>Admin Page</h1>
         <a href="/" style="font-size: 20px;">Main Page</a>
         <div class="row justify-content-end">
             <div class="col-auto">
@@ -24,7 +24,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" name="name" id="name" placeholder="MemberSearch">
                     <div class="input-group-append" style="margin-bottom: 10px;">
-                        <button class="btn btn-outline-secondary" onclick="searchMember()" type="button">Search</button>
+                        <button class="btn btn-outline-secondary" onclick="adminSearchMember()" type="button">Search</button>
                     </div>
                 </div>
            </div>     
@@ -66,7 +66,7 @@
             <tbody th:unless="${map.list.size() == 0}">
                 <tr th:each="member : ${map.list}">
                     <td>
-					    <a th:href="'searchMember?name=' + ${member.member_name}">
+					    <a th:href="'adminSearchMember?name=' + ${member.member_name}">
 					        <span th:text="${member.member_name}"></span>
 					    </a>
 					</td>
@@ -114,18 +114,18 @@
         $(document).ready(function () {
             $("#search").keypress(function (e) {
                 if (e.keyCode === 13) {
-                	searchMember();
+                	adminSearchMember();
                 }
             });
         });
-
-        /* searchMember */
-          function searchMember() {
+        
+        /* adminSearchMember */
+          function adminSearchMember() {
             var name = $("#name").val();
             if(name === ""){
             	alert("직원을 입력 해주세요.");
             }else{
-            self.location = "searchMember?name=" + name;
+            self.location = "adminSearchMember?name=" + name;
             }
         }
       

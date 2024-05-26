@@ -51,9 +51,33 @@ public class AdminController {
 	
 	
 	//admin search page
-	public String adminSearchMember() {
+	@GetMapping("/adminSearchMember")
+	public String adminsearchmember(Model model, HttpSession session, String name, @RequestParam(defaultValue = "1") int curPage) {
 		
-		return "admin/adminsearchmember";
-	}
+		
+	
+		int count = adminService.adminCountSearch(name);
+//		System.out.print(count);
+	       
+	        Pager pager = new Pager(count, curPage);
+	        int start = pager.getPageBegin();
+	        int end = pager.getPageEnd();
+	        
+	        session.setAttribute("name",name);	// 아이디 검색
+	        session.setAttribute("curPage", curPage);
+	        
+	      
+	        
+	        List<MemberVO> list = adminService.adminSearchMember(name, start, end);
+//	        System.out.print(user_id);
+	        HashMap<String, Object> map = new HashMap<String, Object>();
+	        map.put("list", list);
+	        map.put("count", count);
+	        map.put("pager", pager);
+	        map.put("name", name);
+	        model.addAttribute("map", map);
+	        
+	        return "admin/adminsearchmember";
+	    }
 
 }
