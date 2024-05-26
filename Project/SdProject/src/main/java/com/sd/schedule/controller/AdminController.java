@@ -87,5 +87,13 @@ public class AdminController {
 		adminService.adminUpdateMember(vo);
 		return  "redirect:adminpage";
 	}
+	
+	//멤버 추가
+	@PostMapping("/adminInsertMember")
+	public String adminInsertMember(MemberVO vo){
+		
+		adminService.adminInsertMember(vo);
+		return "redirect:adminpage";
+	}
 
 }

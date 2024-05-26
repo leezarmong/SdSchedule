@@ -38,7 +38,9 @@
         <div th:if="${session.user.user_id == 'b'}" style="font-size: 25px;">코엑스점 입니다. (b)</div>
         <!--  -->
         
-        <!-- <input type="text" id="user_id" th:value="${session.user.user_id}" readonly style="border: none; outline: none; width: 20px; font-size: 25px;" /> <span style="font-size: 25px;">매장 입니다. (TEST)</span> -->
+        
+        <!-- insert 하기위한 session user_id-->
+        <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
         
             <input type="text" id="member_name" class="form-control" placeholder="Enter member name">
             <select id="member_grade" class="form-control mt-2">
@@ -75,8 +77,7 @@
 					    </a>
 					</td>
 					<td th:text="${member.member_grade}"></td>
-					<!-- test -->
-					<td><input type="text" id="user_id" th:value="${member.user_id}" readonly style="border: none; outline: none; width: 20px;" /></td>
+					<td><input type="text" th:value="${member.user_id}" readonly style="border: none; outline: none; width: 20px;" /></td>
 					
                 </tr>
             </tbody>

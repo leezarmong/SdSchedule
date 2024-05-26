@@ -48,5 +48,11 @@ public class AdminServiceImpl implements AdminService{
 	public void adminUpdateMember (MemberVO vo) {
 		adminMapper.adminUpdateMember(vo);
 	}
+	
+	// 관리자 전용 멤버 입력 
+	@Override
+	public void adminInsertMember (MemberVO vo) {
+		adminMapper.adminInsertMember(vo);
+	}
 
 }

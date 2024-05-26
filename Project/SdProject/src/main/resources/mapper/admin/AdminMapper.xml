@@ -66,7 +66,7 @@
 	</select>
 	
 	
-	<!-- 멤버 업데이트 -->
+	<!-- 관리자 전용 멤버 업데이트 -->
 	<update id="adminUpdateMember">
 		UPDATE MEMBER
 		SET
@@ -76,6 +76,12 @@
 		WHERE
 		MEMBER_NO = #{member_no}
 	</update>
+	
+	<!-- 관리자 전용 멤버 입력 -->
+	<insert id="adminInsertMember">
+		  insert into member(member_name, member_no, member_grade, user_id)
+   			 values(#{member_name}, MEMBER_SEQ.NEXTVAL, #{member_grade}, #{user_id})	
+	</insert>
 	
 
 </mapper>

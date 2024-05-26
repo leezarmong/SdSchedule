@@ -67,7 +67,7 @@
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: "insert",
+                        url: "adminInsertMember",
                         data: {
                             "member_name": member_name,
                             "member_grade": member_grade,

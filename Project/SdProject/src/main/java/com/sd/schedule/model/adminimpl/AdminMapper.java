@@ -30,5 +30,9 @@ public interface AdminMapper {
 	
 	// 관리자 전용 멤버 업데이트 
 	public void adminUpdateMember (MemberVO vo);
+	
+	
+	// 관리자 전용 멤버 입력 
+	public void adminInsertMember (MemberVO vo);
  
 }

@@ -59,8 +59,10 @@
 		                <option th:selected="${member.member_grade == 'PT'}" value="PT">PT</option>
 		            </select>
 		        </td>
-		        <td><input type="text" id="user_id" th:value="${member.user_id}" readonly style="border: none; outline: none; width: 20px;" /></td>
+		        <td><input type="text" th:value="${member.user_id}" readonly style="border: none; outline: none; width: 20px;" /></td>
 		        <td>
+		         <!-- test insert 하기위해서 user_id 필수-->
+			        <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
 		            <input type="hidden" class="member_no" th:value="${member.member_no}" />
 		            <input type="hidden" th:value="${member.member_name}" />
 		            <button type="button" class="btn btn-primary update-btn" onclick="update(this)">Update</button>
