@@ -59,7 +59,16 @@
 		                <option th:selected="${member.member_grade == 'PT'}" value="PT">PT</option>
 		            </select>
 		        </td>
-		        <td><input type="text" id="user_id" th:value="${member.user_id}" readonly style="border: none; outline: none; width: 20px;" /></td>
+		        <td>
+		        <!-- <input type="text" id="user_id" th:value="${member.user_id}"/> -->
+		         <select class="user_id" th:value="${member.user_id}">
+		                <option value="null">매장 선택</option>
+		                <option th:selected="${member.user_id == 'a'}" value="a">a</option>
+		                <option th:selected="${member.user_id == 'b'}" value="b">b</option>
+		                <!-- <option th:selected="${member.user_id == '#'}" value="#">#</option> -->
+		                <!-- <option th:selected="${member.user_id == '#'}" value="#">#</option> -->
+		            </select>
+		        </td>
 		        <td>
 		            <input type="hidden" class="member_no" th:value="${member.member_no}" />
 		            <input type="hidden" th:value="${member.member_name}" />

@@ -26,5 +26,9 @@ public interface AdminMapper {
 	
 	// 관리자 전용 멤버 수 불러오기(검색)
 	public int adminCountSearch (String name);
+	
+	
+	// 관리자 전용 멤버 업데이트 
+	public void adminUpdateMember (MemberVO vo);
  
 }

@@ -41,5 +41,12 @@ public class AdminServiceImpl implements AdminService{
 	public int adminCountSearch (String name) {
 		return adminMapper.adminCountSearch(name);
 	}
+	
+
+	// 관리자 전용 멤버 업데이트 
+	@Override
+	public void adminUpdateMember (MemberVO vo) {
+		adminMapper.adminUpdateMember(vo);
+	}
 
 }

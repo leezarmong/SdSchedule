@@ -65,5 +65,17 @@
     ]]>
 	</select>
 	
+	
+	<!-- 멤버 업데이트 -->
+	<update id="adminUpdateMember">
+		UPDATE MEMBER
+		SET
+		MEMBER_NAME = #{member_name},
+		MEMBER_GRADE = #{member_grade},
+		USER_ID = #{user_id}
+		WHERE
+		MEMBER_NO = #{member_no}
+	</update>
+	
 
 </mapper>

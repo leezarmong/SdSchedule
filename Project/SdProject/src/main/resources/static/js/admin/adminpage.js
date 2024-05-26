@@ -117,6 +117,7 @@
 			function update(button) {
 			    var member_name = $(button).closest('tr').find('.member_name').val();
 			    var member_grade = $(button).closest('tr').find('.member_grade').val();
+			    var user_id = $(button).closest('tr').find('.user_id').val();
 			
 			    if (member_grade === "null") {
 			        alert("등급을 다시 선택 해 주세요.");
@@ -128,10 +129,11 @@
 			
 			            $.ajax({
 			                type: "GET",
-			                url: "updateMember",
+			                url: "adminUpdateMember",
 			                data: {
 			                    "member_name": member_name,
 			                    "member_grade": member_grade,
+			                    "user_id" : user_id,
 			                    "member_no": memberNo
 			                },
 			                success: function (data) {

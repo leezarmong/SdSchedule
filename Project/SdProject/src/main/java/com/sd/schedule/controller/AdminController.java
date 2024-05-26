@@ -79,5 +79,13 @@ public class AdminController {
 	        
 	        return "admin/adminsearchmember";
 	    }
+	
+	//관리자 전용 멤버 업데이트
+	@GetMapping("/adminUpdateMember")
+	public String adminUpdateMember (MemberVO vo) {
+		
+		adminService.adminUpdateMember(vo);
+		return  "redirect:adminpage";
+	}
 
 }
