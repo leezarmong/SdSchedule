@@ -16,5 +16,5 @@
 <span style="font-size: 20px;">7. 관리자 전용 페이지에서 매장select 키 만들어 편의성 추가 하였습니다. </span><br>
 
 
-<input type="text" class="form-control" name="name" id="name" placeholder="MemberSearch">
+
 </div>
