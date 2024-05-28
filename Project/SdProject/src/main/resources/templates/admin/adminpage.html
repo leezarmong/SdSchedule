@@ -48,9 +48,9 @@
 
             <select id="user_id" class="form-control mt-2">
                 <option value="null">매장 선택</option>
-                <option value="a">강남점 (a)</option>
-                <option value="b">코엑스점 (b)</option>
-                <!-- <option value="#">#</option> -->
+                <option value="sd-gang">강남점</option>
+                <option value="sd-coex">코엑스점</option>
+                <option value="sd-hong">홍대점</option>
                 <!-- <option value="#">#</option> -->
             </select><br>
 
@@ -62,8 +62,9 @@
             <label for="storeFilter">Store Filter:</label>
             <select id="storeFilter" class="form-control" onchange="updateFilterAndReload()">
                 <option value="all">All Stores</option>
-                <option value="a">강남점 (a)</option>
-                <option value="b">코엑스점 (b)</option>
+                <option value="sd-gang">강남점</option>
+                <option value="sd-coex">코엑스점</option>
+                <option value="sd-hong">홍대점</option>
             </select>
         </div>
 
@@ -89,8 +90,9 @@
                     </td>
                     <td th:text="${member.member_grade}"></td>
                     <td>
-                        <div th:if="${member.user_id == 'a'}">강남점 (a)</div>
-                        <div th:if="${member.user_id == 'b'}">코엑스점 (b)</div>
+                        <div th:if="${member.user_id == 'sd-gang'}">강남점</div>
+                        <div th:if="${member.user_id == 'sd-coex'}">코엑스점</div>
+                        <div th:if="${member.user_id == 'sd-hong'}">홍대점</div>
                     </td>
                 </tr>
             </tbody>

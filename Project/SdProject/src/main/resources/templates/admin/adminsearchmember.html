@@ -62,9 +62,9 @@
 		        <td>
 		         <select class="user_id" th:value="${member.user_id}">
 		                <option value="null">매장 선택</option>
-		                <option th:selected="${member.user_id == 'a'}" value="a">강남점 (a)</option>
-		                <option th:selected="${member.user_id == 'b'}" value="b">코엑스점 (b)</option>
-		                <!-- <option th:selected="${member.user_id == '#'}" value="#">#</option> -->
+		                <option th:selected="${member.user_id == 'sd-gang'}" value="sd-gang">강남점</option>
+		                <option th:selected="${member.user_id == 'sd-coex'}" value="sd-coex">코엑스점</option>
+		                <option th:selected="${member.user_id == 'sd-hong'}" value="sd-hong">홍대점</option>
 		                <!-- <option th:selected="${member.user_id == '#'}" value="#">#</option> -->
 		            </select>
 		        </td>

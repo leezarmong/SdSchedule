@@ -34,8 +34,9 @@
         <div id="login">
         
         <!-- 매장 필터 -->
-        <div th:if="${session.user.user_id == 'a'}" style="font-size: 25px;">강남점 입니다. (a)</div>
-        <div th:if="${session.user.user_id == 'b'}" style="font-size: 25px;">코엑스점 입니다. (b)</div>
+        <div th:if="${session.user.user_id == 'sd-gang'}" style="font-size: 25px;">강남점 입니다. </div>
+        <div th:if="${session.user.user_id == 'sd-coex'}" style="font-size: 25px;">코엑스점 입니다. </div>
+        <div th:if="${session.user.user_id == 'sd-hong'}" style="font-size: 25px;">홍대점 입니다. </div>
         <!--  -->
         
         
@@ -59,9 +60,6 @@
                 <tr>
                     <th>Member Name</th>
                     <th>Member Grade</th>
-                     <th>TEST</th>
-                   
-                     
                 </tr>
             </thead>
             <tbody th:if="${map.list.isEmpty()}">
@@ -77,8 +75,6 @@
 					    </a>
 					</td>
 					<td th:text="${member.member_grade}"></td>
-					<td><input type="text" th:value="${member.user_id}" readonly style="border: none; outline: none; width: 20px;" /></td>
-					
                 </tr>
             </tbody>
         </table>

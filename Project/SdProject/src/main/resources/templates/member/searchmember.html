@@ -60,8 +60,9 @@
 		            </select>
 		        </td>
 		        <td>
-		        	<div th:if="${member.user_id == 'a'}">강남점 (a)</div>
-					<div th:if="${member.user_id == 'b'}">코엑스점 (b)</div>
+		        	<div th:if="${member.user_id == 'sd-gang'}">강남점</div>
+					<div th:if="${member.user_id == 'sd-coex'}">코엑스점</div>
+					<div th:if="${member.user_id == 'sd-hong'}">홍대점</div>
 		        </td>
 		        <td>
 			        <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
