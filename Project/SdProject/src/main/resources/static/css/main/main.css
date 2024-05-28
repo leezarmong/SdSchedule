@@ -46,16 +46,16 @@ body{
 	  left: 15%;
 }
 
-#notice{
-	  position: absolute;
-	  top: 85%;
-	  left: 15%;
-}
-
 #login{
 	  position: absolute;
 	  top: 5%;
 	  left: 90%;
+}
+
+#notice{
+	  position: absolute;
+	  top: 85%;
+	  left: 15%;
 }
 
 #login_hello{
