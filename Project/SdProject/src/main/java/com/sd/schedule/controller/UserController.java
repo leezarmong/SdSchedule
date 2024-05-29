@@ -1,5 +1,7 @@
 package com.sd.schedule.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -37,8 +39,9 @@ public class UserController {
 	@PostMapping("/login")
 	public String login(UserVO vo , HttpSession session) {
 	    UserVO user = userService.login(vo);
-
-	  
+	    LocalDateTime now = LocalDateTime.now();
+	    
+	  System.out.println(user.getUser_id()+"님이"  + now + "에 로그인 했습니다. ");
 	    
 	    if (user != null) {
 	        session.setAttribute("user", user);
