@@ -26,6 +26,7 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberVO> getMemberList(MemberVO vo, int start, int end){
 		return memberMapper.getMemberList(vo, start, end);
 	}
+	
 
 	//멤버 입력
 	@Override

@@ -49,6 +49,8 @@
 		]]>
 	
 	</select>
+	
+	
 
 	<!-- 멤버 입력 -->
 	<insert id="insertMember">

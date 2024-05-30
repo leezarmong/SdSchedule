@@ -38,6 +38,7 @@
         <div th:if="${session.user.user_id == 'sd-coex'}" style="font-size: 25px;">코엑스점 입니다. </div>
         <div th:if="${session.user.user_id == 'sd-hong'}" style="font-size: 25px;">홍대점 입니다. </div>
         <!--  -->
+       <div th:text="${count}+' 명'" style="font-size: 20px;"></div>
         
         
         <!-- insert 하기위한 session user_id-->
