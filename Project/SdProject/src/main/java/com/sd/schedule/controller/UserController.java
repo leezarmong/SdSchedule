@@ -4,6 +4,7 @@ package com.sd.schedule.controller;
 
 import java.time.LocalDateTime;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -44,7 +45,7 @@ public class UserController {
 	public String login(UserVO vo , HttpSession session, BindingResult bindingResult, HttpServletResponse response) {
 		UserVO user = userService.login(vo);
 	    LocalDateTime now = LocalDateTime.now();
-	    System.out.println(user.getUser_id()+"님이"  + now + "에 로그인 했습니다. ");
+	    System.out.println(user.getUser_id()+"님이 "  +now.getYear()+"년 "+ now.getHour()+"시 "+now.getMinute()+"분 에 로그인 했습니다. ");
 	    
 	    
 	    
