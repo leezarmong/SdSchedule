@@ -34,7 +34,8 @@
         <div id="login">
 
             <span style="font-size: 25px;"> 관리자 전용 페이지 입니다. </span>
-
+			 <div th:text="'총원 '+${count}+' 명'" style="font-size: 20px;"></div>
+			 
             <input type="text" id="member_name" class="form-control" placeholder="Enter member name">
             <select id="member_grade" class="form-control mt-2">
                 <option value="null">Select Member Grade</option>

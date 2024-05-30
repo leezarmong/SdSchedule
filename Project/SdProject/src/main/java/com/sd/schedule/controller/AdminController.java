@@ -36,6 +36,9 @@ public class AdminController {
 	        Pager pager = new Pager(count, curPage);
 	        int start = pager.getPageBegin();
 	        int end = pager.getPageEnd();
+	        
+	        
+	        model.addAttribute("count", count);
 			
 
 	    	List<MemberVO> list =adminService.getAdminMemberList(vo, start, end);
