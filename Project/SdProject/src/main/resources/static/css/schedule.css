@@ -8,6 +8,13 @@
 .btn i {
     margin: 65px 0 30px;
 }
+#excel-upload{ 
+    display: none;
+    cursor: pointer;
+}
+.fa-file-excel:before {
+    cursor: pointer;
+}
 #tables {
     width: 1000px;
     height: 100%;

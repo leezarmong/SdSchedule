@@ -16,22 +16,23 @@ const weekend = ["일","월","화","수","목","금","토"];
 
 // get member list from: db > java > html > js
 
- const memberList = [];
- const mNameElements = document.querySelectorAll('.hidden .mname');
- const mGradeElements = document.querySelectorAll('.hidden .mgrade');
 
- mNameElements.forEach((nameElement, index) => {
-     const memberName = nameElement.innerText;
-     const memberGrade = mGradeElements[index].innerText;
+const memberList = [];
+const mNameElements = document.querySelectorAll('.hidden .mname');
+const mGradeElements = document.querySelectorAll('.hidden .mgrade');
 
-     memberList.push({
-         name: memberName,
-         grade: memberGrade
-     });
- });
+mNameElements.forEach((nameElement, index) => {
+    const memberName = nameElement.innerText;
+    const memberGrade = mGradeElements[index].innerText;
 
-/*
-const memberList = [
+    memberList.push({
+        name: memberName,
+        grade: memberGrade
+    });
+});
+
+
+/*const memberList = [
     {name: '김장현', grade: 'SM'},
     {name: '김해수', grade: 'VSM'},
     {name: '최인화', grade: 'MGR'},
@@ -60,9 +61,8 @@ const memberList = [
     {name: '조경서', grade: 'PT'},
     {name: '조관우', grade: 'PT'},
     {name: '홍지오', grade: 'PT'}
-];
+];*/
 
-*/
 
 // convert schedule excel > json
 const excelToJson = async (callback) => {
@@ -72,10 +72,14 @@ const excelToJson = async (callback) => {
         // data > Json convert as I want
         const Json = [];
         let tableDate = [];
+        // loop as count of data's row
         for(let i = 0; i < data.length; i++){
             // data[i][0], data[i][11] = 이름
             let arrid = '';
+            // 시간표가 1번째 줄(a(=0)), 12번째 줄(l(=11)) 2곳에서 각기 시작하므로 2번 반복
             for(let f = 0; f < 2; f++){
+                // \n 또는 공백이 있을 경우 해당 문자를 기준으로 앞쪽에 있던 글자를 arrid 에 저장
+                // \n 또는 공백이 없을 경우 arrid 를 빈문자로 선언
                 if(
                     memberList.map(el=>el.name).includes(String(data[i][11*f]).split('\n')[0])
                 ){
@@ -85,13 +89,19 @@ const excelToJson = async (callback) => {
                 ){
                     arrid = String(data[i][11*f]).split(' ')[0];
                 };
+                // arrid 가 빈문자가 아닌경우
                 if(
                     arrid != ''
                 ){
                     Json[arrid] = [];
                     const tempArr = [];
+                    // 해당 row의 2~9번째(2번째 실행일경우 13~20번째) column을 읽음
                     for(let j = 11*f+2; j < 11*f+9; j++){
+                        // 해당 셀이 빈칸이 아니라면
                         if(data[i][j]!=null){
+                            // 해당 셀에 ~ 또는 - 이 있을 경우 해당 문자를 기준으로 앞숫자를 시작시각, 뒷숫자를 종료시각에 저장
+                            // 시작시각과 종료시각을 배열에 넣고 tempArr에 push
+                            // 해당 셀에 ~ 또는 - 이 없을 경우 null 값을 tempArr에 push
                             if(data[i][j].includes("~")){
                                 let time_start = halfMinuteConverter(data[i][j].split('~')[0]);
                                 let time_finish = halfMinuteConverter(data[i][j].split('~')[1]);
@@ -103,11 +113,15 @@ const excelToJson = async (callback) => {
                             }else{
                                 tempArr.push(null)
                             }
-                        }else{
+                        }
+                        // 해당 셀이 빈칸이라면 null 값을 tempArr에 push
+                        else{
                             tempArr.push(null)
                         };
                     };
+                    // Json 객체에 arrid as key, tempArr as value 로 저장
                     Json[arrid]=tempArr;
+                    // arrid 값 초기화
                     arrid = '';
                 };
             };
@@ -276,7 +290,7 @@ Excel.onchange = () => {
             </thead>
         `;
         // convert shape of json data
-        for(let date = tableDate.length-1; date >= 0; date--){
+        for(let date = 0; date <= tableDate.length-1; date++){
             const rosterbody = [];
             for(let memb = 0; memb < sortedJson_value.length; memb++){
                 if(sortedJson_value[memb][date]!=null){
