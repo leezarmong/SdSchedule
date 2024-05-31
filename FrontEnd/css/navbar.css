@@ -1,20 +1,58 @@
-#navbar{
+#openNav{
+    background-color: var(--grue200);
+    color: var(--grue300);
+    padding: 20px;
+    width: 60px;
     height: 60px;
-    justify-content: flex-start;
-}
-#excel-upload{ 
-    display: none;
+    border-radius: 50%;
+    position: absolute;
+    margin: 8px;
     cursor: pointer;
 }
-.fa-file-excel:before {
-    cursor: pointer;
+#openNav::before{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
-#navbar a{
+#openNav:hover{
+    background-color: var(--grue800);
+    color: #f08e2a;
+}
+#hiddenMenu{
+    height: 100%;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: var(--grue800);
+}
+#hiddenMenu #navHeader{
+    display: flex;
+    border-bottom: var(--grue300) solid 2px;
+}
+#hiddenMenu #closeNav{
+    padding: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: relative;
+    margin: 8px;
+    cursor: pointer;
+    color: #f08e2a;
+}
+#hiddenMenu #closeNav::before{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+#hiddenMenu a{
     padding: 0 0 0 80px;
     font-size: 24px;
     color: var(--grue200);
     text-decoration: none;
 }
-#navbar a:link {
+#hiddenMenu a:link {
     text-decoration: none;
 }
