@@ -10,13 +10,89 @@
     <!-- Bootstrap CDN -->
 
     <meta charset="UTF-8">
-    <title>adminpage</title>
+    <title>Adminpage</title>
+    <style>
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        #logo {
+            height: 75px;
+            /* Adjust the height as needed */
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links li a,
+        #login button {
+            color: #fff;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.3s;
+            padding: 0;
+        }
+
+        .nav-links li a:hover,
+        #login button:hover {
+            color: #f4f4f4;
+            font-size: 1.4rem;
+            transition: 0.3s;
+            -webkit-transition: 0.3s;
+            -moz-transition: 0.3s;
+            -o-transition: 0.3s;
+            -ms-transition: 0.3s;
+        }
+        footer {
+			    text-align: center;
+			    padding: 1rem;
+			    background: #333;
+			    color: #fff;
+			}
+    </style>
 </head>
 
 <body>
+  <header>
+        <nav>
+            <div class="logo">
+                <img src="./img/logo.png" id="logo" width="110" alt="">
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="/" style="color: white;">Home</a>
+                </li>
+                <!-- 관리자인 경우 -->
+                <li>
+                    <a href="schedule" style="color: white;">Roster</a>
+                </li>
+                <!-- 로그인 된 경우 -->
+                <li th:if="${session.user != null}">
+                    <div id="login">
+                        <button onclick="confirmLogout()">Logout</button>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
     <div class="container mt-5">
         <h1>Admin Page</h1>
-        <a href="/" style="font-size: 20px;">Main Page</a>
         <div class="row justify-content-end">
             <div class="col-auto">
 
@@ -54,8 +130,8 @@
                 <option value="sd-hong">홍대점</option>
                 <!-- <option value="#">#</option> -->
             </select><br>
-
-            <button type="button" class="btn btn-primary mt-2" onclick="insert()">Insert</button>
+            
+            <input type="button" class="btn btn-primary" value="Insert" onclick="insert()">
         </div>
 
         <!-- 매장 필터 -->
@@ -100,7 +176,7 @@
         </table>
 
         <!-- pager -->
-        <div class="pagination justify-content-center">
+        <div class="pagination justify-content-center" style="margin-bottom: 100px;">
             <ul class="pagination">
                 <th:block th:if="${map.pager.curBlock > 1}">
                     <li class="page-item"><a class="page-link" th:href="@{/adminpage(curPage=1, store=${param.store})}">처음</a></li>
@@ -162,6 +238,12 @@
                 }
             });
         }
+        /* 로그아웃 팝업 */
+        function confirmLogout() {
+            if (confirm("로그아웃하시겠습니까?")) {
+                location.href = 'logout';
+            }
+        }
 
         /* 이름 파라미터 */
         function getQueryParam(name) {
@@ -184,6 +266,9 @@
 
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <footer>
+        <p>&copy; Made by Jaewon and Yejun ( 2024.4.25 ~ )</p>
+    </footer>
 </body>
 
 </html>

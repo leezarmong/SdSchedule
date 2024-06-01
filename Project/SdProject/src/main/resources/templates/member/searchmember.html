@@ -7,30 +7,116 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <!-- jQuery -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Bootstrap CDN -->
-	
+    <!-- Bootstrap CDN -->
+
     <meta charset="UTF-8">
     <title>SearchMember</title>
+    <style>
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        #logo {
+            height: 75px;
+            /* Adjust the height as needed */
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links li a,
+        #login button {
+            color: #fff;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.3s;
+            padding: 0;
+        }
+
+        .nav-links li a:hover,
+        #login button:hover {
+            color: #f4f4f4;
+            font-size: 1.4rem;
+            transition: 0.3s;
+            -webkit-transition: 0.3s;
+            -moz-transition: 0.3s;
+            -o-transition: 0.3s;
+            -ms-transition: 0.3s;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #333;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        body {
+            margin-bottom: 80px; /* Adjust this value if needed */
+        }
+    </style>
 </head>
 
 <body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="./img/logo.png" id="logo" width="110" alt="">
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="/" style="color: white;">Home</a>
+                </li>
+                <!-- 관리자인 경우 -->
+                <li>
+                    <a href="memberpage" style="color: white;">Memberpage</a>
+                </li>
+                <li>
+                    <a href="schedule" style="color: white;">Roster</a>
+                </li>
+                <!-- 로그인 된 경우 -->
+                <li th:if="${session.user != null}">
+                    <div id="login">
+                        <button onclick="confirmLogout()">Logout</button>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
     <div class="container mt-5">
-        <a href="memberpage"><h1>Member Page</h1></a>
-        <a href="/" style="font-size: 20px;">Main Page</a>
+        <h1>Member Page</h1>
         <div class="row justify-content-end">
             <div class="col-auto">
-            
-          		<div id="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="name" id="name" placeholder="MemberSearch">
-                    <div class="input-group-append" style="margin-bottom: 10px;">
-                        <button class="btn btn-outline-secondary" onclick="searchMember()" type="button">Search</button>
+                <div id="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="MemberSearch">
+                        <div class="input-group-append" style="margin-bottom: 10px;">
+                            <button class="btn btn-outline-secondary" onclick="searchMember()" type="button">Search</button>
+                        </div>
                     </div>
-                </div>
-         	  </div>  
+                </div>  
             </div>
         </div>
-        
+
         <table class="table table-striped mt-2">
             <thead class="thead-dark">
                 <tr>
@@ -46,71 +132,78 @@
                 </tr>
             </tbody>
             <tbody th:if="${not #lists.isEmpty(map.list)}">
-		    <tr th:each="member : ${map.list}">
-		        <td><input type="text" class="member_name" th:value="${member.member_name}" /></td>
-		        <td>
-		            <select class="member_grade" th:value="${member.member_grade}">
-		                <option value="null">Select Member Grade</option>
-		                <option th:selected="${member.member_grade == 'SM'}" value="SM">SM</option>
-		                <option th:selected="${member.member_grade == 'VSM'}" value="VSM">VSM</option>
-		                <option th:selected="${member.member_grade == 'MGR'}" value="MGR">MGR</option>
-		                <option th:selected="${member.member_grade == 'CT'}" value="CT">CT</option>
-		                <option th:selected="${member.member_grade == 'EMP'}" value="EMP">EMP</option>
-		                <option th:selected="${member.member_grade == 'PT'}" value="PT">PT</option>
-		            </select>
-		        </td>
-		        <td>
-		        	<div th:if="${member.user_id == 'sd-gang'}">강남점</div>
-					<div th:if="${member.user_id == 'sd-coex'}">코엑스점</div>
-					<div th:if="${member.user_id == 'sd-hong'}">홍대점</div>
-		        </td>
-		        <td>
-			        <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
-		            <input type="hidden" class="member_no" th:value="${member.member_no}" />
-		            <input type="hidden" th:value="${member.member_name}" />
-		            <button type="button" class="btn btn-primary update-btn" onclick="update(this)">Update</button>
-		            <button type="button" class="btn btn-danger delete-btn" onclick="deleteMember(this)">Delete</button>
-		        </td>
-		    </tr>
-		</tbody>
+                <tr th:each="member : ${map.list}">
+                    <td><input type="text" class="member_name" th:value="${member.member_name}" /></td>
+                    <td>
+                        <select class="member_grade" th:value="${member.member_grade}">
+                            <option value="null">Select Member Grade</option>
+                            <option th:selected="${member.member_grade == 'SM'}" value="SM">SM</option>
+                            <option th:selected="${member.member_grade == 'VSM'}" value="VSM">VSM</option>
+                            <option th:selected="${member.member_grade == 'MGR'}" value="MGR">MGR</option>
+                            <option th:selected="${member.member_grade == 'CT'}" value="CT">CT</option>
+                            <option th:selected="${member.member_grade == 'EMP'}" value="EMP">EMP</option>
+                            <option th:selected="${member.member_grade == 'PT'}" value="PT">PT</option>
+                        </select>
+                    </td>
+                    <td>
+                        <div th:if="${member.user_id == 'sd-gang'}">강남점</div>
+                        <div th:if="${member.user_id == 'sd-coex'}">코엑스점</div>
+                        <div th:if="${member.user_id == 'sd-hong'}">홍대점</div>
+                    </td>
+                    <td>
+                        <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
+                        <input type="hidden" class="member_no" th:value="${member.member_no}" />
+                        <input type="hidden" th:value="${member.member_name}" />
+                        <button type="button" class="btn btn-primary update-btn" onclick="update(this)">Update</button>
+                        <button type="button" class="btn btn-danger delete-btn" onclick="deleteMember(this)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
         </table>
-
-        
     </div>
-    <script type="text/javascript">
-       
-	    /* 엔터키 멤버 추가 */
-	    $(document).ready(function () {
-	        $("#login").keypress(function (e) {
-	            if (e.keyCode === 13) {
-	                insert();
-	            }
-	        });
-	    });
-	    
-	    /* 엔터키 멤버 수정 */
-	    $(document).ready(function () {
-	        $("#search").keypress(function (e) {
-	            if (e.keyCode === 13) {
-	            	searchMember();
-	            }
-	        });
-	    });
 
+    <script type="text/javascript">
+        /* 엔터키 멤버 추가 */
+        $(document).ready(function () {
+            $("#login").keypress(function (e) {
+                if (e.keyCode === 13) {
+                    insert();
+                }
+            });
+        });
+
+        /* 엔터키 멤버 수정 */
+        $(document).ready(function () {
+            $("#search").keypress(function (e) {
+                if (e.keyCode === 13) {
+                    searchMember();
+                }
+            });
+        });
 
         /* searchMember */
         function searchMember() {
             var name = $("#name").val();
             if(name === ""){
-            	alert("직원을 입력 해주세요.");
+                alert("직원을 입력 해주세요.");
             }else{
-            self.location = "searchMember?name=" + name;
+                self.location = "searchMember?name=" + name;
+            }
+        }
+
+        /* 로그아웃 팝업 */
+        function confirmLogout() {
+            if (confirm("로그아웃하시겠습니까?")) {
+                location.href = 'logout';
             }
         }
     </script>
 
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <footer>
+        <p>&copy; Made by Jaewon and Yejun (2024.4.25 ~ )</p>
+    </footer>
 </body>
 
 </html>

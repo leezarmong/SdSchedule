@@ -7,27 +7,105 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <!-- jQuery -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Bootstrap CDN -->
+    <!-- Bootstrap CDN -->
 
     <meta charset="UTF-8">
     <title>Memberpage</title>
+    <style>
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        #logo {
+            height: 75px;
+            /* Adjust the height as needed */
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links li a,
+        #login button {
+            color: #fff;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.3s;
+            padding: 0;
+        }
+
+        .nav-links li a:hover,
+        #login button:hover {
+            color: #f4f4f4;
+            font-size: 1.4rem;
+            transition: 0.3s;
+            -webkit-transition: 0.3s;
+            -moz-transition: 0.3s;
+            -o-transition: 0.3s;
+            -ms-transition: 0.3s;
+        }
+		
+        footer {
+			    text-align: center;
+			    padding: 1rem;
+			    background: #333;
+			    color: #fff;
+			}
+
+    </style>
 </head>
 
 <body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="./img/logo.png" id="logo" width="110" alt="">
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="/" style="color: white;">Home</a>
+                </li>
+                <!-- 관리자인 경우 -->
+                <li>
+                    <a href="schedule" style="color: white;">Roster</a>
+                </li>
+                <!-- 로그인 된 경우 -->
+                <li th:if="${session.user != null}">
+                    <div id="login">
+                        <button onclick="confirmLogout()">Logout</button>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
     <div class="container mt-5">
         <h1>Member Page</h1>
-        <a href="/" style="font-size: 20px;">Main Page</a>
         <div class="row justify-content-end">
             <div class="col-auto">
             
-           	<div id="search">
+            <div id="search">
                 <div class="input-group">
                     <input type="text" class="form-control" name="name" id="name" placeholder="MemberSearch">
                     <div class="input-group-append" style="margin-bottom: 10px;">
                         <button class="btn btn-outline-secondary" onclick="searchMember()" type="button">Search</button>
                     </div>
                 </div>
-           </div>     
+            </div>
                 
             </div>
         </div>
@@ -53,8 +131,10 @@
                 <option value="CT">CT</option>
                 <option value="EMP">EMP</option>
                 <option value="PT">PT</option>
-            </select>
-            <button type="button" class="btn btn-primary mt-2" onclick="insert()">Insert</button>
+            </select><br>
+            <input type="button" class="btn btn-primary" value="Insert" onclick="insert()">
+  
+
         </div>
         <table class="table table-striped mt-2">
             <thead class="thead-dark">
@@ -64,24 +144,24 @@
                 </tr>
             </thead>
             <tbody th:if="${map.list.isEmpty()}">
-		    <tr>
-		        <td colspan="3">등록된 멤버가 없습니다.</td>
-		    </tr>
-		</tbody>
+                <tr>
+                    <td colspan="3">등록된 멤버가 없습니다.</td>
+                </tr>
+            </tbody>
             <tbody th:unless="${map.list.size() == 0}">
                 <tr th:each="member : ${map.list}">
                     <td>
-					    <a th:href="'searchMember?name=' + ${member.member_name}">
-					        <span th:text="${member.member_name}"></span>
-					    </a>
-					</td>
-					<td th:text="${member.member_grade}"></td>
+                        <a th:href="'searchMember?name=' + ${member.member_name}">
+                            <span th:text="${member.member_name}"></span>
+                        </a>
+                    </td>
+                    <td th:text="${member.member_grade}"></td>
                 </tr>
             </tbody>
         </table>
 
         <!-- pager -->
-          <div class="pagination justify-content-center">
+        <div class="pagination justify-content-center" style="margin-bottom: 100px;">
             <ul class="pagination">
                 <th:block th:if="${map.pager.curBlock > 1}">
                     <li class="page-item"><a class="page-link" th:href="@{/memberpage(curPage=1)}">처음</a></li>
@@ -99,8 +179,6 @@
             </ul>
         </div>
         
-        
-        
     </div> 
     <script type="text/javascript">
         /* 엔터키 멤버 추가 */
@@ -116,26 +194,34 @@
         $(document).ready(function () {
             $("#search").keypress(function (e) {
                 if (e.keyCode === 13) {
-                	searchMember();
+                    searchMember();
                 }
             });
         });
 
         /* searchMember */
-          function searchMember() {
+        function searchMember() {
             var name = $("#name").val();
             if(name === ""){
-            	alert("직원을 입력 해주세요.");
+                alert("직원을 입력 해주세요.");
             }else{
-            self.location = "searchMember?name=" + name;
+                self.location = "searchMember?name=" + name;
             }
         }
-      
-        
+        /* 로그아웃 팝업 */
+        function confirmLogout() {
+            if (confirm("로그아웃하시겠습니까?")) {
+                location.href = 'logout';
+            }
+        }
     </script>
 
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+     <footer>
+        <p>&copy; Made by Jaewon and Yejun ( 2024.4.25 ~ )</p>
+    </footer>
 </body>
 
 </html>
