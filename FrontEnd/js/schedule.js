@@ -10,6 +10,7 @@ const weekPayTable = document.getElementById("weekPayTable");
 const payPerDayTable = document.getElementById("payPerDayTable");
 const excel_upload_btn = document.querySelector("label");
 const roster = document.getElementById("roster");
+const tables = document.getElementById("tables");
 const roster_print_btn = document.getElementById("rosterPrint");
 
 const weekend = ["일","월","화","수","목","금","토"];
@@ -263,6 +264,7 @@ Excel.onchange = () => {
     weekPayTable.style.display = "block";
     payPerDayTable.style.display = "block";
     roster.style.display = "block";
+    tables.style.display = "block";
     excelToJson( data => {
         const tableDate =  data.tableDate;
         delete data['tableDate'];
