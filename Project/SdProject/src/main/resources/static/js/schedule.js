@@ -10,13 +10,14 @@ const weekPayTable = document.getElementById("weekPayTable");
 const payPerDayTable = document.getElementById("payPerDayTable");
 const excel_upload_btn = document.querySelector("label");
 const roster = document.getElementById("roster");
+const tables = document.getElementById("tables");
 const roster_print_btn = document.getElementById("rosterPrint");
 
 const weekend = ["일","월","화","수","목","금","토"];
 
 // get member list from: db > java > html > js
 
-
+/*
 const memberList = [];
 const mNameElements = document.querySelectorAll('.hidden .mname');
 const mGradeElements = document.querySelectorAll('.hidden .mgrade');
@@ -30,9 +31,9 @@ mNameElements.forEach((nameElement, index) => {
         grade: memberGrade
     });
 });
+*/
 
-
-/*const memberList = [
+const memberList = [
     {name: '김장현', grade: 'SM'},
     {name: '김해수', grade: 'VSM'},
     {name: '최인화', grade: 'MGR'},
@@ -61,7 +62,7 @@ mNameElements.forEach((nameElement, index) => {
     {name: '조경서', grade: 'PT'},
     {name: '조관우', grade: 'PT'},
     {name: '홍지오', grade: 'PT'}
-];*/
+];
 
 
 // convert schedule excel > json
@@ -263,6 +264,7 @@ Excel.onchange = () => {
     weekPayTable.style.display = "block";
     payPerDayTable.style.display = "block";
     roster.style.display = "block";
+    tables.style.display = "block";
     excelToJson( data => {
         const tableDate =  data.tableDate;
         delete data['tableDate'];
