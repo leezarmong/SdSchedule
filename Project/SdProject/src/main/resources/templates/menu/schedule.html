@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+ 	<title>Schedule</title>
 	<link rel="stylesheet" href="./css/index.css" />
 	<link rel="stylesheet" href="./css/header.css" />
 	<link rel="stylesheet" href="./css/schedule.css" />
@@ -12,12 +13,10 @@
     <header>
         <nav>
             <div class="logo">
-                <img src="./img/logo.png" id="logo" width="110" alt="">
+            
+                    <a href="/" style="color: white;"><img src="./img/logo.png" id="logo" width="110" alt=""></a>
             </div>
             <ul class="nav-links">
-                <li>
-                    <a href="/" style="color: white;">Home</a>
-                </li>
                 <li th:if="${session.user != null and session.user.user_id != 'admin'}">
                     <a href="memberpage" style="color: white;">Memberpage</a>
                 </li>
