@@ -1,6 +1,7 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
 body {
+    font-family: "Poppins", sans-serif; /* 글씨체 코드 추가 */
     margin: 0;
-    font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
 
@@ -25,6 +26,7 @@ nav {
     list-style: none;
     display: flex;
     gap: 1rem;
+    margin: 1rem 0; /* 헤더 이거 추가하면 통일될거 같음 */
 }
 
 .nav-links li a,
