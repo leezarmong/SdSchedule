@@ -1,0 +1,187 @@
+@charset "UTF-8";
+
+.explore-menu {
+  border: none;
+  background: none;
+  outline: none;
+  color: #F9E7C5;
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 800;
+  font-family: "Poppins", Arial;
+  display: block;
+  position: relative;
+  cursor: pointer;
+  width: 160px;
+  text-align: center;
+  border-radius: 26px;
+  padding: 0;
+  margin: 0;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--transform-duration, 0.4s);
+  will-change: transform;
+  transform-style: preserve-3d;
+  transform: perspective(480px) rotateX(calc(var(--rotate, 0deg) + var(--rx, 0deg))) rotateY(calc(0deg + var(--ry, 0deg))) translateZ(0);
+}
+.explore-menu:hover {
+  --rotate: 18deg;
+  --easing: cubic-bezier(.8, .5, .2, 1.4);
+  --transform-duration: .15s;
+  --duration: .5s;
+  --top-y: -3px;
+  --top-z: 36px;
+  --pickle-x: 0;
+  --pickle-z: 5px;
+  --ketchup-y: -2px;
+  --ketchup-s: 1;
+  --ketchup-z: 28px;
+  --salad-s: 1;
+  --salad-z: 24px;
+  --cheese-y: 2px;
+  --cheese-s: 1;
+  --cheese-z: 16px;
+  --beef-y: 2px;
+  --beef-s: 1;
+  --beef-z: 4px;
+  --bottom-y: 2px;
+  --bottom-s: 1;
+  --pickle-y: 0;
+}
+.explore-menu:hover:after {
+  box-shadow: 36px 4px 0px rgba(0, 0, 0, 0.06), 16px 12px 0px rgba(0, 0, 0, 0.06), 20px 8px 0px rgba(0, 0, 0, 0.06);
+}
+.explore-menu:active {
+  --duration: .25s;
+  --rotate: 16deg;
+  --pickle-x: 2px;
+  --top-y: -1px;
+  --top-z: 24px;
+  --ketchup-y: 0px;
+  --ketchup-s: .975;
+  --ketchup-z: 20px;
+  --salad-s: .975;
+  --salad-z: 16px;
+  --cheese-y: 1px;
+  --cheese-s: .975;
+  --cheese-z: 12px;
+  --beef-y: 1px;
+  --beef-s: .965;
+  --beef-z: 2px;
+  --bottom-y: 1px;
+  --bottom-s: .975;
+}
+.explore-menu:active:after {
+  box-shadow: 24px 3px 0px rgba(0, 0, 0, 0.08), 10px 8px 0px rgba(0, 0, 0, 0.08), 16px 4px 0px rgba(0, 0, 0, 0.08);
+}
+.explore-menu .top {
+  position: relative;
+  z-index: 7;
+  padding: 12px 0;
+  background: radial-gradient(55% 165% at 50% 50%, #F0A151 0%, #D18334 100%);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2), inset 0px -2.5px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 26px;
+  text-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.15);
+  transform: translateY(var(--top-y, 0)) translateZ(var(--top-z, 1px));
+  transition: transform var(--duration, 0.3s) var(--easing, ease);
+}
+.explore-menu:before, .explore-menu:after {
+  content: "";
+  display: block;
+  position: absolute;
+}
+.explore-menu:before {
+  left: -2px;
+  top: 16px;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #A7BE5B;
+  box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.25);
+  transform: translateX(var(--pickle-x, 8px)) translateZ(var(--pickle-z, 0));
+  transition: transform var(--duration, 0.3s) var(--easing, ease);
+}
+.explore-menu:after {
+  position: absolute;
+  left: -2px;
+  top: 0;
+  width: 164px;
+  height: 53px;
+  background: #B1612E;
+  border-radius: 26px;
+  transform: translateY(var(--bottom-y, 0)) scale(var(--bottom-s, 0.8)) translateZ(0);
+  transition: transform var(--duration, 0.3s) var(--easing, ease), box-shadow var(--duration, 0.3s) var(--easing, ease);
+}
+.explore-menu .ketchup,
+.explore-menu .salad,
+.explore-menu .cheese {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 160px;
+  transition: transform var(--duration, 0.3s) var(--easing, ease);
+}
+.explore-menu .ketchup {
+  z-index: 6;
+  height: 54px;
+  fill: #D14253;
+  transform: translateY(var(--ketchup-y, 0)) scale(var(--ketchup-s, 0.9)) translateZ(var(--ketchup-z, 0));
+}
+.explore-menu .salad {
+  z-index: 5;
+  height: 52px;
+  fill: #5B9A70;
+  transform: scale(var(--salad-s, 0.8)) translateZ(var(--salad-z, 0));
+}
+.explore-menu .cheese {
+  z-index: 4;
+  height: 53px;
+  fill: #F89931;
+  transform: translateY(var(--cheese-y, 0)) scale(var(--cheese-s, 0.8)) translateZ(var(--cheese-z, 0));
+}
+.explore-menu .beef {
+  z-index: 2;
+  position: absolute;
+  left: -4px;
+  top: 0;
+  width: 168px;
+  height: 51px;
+  border-radius: 26px;
+  background: #6D392D;
+  box-shadow: inset 0px -2.5px 0px rgba(0, 0, 0, 0.25);
+  transform: translateY(var(--beef-y, 0)) scale(var(--beef-s, 0.75)) translateZ(var(--beef-z, 0));
+  transition: transform var(--duration, 0.3s) var(--easing, ease);
+}
+.explore-menu .beef:before, .explore-menu .beef:after {
+  content: "";
+  display: block;
+  position: absolute;
+}
+.explore-menu .beef:before {
+  background: #000;
+  opacity: 0.25;
+  width: 10px;
+  height: 36px;
+  border-radius: 5px;
+  position: absolute;
+  left: 9px;
+  bottom: 8px;
+  box-shadow: 16px 3px 0 #000, 32px 3px 0 #000, 48px 3px 0 #000, 63px 3px 0 #000, 78px 3px 0 #000, 93px 3px 0 #000, 108px 3px 0 #000, 124px 3px 0 #000, 140px 0 0 #000;
+}
+.explore-menu .beef:after {
+  left: 97px;
+  top: 21px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #A7BE5B;
+  box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.25);
+  transform: translateY(var(--pickle-y, -6px)) translateZ(0);
+  transition: transform var(--duration, 0.3s) var(--easing, ease);
+}
+
+
