@@ -202,6 +202,7 @@
                         <div th:if="${member.user_id == 'sd-gang'}">강남점</div>
                         <div th:if="${member.user_id == 'sd-coex'}">코엑스점</div>
                         <div th:if="${member.user_id == 'sd-hong'}">홍대점</div>
+                        <div th:if="${member.user_id == 'test'}">test</div>
                     </td>
                     <td>
                         <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 

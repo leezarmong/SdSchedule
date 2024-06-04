@@ -51,3 +51,7 @@ select * from member where user_id ='a';
 
 
 select * from member;
+
+select * from userc;
+
+insert into userc values ('test','001');
