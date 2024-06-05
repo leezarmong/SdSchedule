@@ -2,7 +2,7 @@ package com.sd.schedule.pager;
 
 public class Pager {
 	public static final int PAGE_SCALE = 10;// 페이지당 게시물수
-	public static final int BLOCK_SCALE = 5;// 화면당 페이지수
+	public static final int BLOCK_SCALE = 10;// 화면당 페이지수
 
 	private int curPage;	// 현재 페이지
 	private int prevPage;	// 이전 페이지
@@ -29,24 +29,26 @@ public class Pager {
 	}
 
 	public void setBlockRange() {
-		// 원하는 페이지가 몇번째 블록에 속하는지 계산
-		curBlock = (int) Math.ceil((curPage - 1) / BLOCK_SCALE) + 1;
-		// 블록의 시작페이지,끝페이지 번호 계산
-		blockBegin = (curBlock - 1) * BLOCK_SCALE + 1;
-		blockEnd = blockBegin + BLOCK_SCALE - 1;
+	    // 원하는 페이지가 몇번째 블록에 속하는지 계산
+	    curBlock = (int) Math.ceil((double) curPage / BLOCK_SCALE);
+	    
+	    // 블록의 시작페이지,끝페이지 번호 계산
+	    blockBegin = (curBlock - 1) * BLOCK_SCALE + 1;
+	    blockEnd = blockBegin + BLOCK_SCALE - 1;
 
-		// 마지막 페이지 번호가 범위를 초과하지 않도록 처리
-		if (blockEnd > totPage) {
-			blockEnd = totPage;
-		}
-		// [이전],[다음]을 눌렀을 때 이동할 페이지 번호
-		prevPage = (curBlock == 1) ? 1 : (curBlock - 1) * BLOCK_SCALE;
-		nextPage = curBlock > totBlock ? (curBlock * BLOCK_SCALE) : (curBlock * BLOCK_SCALE) + 1;
-		// 마지막 페이지가 범위를 초과하지 않도록 처리
-
-		if (nextPage >= totPage) {
-			nextPage = totPage;
-		}
+	    // 마지막 페이지 번호가 범위를 초과하지 않도록 처리
+	    if (blockEnd > totPage) {
+	        blockEnd = totPage;
+	    }
+	    
+	    // [이전],[다음]을 눌렀을 때 이동할 페이지 번호
+	    prevPage = (curBlock == 1) ? 1 : (curBlock - 1) * BLOCK_SCALE;
+	    nextPage = curBlock < totBlock ? (curBlock * BLOCK_SCALE) + 1 : totPage;
+	    
+	    // 마지막 페이지가 범위를 초과하지 않도록 처리
+	    if (nextPage > totPage) {
+	        nextPage = totPage;
+	    }
 	}
 
 	// 블록의 갯수 계산

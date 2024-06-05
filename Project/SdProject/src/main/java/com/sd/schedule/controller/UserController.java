@@ -3,7 +3,7 @@ package com.sd.schedule.controller;
 
 
 import java.time.LocalDateTime;
-
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -42,12 +42,14 @@ public class UserController {
 	
 	// 로그인
 	@PostMapping("/login")
-	public String login(UserVO vo , HttpSession session, BindingResult bindingResult, HttpServletResponse response) {
-		UserVO user = userService.login(vo);
+	public String login(UserVO vo, HttpSession session, BindingResult bindingResult, HttpServletResponse response) {
+	    UserVO user = userService.login(vo);
 	    LocalDateTime now = LocalDateTime.now();
-	    System.out.println(user.getUser_id()+"님이 "  +now.getYear()+"년 "+ now.getHour()+"시 "+now.getMinute()+"분 에 로그인 했습니다. ");
 	    
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일 EEEE HH시 mm분");
+	    String formattedDate = now.format(formatter);
 	    
+	    System.out.println(user.getUser_id() + "님이 " + formattedDate + "에 로그인 했습니다.");
 	    
 	    if (user != null) {
 	        session.setAttribute("user", user);

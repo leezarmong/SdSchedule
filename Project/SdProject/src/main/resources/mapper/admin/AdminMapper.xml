@@ -8,29 +8,38 @@
 
 	<!-- 관리자 전용 멤버 리스트 -->
 	<select id="getAdminMemberList" resultType="com.sd.schedule.model.member.MemberVO">
-		<![CDATA[
-		    SELECT 
-		       *
-		    FROM (
-		        SELECT ROWNUM AS RN, A.* 
-		        FROM (
-		            SELECT * 
-		            FROM MEMBER 
-		            ORDER BY MEMBER_GRADE, MEMBER_NO
-		        ) A
-		    ) 
-		    WHERE RN BETWEEN #{start} AND #{end}
-		    ORDER BY CASE 
-		        WHEN MEMBER_GRADE = 'SM' THEN 1 
-		        WHEN MEMBER_GRADE = 'VSM' THEN 2 
-		        WHEN MEMBER_GRADE = 'MGR' THEN 3 
-		        WHEN MEMBER_GRADE = 'CT' THEN 4 
-		        WHEN MEMBER_GRADE = 'EMP' THEN 5 
-		        WHEN MEMBER_GRADE = 'PT' THEN 6 
-		        ELSE 7 
-		    END, MEMBER_NO
-		]]> 
-	</select>
+<![CDATA[
+    SELECT *
+    FROM (
+        SELECT ROWNUM AS RN, A.* 
+        FROM (
+            SELECT * 
+            FROM MEMBER 
+            ORDER BY 
+                CASE
+                    WHEN USER_ID = 'sd-gang' THEN 1
+                    WHEN USER_ID = 'sd-hong' THEN 2
+                    WHEN USER_ID = 'sd-coex' THEN 3
+                    WHEN USER_ID = 'test' THEN 4
+                    ELSE 5
+                END,
+                CASE 
+                    WHEN MEMBER_GRADE = 'SM' THEN 1 
+                    WHEN MEMBER_GRADE = 'VSM' THEN 2 
+                    WHEN MEMBER_GRADE = 'MGR' THEN 3 
+                    WHEN MEMBER_GRADE = 'CT' THEN 4 
+                    WHEN MEMBER_GRADE = 'EMP' THEN 5 
+                    WHEN MEMBER_GRADE = 'PT' THEN 6 
+                    ELSE 7 
+                END,
+                MEMBER_NO
+        ) A
+    ) 
+    WHERE RN BETWEEN #{start} AND #{end}
+    ORDER BY RN
+]]>
+</select>
+
 	
 	<!-- 관리자 전용 멤버 수 카운트 -->
 	<select id="adminCountMember" resultType="java.lang.Integer">
