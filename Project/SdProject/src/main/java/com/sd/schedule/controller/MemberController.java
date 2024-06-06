@@ -139,5 +139,10 @@ public class MemberController {
 		memberService.updateMember(vo);
 		return  "redirect:memberpage";
 	}
+	
+	@GetMapping("/renewal")
+	public String renewal () {
+		return "member/renewal";
+	}
 
 }

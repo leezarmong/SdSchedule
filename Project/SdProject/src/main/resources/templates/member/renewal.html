@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+퇴사한 직원이 많을경우 한번에 리뉴얼 해주는 페이지 입니다.<br>
+엑셀 파일을 업로드 할 시 엑셀에 없는 직원들을 추출하여
+DB 에서 삭제 후 memberPage 의 직원들을 리뉴얼 해줍니다. <br><br>
+신입으로 들어온 직원은 이전과 동일하게 insert 해주면 됩니다.<br><br>
+ 
+
+				<!-- 파일 업로드 폼 -->
+		        <form method="post" enctype="multipart/form-data" action="/uploadExcel"  >
+		            <input type="file" name="file" required ><br>
+		            <button type="submit">멤버 정리</button>
+		        </form>
+
+</body>
+</html>

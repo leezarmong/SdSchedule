@@ -131,94 +131,98 @@
         </nav>
     </header>
 
-    <div class="container mt-5">
-        <h1>Member Page</h1>
-        <div class="row justify-content-end">
-            <div class="col-auto">
-            
-            <div id="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="name" id="name" placeholder="MemberSearch">
-                    <div class="input-group-append" style="margin-bottom: 10px;">
-                        <button class="btn btn-outline-secondary" onclick="searchMember()" type="button">Search</button>
-                    </div>
+   <div class="container mt-5">
+    <h1>Member Page</h1>
+    <div class="row justify-content-end">
+        <div class="col-auto">
+        
+        <div id="search">
+            <div class="input-group">
+                <input type="text" class="form-control" name="name" id="name" placeholder="MemberSearch">
+                <div class="input-group-append" style="margin-bottom: 10px;">
+                    <button class="btn btn-outline-secondary" onclick="searchMember()" type="button">Search</button>
                 </div>
             </div>
-                
-            </div>
         </div>
-        <div id="login">
-        
-        <!-- 매장 필터 -->
-        <div th:if="${session.user.user_id == 'sd-gang'}" style="font-size: 25px;">강남점 입니다. </div>
-        <div th:if="${session.user.user_id == 'sd-coex'}" style="font-size: 25px;">코엑스점 입니다. </div>
-        <div th:if="${session.user.user_id == 'sd-hong'}" style="font-size: 25px;">홍대점 입니다. </div>
-        <div th:if="${session.user.user_id == 'test'}" style="font-size: 25px;">test 계정 입니다. </div>
-        <!--  -->
-       <div th:text="${count}+' 명'" style="font-size: 20px;"></div>
-        
-        
-        <!-- insert 하기위한 session user_id-->
-        <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
-        
-            <input type="text" id="member_name" class="form-control" placeholder="Enter member name">
-            <select id="member_grade" class="form-control mt-2">
-                <option value="null">Select Member Grade</option>
-                <option value="SM">SM</option>
-                <option value="VSM">VSM</option>
-                <option value="MGR">MGR</option>
-                <option value="CT">CT</option>
-                <option value="EMP">EMP</option>
-                <option value="PT">PT</option>
-            </select><br>
-            <input type="button" class="btn btn-primary" value="Insert" onclick="insert()">
-  
+            
+        </div>
+    </div>
+    <div id="login">
+    
+    <!-- 매장 필터 -->
+    <div th:if="${session.user.user_id == 'sd-gang'}" style="font-size: 25px;">강남점 입니다. </div>
+    <div th:if="${session.user.user_id == 'sd-coex'}" style="font-size: 25px;">코엑스점 입니다. </div>
+    <div th:if="${session.user.user_id == 'sd-hong'}" style="font-size: 25px;">홍대점 입니다. </div>
+    <div th:if="${session.user.user_id == 'test'}" style="font-size: 25px;">test 계정 입니다. </div>
+    <!--  -->
+    <div th:text="${count}+' 명'" style="font-size: 20px;"></div>
+          
+    <!-- insert 하기위한 session user_id-->
+    <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
+    
+    <div style="position: relative;">
+        <input type="text" id="member_name" class="form-control" placeholder="Enter member name">
+        <select id="member_grade" class="form-control mt-2">
+            <option value="null">Select Member Grade</option>
+            <option value="SM">SM</option>
+            <option value="VSM">VSM</option>
+            <option value="MGR">MGR</option>
+            <option value="CT">CT</option>
+            <option value="EMP">EMP</option>
+            <option value="PT">PT</option>
+        </select><br>
+        <input type="button" class="btn btn-primary" value="Insert" onclick="insert()">
+        <input type="button" class="btn btn-danger" value="멤버 리뉴얼" onclick="renewal()">
+		 
+       
+    </div>
+    
+    </div>
+    <table class="table table-striped mt-2">
+        <thead class="thead-dark">
+            <tr>
+                <th>Member Name</th>
+                <th>Member Grade</th>
+            </tr>
+        </thead>
+        <tbody th:if="${map.list.isEmpty()}">
+            <tr>
+                <td colspan="3">등록된 멤버가 없습니다.</td>
+            </tr>
+        </tbody>
+        <tbody th:unless="${map.list.size() == 0}">
+            <tr th:each="member : ${map.list}">
+                <td>
+                    <a th:href="'searchMember?name=' + ${member.member_name}">
+                        <span th:text="${member.member_name}"></span>
+                    </a>
+                </td>
+                <td th:text="${member.member_grade}"></td>
+            </tr>
+        </tbody>
+    </table>
 
-        </div>
-        <table class="table table-striped mt-2">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Member Name</th>
-                    <th>Member Grade</th>
-                </tr>
-            </thead>
-            <tbody th:if="${map.list.isEmpty()}">
-                <tr>
-                    <td colspan="3">등록된 멤버가 없습니다.</td>
-                </tr>
-            </tbody>
-            <tbody th:unless="${map.list.size() == 0}">
-                <tr th:each="member : ${map.list}">
-                    <td>
-                        <a th:href="'searchMember?name=' + ${member.member_name}">
-                            <span th:text="${member.member_name}"></span>
-                        </a>
-                    </td>
-                    <td th:text="${member.member_grade}"></td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- pager -->
+    <div class="pagination justify-content-center" style="margin-bottom: 100px;">
+        <ul class="pagination">
+            <th:block th:if="${map.pager.curBlock > 1}">
+                <li class="page-item"><a class="page-link" th:href="@{/memberpage(curPage=1)}">처음</a></li>
+                <li class="page-item"><a class="page-link" th:href="@{/memberpage(curPage=${map.pager.prevPage})}">이전</a></li>
+            </th:block>
+            <th:block th:each="num : ${#numbers.sequence(map.pager.blockBegin, map.pager.blockEnd)}">
+                <li class="page-item" th:classappend="${num == map.pager.curPage} ? 'active'">
+                    <a class="page-link" th:href="@{/memberpage(curPage=${num})}" th:text="${num}"></a>
+                </li>
+            </th:block>
+            <th:block th:if="${map.pager.curBlock < map.pager.totBlock}">
+                <li class="page-item"><a class="page-link" th:href="@{/memberpage(curPage=${map.pager.nextPage})}">다음</a></li>
+                <li class="page-item"><a class="page-link" th:href="@{/memberpage(curPage=${map.pager.totPage})}">끝</a></li>
+            </th:block>
+        </ul>
+    </div>
+    
+</div>
 
-        <!-- pager -->
-        <div class="pagination justify-content-center" style="margin-bottom: 100px;">
-            <ul class="pagination">
-                <th:block th:if="${map.pager.curBlock > 1}">
-                    <li class="page-item"><a class="page-link" th:href="@{/memberpage(curPage=1)}">처음</a></li>
-                    <li class="page-item"><a class="page-link" th:href="@{/memberpage(curPage=${map.pager.prevPage})}">이전</a></li>
-                </th:block>
-                <th:block th:each="num : ${#numbers.sequence(map.pager.blockBegin, map.pager.blockEnd)}">
-                    <li class="page-item" th:classappend="${num == map.pager.curPage} ? 'active'">
-                        <a class="page-link" th:href="@{/memberpage(curPage=${num})}" th:text="${num}"></a>
-                    </li>
-                </th:block>
-                <th:block th:if="${map.pager.curBlock < map.pager.totBlock}">
-                    <li class="page-item"><a class="page-link" th:href="@{/memberpage(curPage=${map.pager.nextPage})}">다음</a></li>
-                    <li class="page-item"><a class="page-link" th:href="@{/memberpage(curPage=${map.pager.totPage})}">끝</a></li>
-                </th:block>
-            </ul>
-        </div>
-        
-    </div> 
     <script type="text/javascript">
         /* 엔터키 멤버 추가 */
         $(document).ready(function () {
@@ -252,6 +256,15 @@
             if (confirm("로그아웃하시겠습니까?")) {
                 location.href = 'logout';
             }
+        }
+        
+        /* 멤버 리뉴얼 renewal 팝업 */
+        function renewal() {
+            var width = 400;
+            var height = 400;
+            var left = (screen.width - width) / 2;
+            var top = (screen.height - height) / 2;
+            window.open('renewal', 'renewal', `width=${width},height=${height},top=${top},left=${left}`);
         }
     </script>
 
