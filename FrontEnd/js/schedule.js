@@ -2,7 +2,8 @@ import {
     numberWithCommas,
     halfMinuteConverter,
     numToHourMinuteConverter,
-    getDateFromExcel
+    getDateFromExcel,
+    isNumber
 } from "./util.js";
 
 const Excel = document.getElementById("excel-upload");
@@ -71,24 +72,40 @@ const excelToJson = async (callback) => {
     await readXlsxFile(Excel.files[0]).then(data=>{
         // code for work table body
         // data > Json convert as I want
-        const Json = [];
+        const Json = {};
+        const Loss = []; // db상에 없지만 엑셀 상에 존재했던 이름들을 저장하는 배열
         let tableDate = [];
         // loop as count of data's row
         for(let i = 0; i < data.length; i++){
-            // data[i][0], data[i][11] = 이름
-            let arrid = '';
+            if(i == 50) {break}
+            let tempName = '';  // 공백과 엔터를 기준으로 자른 이름이라 분류된 문자
+            let arrid = ''; // DB에 존재하는 이름이면 해당 변수에 저장
+            let Qid = ''; // DB에 존재하지 않는 이름이면 해당 변수에 저장
             // 시간표가 1번째 줄(a(=0)), 12번째 줄(l(=11)) 2곳에서 각기 시작하므로 2번 반복
             for(let f = 0; f < 2; f++){
                 // \n 또는 공백이 있을 경우 해당 문자를 기준으로 앞쪽에 있던 글자를 arrid 에 저장
                 // \n 또는 공백이 없을 경우 arrid 를 빈문자로 선언
+                const nameCell = (                                                      // 엑셀에서 이름이 들어갔을 칸에 있는 데이터
+                    !isNumber(data[i][11*f]) && data[i][11*f] != null                   // 그 값이 숫자거나 null 이면 일단 배제
+                    && data[i][11*f] != "OP Shift" && data[i][11*f] != "CL Shift"       // 그 값이 OP Shift, CL Shift 여도 배제
+                ) ? String(data[i][11*f]) : '';
+                let spaceIndex = nameCell.indexOf(' ');
+                let enterIndex = nameCell.indexOf('\n');
+                if(spaceIndex > 0 && enterIndex > 0){
+                    tempName = (spaceIndex > enterIndex) ? nameCell.split(' ')[0] : nameCell.split('\n')[0];
+                }else if(spaceIndex > 0 && enterIndex < 0){
+                    tempName = nameCell.split(' ')[0];
+                }else if(spaceIndex < 0 && enterIndex > 0){
+                    tempName = nameCell.split('\n')[0];
+                }else if(spaceIndex < 0 && enterIndex < 0){
+                    tempName = nameCell;
+                };
                 if(
-                    memberList.map(el=>el.name).includes(String(data[i][11*f]).split('\n')[0])
+                    memberList.map(el=>el.name).includes(tempName)
                 ){
-                    arrid = String(data[i][11*f]).split('\n')[0];
-                }else if(
-                    memberList.map(el=>el.name).includes(String(data[i][11*f]).split(' ')[0])
-                ){
-                    arrid = String(data[i][11*f]).split(' ')[0];
+                    arrid = tempName;
+                }else{
+                    Qid = tempName;
                 };
                 // arrid 가 빈문자가 아닌경우
                 if(
@@ -124,6 +141,10 @@ const excelToJson = async (callback) => {
                     Json[arrid]=tempArr;
                     // arrid 값 초기화
                     arrid = '';
+                }else if(
+                    Qid != ''
+                ){
+                    Loss.push(Qid);
                 };
             };
             if(String(data[i][1])==="주차" && tableDate.length < 7){
@@ -139,6 +160,7 @@ const excelToJson = async (callback) => {
             sortedJson[key] = Json[key];
         });
         returnData = sortedJson;
+        returnData.Loss = Loss;
         returnData.tableDate = tableDate;
     });
     callback(returnData)
@@ -146,7 +168,21 @@ const excelToJson = async (callback) => {
 
 // run. if detected excel upload
 Excel.onchange = () => {
+    // 주급 계산 테이블 작성
     excelToJson( data => {
+        const Loss =  data.Loss;
+        if(Loss.length > 0){
+            let lossList = Loss.map(el=>` "${el}"`);
+            alert(`
+등록되지 않은 멤버가 있습니다.
+해당 멤버는 MemberPage에서 등록 후 반영됩니다.
+
+<등록되지 않은 멤버>
+${lossList}
+            `);
+        };
+        console.log(Loss)
+        delete data['Loss'];
         delete data['tableDate'];
         const sortedJson = data;
         console.log(sortedJson)
@@ -265,8 +301,10 @@ Excel.onchange = () => {
     payPerDayTable.style.display = "block";
     roster.style.display = "block";
     tables.style.display = "block";
+    // 로스터 테이블 작성
     excelToJson( data => {
         const tableDate =  data.tableDate;
+        delete data['Loss'];
         delete data['tableDate'];
         const sortedJson_key = Object.keys(data);
         const sortedJson_value = Object.values(data);
