@@ -43,5 +43,6 @@ public interface MemberMapper {
 	//멤버 업데이트
 	public void updateMember (MemberVO vo);
 	
-
+	//불필요 멤버 전체 삭제
+	public void deleteMembers(@Param("list") List<MemberVO> members);
 }

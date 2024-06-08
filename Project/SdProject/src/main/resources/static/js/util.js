@@ -17,6 +17,9 @@ export function getDateFromExcel (numb){
     date2.setTime(date.getTime() + ((numb - 2) * 24 * 60 * 60 * 1000));
     return date2.getFullYear()+ "년 " + ("0" + (date2.getMonth()+1)).slice(-2) + "월 " + ("0" + date2.getDate()).slice(-2) + "일";
 };
+export function isNumber(value) {
+    return typeof value === 'number';
+};
 // export function getDateBy (numb){
 //     var date = new Date();
 //     var date2 = new Date();

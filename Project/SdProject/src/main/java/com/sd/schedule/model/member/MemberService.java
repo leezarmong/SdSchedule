@@ -1,8 +1,10 @@
 package com.sd.schedule.model.member;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface MemberService {
 	
@@ -34,5 +36,8 @@ public interface MemberService {
 	
 	//멤버 업데이트
 	public void updateMember (MemberVO vo);
+	
+	//엑셀 데이터 추출
+	public List<String> processExcelFile(MultipartFile file, String user_id)throws IOException;
 
 }

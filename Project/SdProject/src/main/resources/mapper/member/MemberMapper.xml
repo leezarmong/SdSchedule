@@ -12,6 +12,15 @@
 		resultType="com.sd.schedule.model.member.MemberVO">
 		 select * from member where user_id = #{user_id} order by member_no
 	</select>
+	
+	
+	<!-- 불필요 멤버 전체 삭제 -->
+	<delete id="deleteMembers">
+		delete from member where member_name in
+		<foreach item="member" collection="list" open="(" separator="," close=")">
+			#{member.member_name}
+		</foreach>
+	</delete>
 
 	<!-- 멤버 리스트(페이지) -->
 	<!--  <select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">

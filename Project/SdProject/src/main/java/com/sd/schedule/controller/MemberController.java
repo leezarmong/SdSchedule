@@ -1,5 +1,6 @@
 package com.sd.schedule.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 
@@ -14,8 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sd.schedule.model.member.MemberService;
 import com.sd.schedule.model.member.MemberVO;
@@ -144,5 +147,28 @@ public class MemberController {
 	public String renewal () {
 		return "member/renewal";
 	}
+	
+	@PostMapping("/uploadExcel")
+	public ResponseEntity<List<String>> uploadExcel(@RequestParam("file") MultipartFile file, HttpSession session, MemberVO vo) {
+	    try {
+	        UserVO user = (UserVO) session.getAttribute("user");
+	        String user_id = user.getUser_id();
+	        vo.setUser_id(user_id);
+	        List<String> membersToDelete = memberService.processExcelFile(file, user_id);
+	        return ResponseEntity.ok(membersToDelete);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	        /*
+	         * 이 코드는 예외 처리 시 서버에서 문제가 발생했음을 클라이언트에게 알리는 역할을 합니다. 
+	         * 예를 들어, 파일 처리 중에 IOException이 발생했을 때, 
+	         * 클라이언트는 500 상태 코드를 통해 서버에서 문제가 발생했음을 알 수 있습니다.
+	         * */
+	    }
+	}
+	
+	
+	
+
 
 }
