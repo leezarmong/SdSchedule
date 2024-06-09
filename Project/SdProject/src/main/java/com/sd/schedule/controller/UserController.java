@@ -55,7 +55,7 @@ public class UserController {
 	   String clientIP = userService.getRemoteIP(request);
 	   
 	   // 재원 ip
-	    if(clientIP.equals("220.117.84.163") ||clientIP.equals("127.0.0.1") || clientIP.equals("223.38.11.106") ) {
+	    if(clientIP.equals("220.117.84.163") ||clientIP.equals("127.0.0.1") ) {
 	    	clientIP = "재원";
 	    }
 	    
