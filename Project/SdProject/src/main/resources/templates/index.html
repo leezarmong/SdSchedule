@@ -20,6 +20,7 @@
     
 </head>
 
+
 <script>
     /* 로그인 팝업 */
     function openLoginPopup() {
@@ -135,7 +136,7 @@
             </div>
             <br>
             <div th:if="${session.user != null}">
-                <input type="button" id="roster" value="Go to Roster" onclick="location.href='schedule'">
+                <button class="custom-btn btn-5" onclick="location.href='schedule'"><span style="font-size: 15px;">Go to Roster</span></button>
             </div>
             <div th:if="${session.user == null}" style="font-size: 20px;">
                 로그인 후 이용 해 주세요.
@@ -147,7 +148,7 @@
         <section id="services" class="services-section">
             <h2>UPDATE</h2>
             <p>1. 2024/06/08 Roster 출력하기 위해 새로 들어온 직원을 memberPage에 등록하지 않을 경우 Roster에 반영되지 않을 수 있음을 알리는 경고 창을 활성화하였습니다.</p>
-            <p>2. 2024/06/08 퇴사한 직원들이 많을 경우 리뉴얼 해주는 버튼을 생성하였습니다. ( Excel에는 퇴사하여 없지만 memberPage{DB}에 남아 있는 경우 대비 -메모리 관리 목적-)</p>
+            <p>2. 2024/06/08 퇴사한 직원들이 많을 경우 리뉴얼 해주는 버튼을 생성하였습니다. ( Excel에는 퇴사하여 없지만 memberPage DB 에 남아 있는 경우 대비 -메모리 관리 목적-)</p>
         </section>
         
         <section id="contact" class="contact-section">
@@ -162,7 +163,7 @@
     </main>
     
     <footer>
-        <p>&copy; Made by Jaewon and Yejun - Alpha Version 2.03 ( 2024.4.25 ~ )</p>
+        <p>&copy; Made by Jaewon and Yejun - Beta Version 1.01 ( 2024.4.25 ~ )</p>
     </footer>
 </body>
 </html>
