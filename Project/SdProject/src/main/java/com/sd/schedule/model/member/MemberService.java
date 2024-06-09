@@ -14,7 +14,6 @@ public interface MemberService {
 	//멤버 리스트(페이)
 	public List<MemberVO> getMemberList(MemberVO vo, int start, int end);
 	
-
 	
 	//멤버 입력
 	public void insertMember (MemberVO vo);

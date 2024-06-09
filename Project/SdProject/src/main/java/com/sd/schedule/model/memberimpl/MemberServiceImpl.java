@@ -87,12 +87,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	//엑셀 데이터 추출
-	@Override
+	@Override								// MultipartFile = 파일 업로드 클래스
 	public List<String> processExcelFile(MultipartFile file, String user_id) throws IOException {
 	    List<String> excelMemberNames = new ArrayList<>();  // 엑셀에서 추출된 멤버 이름 리스트
 	    List<String> membersToDeleteNames = new ArrayList<>();  // 삭제해야 할 멤버 이름 리스트
 
 	    try (InputStream inputStream = file.getInputStream(); Workbook workbook = new XSSFWorkbook(inputStream)) {
+    															// 'Workbook'은 Excel 파일을 포함한 Microsoft 문서용 Java API인 Apache POI 라이브러리의 클래스
 	        Sheet sheet = workbook.getSheetAt(0);  // 첫 번째 시트를 가져옴
 	        if (sheet == null) {
 	            throw new IOException("Sheet not found");
@@ -100,7 +101,7 @@ public class MemberServiceImpl implements MemberService {
 
 	        // A 열에서 이름을 읽음 (A7, A9, A11, ..., A39)
 	        for (int i = 6; i <= 38; i += 2) {
-	            Row row = sheet.getRow(i);
+	            Row row = sheet.getRow(i);	// 행
 	            if (row != null) {
 	                Cell cell = row.getCell(0);  // A 열
 	                if (cell != null) {
@@ -114,7 +115,7 @@ public class MemberServiceImpl implements MemberService {
 
 	        // L 열에서 이름을 읽음 (L3, L5, L7, ..., L39)
 	        for (int i = 2; i <= 38; i += 2) {
-	            Row row = sheet.getRow(i);
+	            Row row = sheet.getRow(i);	// 행
 	            if (row != null) {
 	                Cell cell = row.getCell(11);  // L 열
 	                if (cell != null) {
@@ -157,13 +158,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	
-	//numeric 오류 대비 메소드
+	//numeric 오류 대비 String으로 변환 메소드
 	private String getCellValueAsString(Cell cell) {
 	    switch (cell.getCellType()) {
 	        case STRING:
 	            return cell.getStringCellValue();
 	        case NUMERIC:
-	            if (DateUtil.isCellDateFormatted(cell)) {
+	            if (DateUtil.isCellDateFormatted(cell)) {	// 날짜 형식이면 날짜 값을 문자열 반환
 	                return cell.getDateCellValue().toString();
 	            } else {
 	                return String.valueOf((int) cell.getNumericCellValue());
@@ -183,7 +184,7 @@ public class MemberServiceImpl implements MemberService {
 	                    return String.valueOf((int) cellValue.getNumberValue());
 	                case BOOLEAN:
 	                    return String.valueOf(cellValue.getBooleanValue());
-	                case BLANK:
+	                case BLANK:		// 빈 셀 빈 문자열 반환
 	                    return "";
 	                default:
 	                    return "";

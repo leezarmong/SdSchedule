@@ -20,6 +20,7 @@ import com.sd.schedule.model.user.UserService;
 import com.sd.schedule.model.user.UserVO;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
@@ -42,14 +43,19 @@ public class UserController {
 	
 	// 로그인
 	@PostMapping("/login")
-	public String login(UserVO vo, HttpSession session, BindingResult bindingResult, HttpServletResponse response) {
+	public String login(UserVO vo, HttpSession session, BindingResult bindingResult, HttpServletResponse response, HttpServletRequest request) {
 	    UserVO user = userService.login(vo);
 	    LocalDateTime now = LocalDateTime.now();
 	    
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일 EEEE HH시 mm분");
 	    String formattedDate = now.format(formatter);
 	    
-	    System.out.println(user.getUser_id() + "님이 " + formattedDate + "에 로그인 했습니다.");
+	   
+	   //client IP 가져오기 
+	   String clientIP = userService.getRemoteIP(request);
+	   
+	    
+	    System.out.println(user.getUser_id() + "님이 " + formattedDate + "에 로그인 했습니다. IP >> "+clientIP);
 	    
 	    if (user != null) {
 	        session.setAttribute("user", user);

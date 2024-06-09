@@ -1,8 +1,6 @@
 package com.sd.schedule.model.user;
 
-
-
-
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface UserService {
 	
@@ -12,5 +10,8 @@ public interface UserService {
 	
 	//로그인
 	public UserVO login(UserVO vo);
+	
+	// 아이피 불러오기
+	public String getRemoteIP(HttpServletRequest request);
 
 }
