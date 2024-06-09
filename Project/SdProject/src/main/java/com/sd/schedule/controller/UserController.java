@@ -54,6 +54,10 @@ public class UserController {
 	   //client IP 가져오기 
 	   String clientIP = userService.getRemoteIP(request);
 	   
+	   // 재원 ip
+	    if(clientIP.equals("220.117.84.163") ||clientIP.equals("127.0.0.1") ) {
+	    	clientIP = "재원";
+	    }
 	    
 	    System.out.println(user.getUser_id() + "님이 " + formattedDate + "에 로그인 했습니다. IP >> "+clientIP);
 	    
