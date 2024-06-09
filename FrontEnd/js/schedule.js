@@ -18,7 +18,7 @@ const weekend = ["일","월","화","수","목","금","토"];
 
 // get member list from: db > java > html > js
 
-/*
+
 const memberList = [];
 const mNameElements = document.querySelectorAll('.hidden .mname');
 const mGradeElements = document.querySelectorAll('.hidden .mgrade');
@@ -32,8 +32,8 @@ mNameElements.forEach((nameElement, index) => {
         grade: memberGrade
     });
 });
-*/
 
+/*
 const memberList = [
     {name: '김장현', grade: 'SM'},
     {name: '김해수', grade: 'VSM'},
@@ -63,7 +63,7 @@ const memberList = [
     {name: '조경서', grade: 'PT'},
     {name: '조관우', grade: 'PT'},
     {name: '홍지오', grade: 'PT'}
-];
+];*/
 
 
 // convert schedule excel > json
@@ -175,7 +175,8 @@ Excel.onchange = () => {
             let lossList = Loss.map(el=>` "${el}"`);
             alert(`
 등록되지 않은 멤버가 있습니다.
-해당 멤버는 MemberPage에서 등록 후 반영됩니다.
+MemberPage에서 신규 인원을 등록 해야
+Roster 에 반영됩니다.
 
 <등록되지 않은 멤버>
 ${lossList}
