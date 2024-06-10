@@ -30,8 +30,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getRemoteIP(HttpServletRequest request) {
 		String ip = request.getHeader("X-FORWARDED-FOR");
-		
-		
+
 		// proxy 환경일 경우
 		if (ip == null || ip.length() == 0) {
 			ip = request.getHeader("Proxy-Client-IP");
@@ -44,6 +43,23 @@ public class UserServiceImpl implements UserService {
 
 		if (ip == null || ip.length() == 0) {
 			ip = request.getRemoteAddr();
+		}
+
+		// IP Addr
+		switch (ip) {
+
+		case "127.0.0.1":
+			ip = "재원";
+			break;
+		case "220.117.84.163":
+			ip = "재원";
+			break;
+		case "221.117.64.143":
+			ip = "코엑스";
+			break;
+		default:
+			break;
+
 		}
 
 		return ip;
