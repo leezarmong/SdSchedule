@@ -100,7 +100,7 @@ public class MemberServiceImpl implements MemberService {
 	        }
 
 	        // A 열에서 이름을 읽음 (A7, A9, A11, ..., A43)
-	        for (int i = 6; i <= 44; i += 2) {
+	        for (int i = 6; i <= 47; i += 2) {
 	            Row row = sheet.getRow(i);	// 행
 	            if (row != null) {
 	                Cell cell = row.getCell(0);  // A 열
@@ -114,7 +114,7 @@ public class MemberServiceImpl implements MemberService {
 	        }
 
 	        // L 열에서 이름을 읽음 (L3, L5, L7, ..., L43)
-	        for (int i = 2; i <= 44; i += 2) {
+	        for (int i = 2; i <= 47; i += 2) {
 	            Row row = sheet.getRow(i);	// 행
 	            if (row != null) {
 	                Cell cell = row.getCell(11);  // L 열
