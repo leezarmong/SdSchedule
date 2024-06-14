@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Add renewal</title>
+</head>
+<body>
+
+
+
+ <h2>Members to be Added:</h2>
+        <ul>
+            <li th:each="member : ${membersToAdd}" th:text="${member}"></li>
+        </ul>
+</body>
+</html>

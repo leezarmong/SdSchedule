@@ -158,6 +158,82 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	
+	
+	// 엑셀 데이터 추출후 등록
+	@Override
+	public List<String> addMembersFromExel(MultipartFile file, String user_id) throws IOException {
+	    List<String> excelMemberNames = new ArrayList<>();  // 엑셀에서 추출된 멤버 이름 리스트
+
+	    try (InputStream inputStream = file.getInputStream(); Workbook workbook = new XSSFWorkbook(inputStream)) {
+	        // 'Workbook'은 Excel 파일을 포함한 Microsoft 문서용 Java API인 Apache POI 라이브러리의 클래스
+	        Sheet sheet = workbook.getSheetAt(0); // 첫 번째 시트를 가져옴
+	        if (sheet == null) {
+	            throw new IOException("Sheet not found");
+	        }
+
+	        // A 열에서 이름을 읽음 (A7, A9, A11, ..., A47)
+	        for (int i = 6; i <= 46; i += 2) {
+	            Row row = sheet.getRow(i); // 행
+	            if (row != null) {
+	                Cell cell = row.getCell(0); // A 열
+	                if (cell != null) {
+	                    String name = getCellValueAsString(cell).split("\\s+")[0]; // 첫 번째 공백 전까지의 문자열만 추출
+	                    if (!name.isEmpty() && !"45424".equals(name)) {
+	                        excelMemberNames.add(name);
+	                    }
+	                }
+	            }
+	        }
+
+	        // L 열에서 이름을 읽음 (L3, L5, L7, ..., L47)
+	        for (int i = 2; i <= 46; i += 2) {
+	            Row row = sheet.getRow(i); // 행
+	            if (row != null) {
+	                Cell cell = row.getCell(11); // L 열
+	                if (cell != null) {
+	                    String name = getCellValueAsString(cell).split("\\s+")[0]; // 첫 번째 공백 전까지의 문자열만 추출
+	                    if (!name.isEmpty() && !"45424".equals(name)) {
+	                        excelMemberNames.add(name);
+	                    }
+	                }
+	            }
+	        }
+	    }
+
+	    // 엑셀에서 추출한 멤버 이름 출력
+	    System.out.println("엑셀에서 추출한 멤버 이름: " + excelMemberNames);
+
+	    List<MemberVO> allMembers = memberMapper.memberList(user_id);  // DB에서 가져온 이전 멤버들
+	    List<String> membersToAdd = new ArrayList<>();  // 추가해야 할 멤버 이름 리스트
+
+	    // DB에서 가져온 멤버 이름 출력
+	    System.out.println("DB에서 가져온 멤버 이름: ");
+	    for (MemberVO member : allMembers) {
+	        System.out.println(member.getMember_name());
+	    }
+
+	    // 엑셀에 존재하지만 DB에는 없는 멤버들을 추가할 목록에 담기
+	    for (String name : excelMemberNames) {
+	        boolean existsInDb = allMembers.stream()	// API 의 일부 요소들을 처리할때사용 매핑에 도움을 줌.
+	                .anyMatch(member -> member.getMember_name().equals(name));
+	        		// 만족하는 요소 체크
+	        		// DB 에서 가져온 allMmebers List 에서 Stream().antMath 를 실행
+	        		// 엑셀에러 추출한 name 과 같은지 확인후 existsInDb 가 아니면 membersToAdd 에 List 를 add 시킨다.
+	        				// 
+	        if (!existsInDb) {
+	            membersToAdd.add(name);
+	        }
+	    }
+
+	    // 추가해야 할 멤버 이름 출력
+	    System.out.println("추가해야 할 멤버 이름: " + membersToAdd);
+
+	    return membersToAdd;
+	}
+	
+	
+	
+	
 
 	// numeric 오류 대비 String으로 변환 메소드
 	private String getCellValueAsString(Cell cell) {

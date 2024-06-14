@@ -16,16 +16,15 @@
 
 <div class="container mt-5">
     <div class="card">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header text-white" style="background-color: #333333;">
             Renewal
         </div>
         <div class="card-body">
-            <p><b style="font-size: 20px;">퇴사한 직원이 많을 경우<br>
+            <p><b style="font-size: 20px;">신입 또는 퇴사한 직원이 많을 경우<br>
              한번에 리뉴얼 해주는 페이지 입니다.</b><br><br>
             최신 엑셀 파일을 업로드 하여 엑셀에 등록된 직원들을 추출하고<br>
-            DB(memberPage)와 비교하여 최신 엑셀에 등록되지 않은<br>
-            퇴사한 직원들을 삭제 후 리뉴얼 해줍니다.<br>
-            신입으로 들어온 직원은 이전과 동일하게 insert 해주면 됩니다.<br><br>
+            DB(memberPage)와 비교하여 <br>
+            memberPage 를 최신화 시켜줍니다.<br><br>
             <b style="color: red;">*주의* 최신 엑셀 파일을 업로드 해주세요.</b>
             </p>
             
@@ -35,6 +34,7 @@
                     <label for="file"><b>엑셀 파일 업로드:</b></label>
                     <input type="file" class="form-control-file" id="file" name="file" required>
                 </div>
+                <button id="addMemberButton" class="btn btn-primary">인원 추가</button>
                 <button type="submit" class="btn btn-danger">멤버 정리</button>
             </form>
         </div>
@@ -46,10 +46,16 @@ $(document).ready(function() {
     $('#uploadForm').on('submit', function(e) {
         e.preventDefault(); // 폼의 기본 제출 동작을 막음
 
+        var fileInput = $('#file')[0].files[0];
+        if (!fileInput) {
+            alert('엑셀 파일을 업로드 해주세요.');
+            return;
+        }
+
         var formData = new FormData(this);
 
         $.ajax({
-            url: '/uploadExcel',
+            url: '/removeEmployee',
             type: 'POST',
             data: formData,
             contentType: false,
@@ -62,6 +68,32 @@ $(document).ready(function() {
                 }
                 window.opener.location.reload(); // 메인 페이지 새로고침
                 window.close(); // 팝업 창 닫기
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('업로드 실패:', textStatus, errorThrown);
+            }
+        });
+    });
+
+    $('#addMemberButton').on('click', function(e) {
+        e.preventDefault(); // 기본 동작을 막음
+
+        var fileInput = $('#file')[0].files[0];
+        if (!fileInput) {
+            alert('엑셀 파일을 업로드 해주세요.');
+            return;
+        }
+
+        var formData = new FormData($('#uploadForm')[0]);
+
+        $.ajax({
+            url: '/addrenewal',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                $('body').html(response);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('업로드 실패:', textStatus, errorThrown);
