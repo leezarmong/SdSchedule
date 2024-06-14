@@ -42,5 +42,9 @@ public interface MemberService {
 	//엑셀 데이터 추출후 등록
 	public List<String> addMembersFromExel(MultipartFile file, String user_id) throws IOException;
 	
+	//새로운 신규인원 새로 추가
+	public void insertMembers(List<MemberVO> members);
+	
+	
 
 }

@@ -23,7 +23,20 @@
 	</delete>
 	
 	
-
+	
+	<!-- 새로운 신규인원 새로 추가 -->
+      <insert id="insertMembers">
+        INSERT INTO member (member_name, member_no, member_grade, user_id)
+        VALUES    
+        <foreach collection="list" item="member" separator=",">
+     	   (
+          #{member.member_name}, 
+          MEMBER_SEQ.NEXTVAL, 
+          #{member.member_grade}, 
+          #{member.user_id}
+			  )
+    	</foreach>
+    </insert>
 
 	<!-- 멤버 리스트(페이지) -->
 	<!--  <select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">

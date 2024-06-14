@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import org.apache.ibatis.annotations.Param;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -272,6 +272,12 @@ public class MemberServiceImpl implements MemberService {
 	            return "";
 	    }
 	}
+	
+	
+	//새로운 신규인원 새로 추가
+	public void insertMembers(List<MemberVO> members) {
+        memberMapper.insertMembers(members);
+    }
 	
 	}
 

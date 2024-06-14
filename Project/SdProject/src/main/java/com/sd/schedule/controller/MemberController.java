@@ -1,10 +1,12 @@
 package com.sd.schedule.controller;
 
 import java.io.IOException;
+import java.lang.System.Logger;
 import java.util.HashMap;
 
 import java.util.List;
 
+import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MemberController {
+
 
 	@Autowired
 	MemberService memberService;
@@ -154,6 +157,7 @@ public class MemberController {
 		}
 	}
 
+	// 멤버 추가 전체
 	@PostMapping("/addrenewal")
 	public String addMembersFromExel(@RequestParam("file") MultipartFile file, Model model, HttpSession session, MemberVO vo) throws IOException {
 
@@ -166,6 +170,18 @@ public class MemberController {
 
 		return "member/addrenewal";
 	}
+	
+	// //새로운 신규인원 새로 추가
+	 @PostMapping("/addMembersInsert")
+	    public String addMembersInsert(@RequestBody List<MemberVO> members) {
+	        memberService.insertMembers(members);
+	        
+	        System.out.print(members);
+	        
+	        return "redirect:/memberpage";
+	    }
+	 
+
 
 	// 인원 추가하기 만들까..?
 //	 @GetMapping("/items")
