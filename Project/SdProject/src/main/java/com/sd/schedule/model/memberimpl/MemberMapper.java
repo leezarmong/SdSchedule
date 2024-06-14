@@ -45,4 +45,6 @@ public interface MemberMapper {
 	
 	//불필요 멤버 전체 삭제
 	public void deleteMembers(@Param("list") List<MemberVO> members);
+	
+	
 }

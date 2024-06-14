@@ -143,18 +143,20 @@ public class MemberController {
 		return  "redirect:memberpage";
 	}
 	
+	//멤버 리뉴얼 
 	@GetMapping("/renewal")
 	public String renewal () {
 		return "member/renewal";
 	}
 	
-	@PostMapping("/uploadExcel")
-	public ResponseEntity<List<String>> uploadExcel(@RequestParam("file") MultipartFile file, HttpSession session, MemberVO vo) {
+	//멤버 퇴사자 전체 삭제
+	@PostMapping("/removeEmployee")
+	public ResponseEntity<List<String>> removeEmployee(@RequestParam("file") MultipartFile file, HttpSession session, MemberVO vo) {
 	    try {
 	        UserVO user = (UserVO) session.getAttribute("user");
 	        String user_id = user.getUser_id();
 	        vo.setUser_id(user_id);
-	        List<String> membersToDelete = memberService.processExcelFile(file, user_id);
+	        List<String> membersToDelete = memberService.deleteMembersFromExel(file, user_id);
 	        return ResponseEntity.ok(membersToDelete);
 	    } catch (IOException e) {
 	        e.printStackTrace();
@@ -168,7 +170,18 @@ public class MemberController {
 	}
 	
 	
-	
+	// 인원 추가하기 만들까..?
+//	 @GetMapping("/items")
+//	    public String getItems(Model model) {
+//	        List<Item> items = new ArrayList<>();
+//	        items.add(new Item("Item1", 10));
+//	        items.add(new Item("Item2", 20));
+//	        items.add(new Item("Item3", 30));
+//
+//	        model.addAttribute("items", items);
+//	        return "items";
+//	    }
+
 
 
 }

@@ -86,9 +86,9 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.updateMember(vo);
 	}
 	
-	//엑셀 데이터 추출
+	//엑셀 삭제
 	@Override								// MultipartFile = 파일 업로드 클래스
-	public List<String> processExcelFile(MultipartFile file, String user_id) throws IOException {
+	public List<String> deleteMembersFromExel(MultipartFile file, String user_id) throws IOException {
 	    List<String> excelMemberNames = new ArrayList<>();  // 엑셀에서 추출된 멤버 이름 리스트
 	    List<String> membersToDeleteNames = new ArrayList<>();  // 삭제해야 할 멤버 이름 리스트
 
@@ -158,13 +158,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	
-	//numeric 오류 대비 String으로 변환 메소드
+
+	// numeric 오류 대비 String으로 변환 메소드
 	private String getCellValueAsString(Cell cell) {
 	    switch (cell.getCellType()) {
 	        case STRING:
 	            return cell.getStringCellValue();
 	        case NUMERIC:
-	            if (DateUtil.isCellDateFormatted(cell)) {	// 날짜 형식이면 날짜 값을 문자열 반환
+	            if (DateUtil.isCellDateFormatted(cell)) {  // 날짜 형식이면 날짜 값을 문자열 반환
 	                return cell.getDateCellValue().toString();
 	            } else {
 	                return String.valueOf((int) cell.getNumericCellValue());
@@ -184,7 +185,7 @@ public class MemberServiceImpl implements MemberService {
 	                    return String.valueOf((int) cellValue.getNumberValue());
 	                case BOOLEAN:
 	                    return String.valueOf(cellValue.getBooleanValue());
-	                case BLANK:		// 빈 셀 빈 문자열 반환
+	                case BLANK:  // 빈 셀 빈 문자열 반환
 	                    return "";
 	                default:
 	                    return "";
@@ -195,7 +196,7 @@ public class MemberServiceImpl implements MemberService {
 	            return "";
 	    }
 	}
-
+	
 	}
 
 

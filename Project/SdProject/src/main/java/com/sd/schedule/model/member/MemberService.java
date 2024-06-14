@@ -37,6 +37,9 @@ public interface MemberService {
 	public void updateMember (MemberVO vo);
 	
 	//엑셀 데이터 추출
-	public List<String> processExcelFile(MultipartFile file, String user_id)throws IOException;
+	public List<String> deleteMembersFromExel(MultipartFile file, String user_id)throws IOException;
+	
+	
+	
 
 }
