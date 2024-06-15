@@ -33,7 +33,7 @@
                         <td id="member_name" th:text="${member}">멤버 이름</td>
                         <td>
                             <select class="form-control member_grade" name="member_grade">
-                                <option value="">등급 선택</option>
+                                <option value="null">등급 선택</option>
                                 <option value="SM">SM</option>
                                 <option value="VSM">VSM</option>
                                 <option value="MGR">MGR</option>
@@ -58,9 +58,18 @@
 function submitForm() {
     var userId = $('#user_id').val();
     var members = [];
+    var isValid = true;
+
     $('#memberForm tbody tr').each(function() {
         var memberName = $(this).find('td#member_name').text();
         var memberGrade = $(this).find('select.member_grade').val();
+
+        if (memberGrade === "null") {
+            alert("직급을 선택해 주세요.");
+            isValid = false;
+            return false; 
+        }
+
         members.push({
             member_name: memberName,
             member_grade: memberGrade,
@@ -68,20 +77,22 @@ function submitForm() {
         });
     });
 
-    var jsonData = JSON.stringify(members);
-    console.log("전송되는 JSON 데이터:", jsonData);
+    if (isValid) {
+        var jsonData = JSON.stringify(members);
+        console.log("전송되는 JSON 데이터:", jsonData);
 
-    $.ajax({
-        url: '/addMembersInsert',
-        type: 'POST',
-        contentType: 'application/json',
-        data: jsonData,
-        success: function(response) {
-            alert("추가되었습니다.");
-            window.opener.location.reload(); // 메인 페이지 새로고침
-            window.close();
-        }
-    });
+        $.ajax({
+            url: '/addMembersInsert',
+            type: 'POST',
+            contentType: 'application/json',
+            data: jsonData,
+            success: function(response) {
+                alert("추가되었습니다.");
+                window.opener.location.reload();
+                window.close();
+            }
+        });
+    }
 }
 </script>
 
