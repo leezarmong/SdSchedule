@@ -129,13 +129,13 @@ public class MemberServiceImpl implements MemberService {
 	    }
 
 	    // 엑셀에서 추출한 멤버 이름 출력
-	    System.out.println("엑셀에서 추출한 멤버 이름: " + excelMemberNames);
+//	    System.out.println("엑셀에서 추출한 멤버 이름: " + excelMemberNames);
 
 	    List<MemberVO> allMembers = memberMapper.memberList(user_id);  // DB에서 가져온 이전 멤버들
 	    List<MemberVO> membersToDelete = new ArrayList<>();  // 삭제해야 할 멤버 리스트
 
 	    // DB에서 가져온 멤버 이름 출력
-	    System.out.println("DB에서 가져온 멤버 이름: ");
+//	    System.out.println("DB에서 가져온 멤버 이름: ");
 	    for (MemberVO member : allMembers) {
 	        System.out.println(member.getMember_name());
 	        if (!excelMemberNames.contains(member.getMember_name())) {  // 엑셀에 없는 멤버는 삭제 대상
@@ -201,13 +201,13 @@ public class MemberServiceImpl implements MemberService {
 	    }
 
 	    // 엑셀에서 추출한 멤버 이름 출력
-	    System.out.println("엑셀에서 추출한 멤버 이름: " + excelMemberNames);
+//	    System.out.println("엑셀에서 추출한 멤버 이름: " + excelMemberNames);
 
 	    List<MemberVO> allMembers = memberMapper.memberList(user_id);  // DB에서 가져온 이전 멤버들
 	    List<String> membersToAdd = new ArrayList<>();  // 추가해야 할 멤버 이름 리스트
 
 	    // DB에서 가져온 멤버 이름 출력
-	    System.out.println("DB에서 가져온 멤버 이름: ");
+//	    System.out.println("DB에서 가져온 멤버 이름: ");
 	    for (MemberVO member : allMembers) {
 	        System.out.println(member.getMember_name());
 	    }
@@ -275,9 +275,13 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	//새로운 신규인원 새로 추가
-	public void insertMembers(List<MemberVO> members) {
-        memberMapper.insertMembers(members);
-    }
+	 @Override
+	    public void insertMembers(List<MemberVO> members) {
+	        for (MemberVO member : members) {
+	            memberMapper.insertMember(member);
+	        }
+	    }
+	 //mapper 의 foreach 가 계속적인 오류로 인해  service 에서 foreac 적용하여 단일 member 로 하나씩 치환
 	
 	}
 

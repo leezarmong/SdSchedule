@@ -3,74 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Renewal</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<h2>추가될 멤버:</h2>
+<div class="container mt-5">
+    <h2 class="mb-4">추가될 멤버:</h2>
 
-<form id="memberForm">
-    <table>
-        <thead class="thead-dark">
-            <tr>
-                <th>멤버 이름</th>
-                <th>멤버 등급</th>
-            </tr>
-        </thead>
-        <tbody th:each="member : ${membersToAdd}">
-            <tr>
-                <td id="member_name" th:text="${member}">멤버 이름</td>
-                <td>
-                    <select class="member_grade" name="member_grade">
-                        <option value="">등급 선택</option>
-                        <option value="SM">SM</option>
-                        <option value="VSM">VSM</option>
-                        <option value="MGR">MGR</option>
-                        <option value="CT">CT</option>
-                        <option value="EMP">EMP</option>
-                        <option value="PT" th:selected="true">PT</option>
-                    </select>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <button type="button" onclick="submitForm()">제출</button>
-    <!-- 세션 user_id를 위한 숨겨진 입력 -->
-    <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
-</form>
+    <form id="memberForm">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>멤버 이름</th>
+                        <th>멤버 등급</th>
+                    </tr>
+                </thead>
+                <tbody th:each="member : ${membersToAdd}">
+                    <tr>
+                        <td id="member_name" th:text="${member}">멤버 이름</td>
+                        <td>
+                            <select class="form-control member_grade" name="member_grade">
+                                <option value="">등급 선택</option>
+                                <option value="SM">SM</option>
+                                <option value="VSM">VSM</option>
+                                <option value="MGR">MGR</option>
+                                <option value="CT">CT</option>
+                                <option value="EMP">EMP</option>
+                                <option value="PT" th:selected="true">PT</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="submitForm()" style="margin-bottom: 20px;">등록하기</button>
+        <!-- 세션 user_id를 위한 숨겨진 입력 -->
+        <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
+    </form>
+</div>
 
 <script>
-    function submitForm() {
-        var userId = $('#user_id').val();
-        var members = [];
-        $('#memberForm tbody tr').each(function() {
-            var memberName = $(this).find('td#member_name').text();
-            var memberGrade = $(this).find('select.member_grade').val();
-            members.push({
-                member_name: memberName,
-                member_grade: memberGrade,
-                user_id: userId
-            });
+function submitForm() {
+    var userId = $('#user_id').val();
+    var members = [];
+    $('#memberForm tbody tr').each(function() {
+        var memberName = $(this).find('td#member_name').text();
+        var memberGrade = $(this).find('select.member_grade').val();
+        members.push({
+            member_name: memberName,
+            member_grade: memberGrade,
+            user_id: userId
         });
+    });
 
-        var jsonData = JSON.stringify(members);
-        console.log("전송되는 JSON 데이터:", jsonData);
+    var jsonData = JSON.stringify(members);
+    console.log("전송되는 JSON 데이터:", jsonData);
 
-        $.ajax({
-            url: '/addMembersInsert',
-            type: 'POST',
-            contentType: 'application/json',
-            data: jsonData,
-            success: function(response) {
-                console.log("성공:", response);
-                window.close(); 
-            },
-            error: function(error) {
-                console.error('에러:', error.responseText);
-                alert('에러: ' + error.responseText);
-            }
-        });
-    }
+    $.ajax({
+        url: '/addMembersInsert',
+        type: 'POST',
+        contentType: 'application/json',
+        data: jsonData,
+        success: function(response) {
+            alert("추가되었습니다.");
+            window.opener.location.reload(); // 메인 페이지 새로고침
+            window.close();
+        }
+    });
+}
 </script>
 
 </body>

@@ -1,12 +1,14 @@
 package com.sd.schedule.controller;
 
 import java.io.IOException;
-import java.lang.System.Logger;
+
+
 import java.util.HashMap;
 
 import java.util.List;
 
-import org.mybatis.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,9 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class MemberController {
 
-
+	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
+	
+	
 	@Autowired
 	MemberService memberService;
 
@@ -172,15 +176,17 @@ public class MemberController {
 	}
 	
 	// //새로운 신규인원 새로 추가
-	 @PostMapping("/addMembersInsert")
-	    public String addMembersInsert(@RequestBody List<MemberVO> members) {
+	@PostMapping("/addMembersInsert")
+	public String addMembersInsert(@RequestBody List<MemberVO> members) {
+	    try {
 	        memberService.insertMembers(members);
-	        
-	        System.out.print(members);
-	        
-	        return "redirect:/memberpage";
+	        log.info("Received members for insertion: {}", members);
+	    } catch (Exception e) {
+	        log.error("Error inserting members", e);
+	        return "error"; // 에러 페이지로 리디렉션할 수도 있습니다.
 	    }
-	 
+	    return "redirect:/memberpage";
+	}
 
 
 	// 인원 추가하기 만들까..?

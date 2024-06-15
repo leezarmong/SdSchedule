@@ -46,8 +46,6 @@ public interface MemberMapper {
 	//불필요 멤버 전체 삭제
 	public void deleteMembers(@Param("list") List<MemberVO> members);
 	
-	//새로운 신규인원 새로 추가
-	public void insertMembers(@Param("list") List<MemberVO> members);
-	
+
 	
 }
