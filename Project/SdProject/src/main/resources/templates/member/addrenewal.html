@@ -21,6 +21,13 @@
                         <th>멤버 등급</th>
                     </tr>
                 </thead>
+					
+					<!-- 추가할멤버가 없는 경우 -->
+                   <tbody th:if="${membersToAdd.isEmpty()}">
+		            <tr>
+		                <td colspan="2">추가할 멤버가 없습니다.</td>
+		            </tr>
+		        </tbody>
                 <tbody th:each="member : ${membersToAdd}">
                     <tr>
                         <td id="member_name" th:text="${member}">멤버 이름</td>
@@ -39,7 +46,9 @@
                 </tbody>
             </table>
         </div>
+          <div th:if="${!membersToAdd.isEmpty()}">
         <button type="button" class="btn btn-primary" onclick="submitForm()" style="margin-bottom: 20px;">등록하기</button>
+        </div>
         <!-- 세션 user_id를 위한 숨겨진 입력 -->
         <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
     </form>
