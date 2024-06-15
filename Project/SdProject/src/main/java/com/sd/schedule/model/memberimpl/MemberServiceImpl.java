@@ -137,7 +137,7 @@ public class MemberServiceImpl implements MemberService {
 	    // DB에서 가져온 멤버 이름 출력
 //	    System.out.println("DB에서 가져온 멤버 이름: ");
 	    for (MemberVO member : allMembers) {
-	        System.out.println(member.getMember_name());
+//	        System.out.println(member.getMember_name());
 	        if (!excelMemberNames.contains(member.getMember_name())) {  // 엑셀에 없는 멤버는 삭제 대상
 	            membersToDelete.add(member);
 	            membersToDeleteNames.add(member.getMember_name());
@@ -209,7 +209,7 @@ public class MemberServiceImpl implements MemberService {
 	    // DB에서 가져온 멤버 이름 출력
 //	    System.out.println("DB에서 가져온 멤버 이름: ");
 	    for (MemberVO member : allMembers) {
-	        System.out.println(member.getMember_name());
+//	        System.out.println(member.getMember_name());
 	    }
 
 	    // 엑셀에 존재하지만 DB에는 없는 멤버들을 추가할 목록에 담기
