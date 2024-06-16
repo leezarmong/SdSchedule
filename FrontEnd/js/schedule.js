@@ -19,6 +19,7 @@ const weekend = ["일","월","화","수","목","금","토"];
 // get member list from: db > java > html > js
 
 
+/*
 const memberList = [];
 const mNameElements = document.querySelectorAll('.hidden .mname');
 const mGradeElements = document.querySelectorAll('.hidden .mgrade');
@@ -33,9 +34,8 @@ mNameElements.forEach((nameElement, index) => {
     });
 });
 
-/*
+*/
 const memberList = [
-    {name: '김장현', grade: 'SM'},
     {name: '김해수', grade: 'VSM'},
     {name: '최인화', grade: 'MGR'},
     {name: '유건희', grade: 'CT'},
@@ -63,7 +63,7 @@ const memberList = [
     {name: '조경서', grade: 'PT'},
     {name: '조관우', grade: 'PT'},
     {name: '홍지오', grade: 'PT'}
-];*/
+];
 
 
 // convert schedule excel > json
@@ -175,12 +175,14 @@ Excel.onchange = () => {
             let lossList = Loss.map(el=>` "${el}"`);
             alert(`
 등록되지 않은 멤버가 있습니다.
-MemberPage에서 신규 인원을 등록 해야
-Roster 에 반영됩니다.
+MemberPage에서 신규 인원을 등록해야 Roster에 반영됩니다.
 
 <등록되지 않은 멤버>
 ${lossList}
+
+확인 클릭 시 멤버 등록페이지로 이동합니다.
             `);
+            location.href = "/memberpage";
         };
         console.log(Loss)
         delete data['Loss'];
