@@ -169,6 +169,7 @@ public class MemberController {
 		String user_id = user.getUser_id();
 		vo.setUser_id(user_id);
 
+		//추가해야될 리스트 가져오기
 		List<String> membersToAdd = memberService.addMembersFromExel(file, user_id);
 		model.addAttribute("membersToAdd", membersToAdd);
 
