@@ -174,7 +174,7 @@ public class MemberController {
 		List<String> membersToAdd = memberService.addMembersFromExel(file, user_id);
 		model.addAttribute("membersToAdd", membersToAdd);
 		
-		// List 추가 인원
+		// List 추가 인원 
 		int count = membersToAdd.size();
 		model.addAttribute("count",count);
 

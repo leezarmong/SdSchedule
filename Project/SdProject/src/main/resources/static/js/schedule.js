@@ -18,7 +18,6 @@ const weekend = ["일","월","화","수","목","금","토"];
 
 // get member list from: db > java > html > js
 
-
 const memberList = [];
 const mNameElements = document.querySelectorAll('.hidden .mname');
 const mGradeElements = document.querySelectorAll('.hidden .mgrade');
@@ -33,130 +32,97 @@ mNameElements.forEach((nameElement, index) => {
     });
 });
 
-/*
-const memberList = [
-    {name: '김장현', grade: 'SM'},
-    {name: '김해수', grade: 'VSM'},
-    {name: '최인화', grade: 'MGR'},
-    {name: '유건희', grade: 'CT'},
-    {name: '이희정', grade: 'CT'},
-    {name: '강민지', grade: 'EMP'},
-    {name: '권태영', grade: 'PT'},
-    {name: '김경민', grade: 'PT'},
-    {name: '김무준', grade: 'PT'},
-    {name: '김세희', grade: 'PT'},
-    {name: '김영록', grade: 'PT'},
-    {name: '김은경', grade: 'PT'},
-    {name: '김지환', grade: 'PT'},
-    {name: '박대용', grade: 'PT'},
-    {name: '박현선', grade: 'PT'},
-    {name: '복금현', grade: 'PT'},
-    {name: '서준영', grade: 'PT'},
-    {name: '안지연', grade: 'PT'},
-    {name: '원동하', grade: 'PT'},
-    {name: '유영현', grade: 'PT'},
-    {name: '윤승관', grade: 'PT'},
-    {name: '이상건', grade: 'PT'},
-    {name: '이영현', grade: 'PT'},
-    {name: '이재원', grade: 'PT'},
-    {name: '전예준', grade: 'PT'},
-    {name: '조경서', grade: 'PT'},
-    {name: '조관우', grade: 'PT'},
-    {name: '홍지오', grade: 'PT'}
-];*/
-
-
 // convert schedule excel > json
 const excelToJson = async (callback) => {
     let returnData;
-    await readXlsxFile(Excel.files[0]).then(data=>{
+    await readXlsxFile(Excel.files[0]).then(data => {
         // code for work table body
         // data > Json convert as I want
         const Json = {};
         const Loss = []; // db상에 없지만 엑셀 상에 존재했던 이름들을 저장하는 배열
         let tableDate = [];
         // loop as count of data's row
-        for(let i = 0; i < data.length; i++){
-            if(i == 50) {break}
+        for (let i = 0; i < data.length; i++) {
+            if (i == 50) { break }
             let tempName = '';  // 공백과 엔터를 기준으로 자른 이름이라 분류된 문자
             let arrid = ''; // DB에 존재하는 이름이면 해당 변수에 저장
             let Qid = ''; // DB에 존재하지 않는 이름이면 해당 변수에 저장
             // 시간표가 1번째 줄(a(=0)), 12번째 줄(l(=11)) 2곳에서 각기 시작하므로 2번 반복
-            for(let f = 0; f < 2; f++){
+            for (let f = 0; f < 2; f++) {
                 // \n 또는 공백이 있을 경우 해당 문자를 기준으로 앞쪽에 있던 글자를 arrid 에 저장
                 // \n 또는 공백이 없을 경우 arrid 를 빈문자로 선언
                 const nameCell = (                                                      // 엑셀에서 이름이 들어갔을 칸에 있는 데이터
-                    !isNumber(data[i][11*f]) && data[i][11*f] != null                   // 그 값이 숫자거나 null 이면 일단 배제
-                    && data[i][11*f] != "OP Shift" && data[i][11*f] != "CL Shift"       // 그 값이 OP Shift, CL Shift 여도 배제
-                ) ? String(data[i][11*f]) : '';
+                    !isNumber(data[i][11 * f]) && data[i][11 * f] != null                   // 그 값이 숫자거나 null 이면 일단 배제
+                    && data[i][11 * f] != "OP Shift" && data[i][11 * f] != "CL Shift"       // 그 값이 OP Shift, CL Shift 여도 배제
+                ) ? String(data[i][11 * f]) : '';
                 let spaceIndex = nameCell.indexOf(' ');
                 let enterIndex = nameCell.indexOf('\n');
-                if(spaceIndex > 0 && enterIndex > 0){
+                if (spaceIndex > 0 && enterIndex > 0) {
                     tempName = (spaceIndex > enterIndex) ? nameCell.split(' ')[0] : nameCell.split('\n')[0];
-                }else if(spaceIndex > 0 && enterIndex < 0){
+                } else if (spaceIndex > 0 && enterIndex < 0) {
                     tempName = nameCell.split(' ')[0];
-                }else if(spaceIndex < 0 && enterIndex > 0){
+                } else if (spaceIndex < 0 && enterIndex > 0) {
                     tempName = nameCell.split('\n')[0];
-                }else if(spaceIndex < 0 && enterIndex < 0){
+                } else if (spaceIndex < 0 && enterIndex < 0) {
                     tempName = nameCell;
                 };
-                if(
-                    memberList.map(el=>el.name).includes(tempName)
-                ){
+                if (
+                    memberList.map(el => el.name).includes(tempName)
+                ) {
                     arrid = tempName;
-                }else{
+                } else {
                     Qid = tempName;
                 };
                 // arrid 가 빈문자가 아닌경우
-                if(
+                if (
                     arrid != ''
-                ){
+                ) {
                     Json[arrid] = [];
                     const tempArr = [];
                     // 해당 row의 2~9번째(2번째 실행일경우 13~20번째) column을 읽음
-                    for(let j = 11*f+2; j < 11*f+9; j++){
+                    for (let j = 11 * f + 2; j < 11 * f + 9; j++) {
                         // 해당 셀이 빈칸이 아니라면
-                        if(data[i][j]!=null){
+                        if (data[i][j] != null) {
                             // 해당 셀에 ~ 또는 - 이 있을 경우 해당 문자를 기준으로 앞숫자를 시작시각, 뒷숫자를 종료시각에 저장
                             // 시작시각과 종료시각을 배열에 넣고 tempArr에 push
                             // 해당 셀에 ~ 또는 - 이 없을 경우 null 값을 tempArr에 push
-                            if(data[i][j].includes("~")){
+                            if (data[i][j].includes("~")) {
                                 let time_start = halfMinuteConverter(data[i][j].split('~')[0]);
                                 let time_finish = halfMinuteConverter(data[i][j].split('~')[1]);
                                 tempArr.push([time_start, time_finish])
-                            }else if(data[i][j].includes("-")){
+                            } else if (data[i][j].includes("-")) {
                                 let time_start = halfMinuteConverter(data[i][j].split('-')[0]);
                                 let time_finish = halfMinuteConverter(data[i][j].split('-')[1]);
                                 tempArr.push([time_start, time_finish])
-                            }else{
+                            } else {
                                 tempArr.push(null)
                             }
                         }
                         // 해당 셀이 빈칸이라면 null 값을 tempArr에 push
-                        else{
+                        else {
                             tempArr.push(null)
                         };
                     };
                     // Json 객체에 arrid as key, tempArr as value 로 저장
-                    Json[arrid]=tempArr;
+                    Json[arrid] = tempArr;
                     // arrid 값 초기화
                     arrid = '';
-                }else if(
+                } else if (
                     Qid != ''
-                ){
+                ) {
                     Loss.push(Qid);
                 };
             };
-            if(String(data[i][1])==="주차" && tableDate.length < 7){
-                for(let d = 0; d < 7; d++){
-                    tableDate.push(String(data[i][d+2]));
+            if (String(data[i][1]) === "주차" && tableDate.length < 7) {
+                for (let d = 0; d < 7; d++) {
+                    tableDate.push(String(data[i][d + 2]));
                 }
             };
         };
         // sort converted Json as key by 가나다
         const sortedJson = {};
-        const sortedKeys = Object.keys(Json).sort((a,b)=>(a<b)?-1:(a==b)?0:1);
-        sortedKeys.forEach(key=>{
+        const sortedKeys = Object.keys(Json).sort((a, b) => (a < b) ? -1 : (a == b) ? 0 : 1);
+        sortedKeys.forEach(key => {
             sortedJson[key] = Json[key];
         });
         returnData = sortedJson;
@@ -169,10 +135,10 @@ const excelToJson = async (callback) => {
 // run. if detected excel upload
 Excel.onchange = () => {
     // 주급 계산 테이블 작성
-    excelToJson( data => {
-        const Loss =  data.Loss;
-        if(Loss.length > 0){
-            let lossList = Loss.map(el=>` "${el}"`);
+    excelToJson(data => {
+        const Loss = data.Loss;
+        if (Loss.length > 0) {
+            let lossList = Loss.map(el => `"${el}"`).join(", ");
             alert(`
 등록되지 않은 멤버가 있습니다.
 MemberPage에서 신규 인원을 등록 해야
@@ -181,12 +147,50 @@ Roster 에 반영됩니다.
 <등록되지 않은 멤버>
 ${lossList}
             `);
-        };
-        console.log(Loss)
+            // Redirect to /addrenewal after alert is dismissed
+            setTimeout(() => {
+                // Create a form dynamically
+                let form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/addrenewal';
+                form.enctype = 'multipart/form-data';
+
+                // Create a file input element
+                let fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.name = 'file';
+
+                // Append the form to the body first
+                document.body.appendChild(form);
+
+                // Set the file input to the actual file
+                let files = document.getElementById('excel-upload').files;
+                if (files.length > 0) {
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(files[0]);
+                    fileInput.files = dataTransfer.files;
+
+                    // Append the file input to the form
+                    form.appendChild(fileInput);
+
+                    // Submit the form
+                     const width = 500;
+                    const height = 600;
+                    const left = (screen.width / 2) - (width / 2);
+                    const top = (screen.height / 2) - (height / 2);
+
+                    // Submit the form in a centered popup
+                    const popup = window.open('', 'addrenewal', `width=${width},height=${height},top=${top},left=${left}`);
+                    form.target = 'addrenewal';
+                    form.submit();
+                }
+            }, 0);
+        }
+        console.log(Loss);
         delete data['Loss'];
         delete data['tableDate'];
         const sortedJson = data;
-        console.log(sortedJson)
+        console.log(sortedJson);
         const sortedJson_key = Object.keys(sortedJson);
         const sortedJson_value = Object.values(sortedJson);
         // code for work table head
@@ -210,43 +214,43 @@ ${lossList}
             nightWorkTime: 0,
             weekPay: 0
         };
-        for(let w = 0; w < sortedJson_key.length; w++){
+        for (let w = 0; w < sortedJson_key.length; w++) {
             // get weekly work time, night work time
             let weekWorkTime = 0;
             let nightWorkTime = 0;
-            for(let d = 0; d < 7; d++){
+            for (let d = 0; d < 7; d++) {
                 let workData = sortedJson[sortedJson_key[w]][d];
-                if(workData!=null){
-                    if(workData[1]-workData[0]>=9){
-                        weekWorkTime+=workData[1]-workData[0]-1
-                    }else{
-                        weekWorkTime+=workData[1]-workData[0]-0.5
-                    };
-                    if(workData[1]===22.5){
-                        nightWorkTime+=0.5
+                if (workData != null) {
+                    if (workData[1] - workData[0] >= 9) {
+                        weekWorkTime += workData[1] - workData[0] - 1;
+                    } else {
+                        weekWorkTime += workData[1] - workData[0] - 0.5;
                     }
-                }else{
-                    weekWorkTime+=0
-                };
-            };
+                    if (workData[1] === 22.5) {
+                        nightWorkTime += 0.5;
+                    }
+                } else {
+                    weekWorkTime += 0;
+                }
+            }
             // get isOver, weekPay
             let isOver = 'O';
             let classPay = 9875;
             let weekPay = 0;
-            if(weekWorkTime>=15){
+            if (weekWorkTime >= 15) {
                 isOver = 'O';
                 weekPay = Math.round((weekWorkTime * 1.2 + nightWorkTime * 0.5) * classPay);
-            }else{
+            } else {
                 isOver = 'X';
                 weekPay = Math.round((weekWorkTime + nightWorkTime * 0.5) * classPay);
-            };
+            }
             weekPayTable_body_html += `
                 <tr>
-                    <td>${memberList.find(el=>el.name === sortedJson_key[w]).grade}</td>
+                    <td>${memberList.find(el => el.name === sortedJson_key[w]).grade}</td>
                     <td>${sortedJson_key[w]}</td>
                     <td>연동x</td>
-                    <td>${Math.round(weekWorkTime*10)/10} h</td>
-                    <td>${Math.round(nightWorkTime*10)/10} h</td>
+                    <td>${Math.round(weekWorkTime * 10) / 10} h</td>
+                    <td>${Math.round(nightWorkTime * 10) / 10} h</td>
                     <td>${isOver}</td>
                     <td>${numberWithCommas(weekPay)} ₩</td>
                 </tr>
@@ -254,7 +258,7 @@ ${lossList}
             total.weekWorkTime += weekWorkTime;
             total.nightWorkTime += nightWorkTime;
             total.weekPay += weekPay;
-        };
+        }
         weekPayTable_body_html = `
             <tbody>
                 <tr class="bold">
@@ -278,15 +282,15 @@ ${lossList}
             </tr>
         `;
         let payPerDayTable_body_html = ``;
-        for(let d = 0; d < 7; d++){
-            const dayJson = sortedJson_value.map(el=>{
-                if(el[d] != null){
-                    return (el[d][1] - el[d][0])
-                }else{
-                    return null
+        for (let d = 0; d < 7; d++) {
+            const dayJson = sortedJson_value.map(el => {
+                if (el[d] != null) {
+                    return (el[d][1] - el[d][0]);
+                } else {
+                    return null;
                 }
             });
-            const sumOfDay = numberWithCommas(Math.round(dayJson.reduce((partialSum, a) => partialSum + a, 0)*14451));
+            const sumOfDay = numberWithCommas(Math.round(dayJson.reduce((partialSum, a) => partialSum + a, 0) * 14451));
             payPerDayTable_body_html += `
                 <tr>
                     <td>${weekend[d]}</td>
@@ -303,8 +307,8 @@ ${lossList}
     roster.style.display = "block";
     tables.style.display = "block";
     // 로스터 테이블 작성
-    excelToJson( data => {
-        const tableDate =  data.tableDate;
+    excelToJson(data => {
+        const tableDate = data.tableDate;
         delete data['Loss'];
         delete data['tableDate'];
         const sortedJson_key = Object.keys(data);
@@ -331,10 +335,10 @@ ${lossList}
             </thead>
         `;
         // convert shape of json data
-        for(let date = 0; date <= tableDate.length-1; date++){
+        for (let date = 0; date <= tableDate.length - 1; date++) {
             const rosterbody = [];
-            for(let memb = 0; memb < sortedJson_value.length; memb++){
-                if(sortedJson_value[memb][date]!=null){
+            for (let memb = 0; memb < sortedJson_value.length; memb++) {
+                if (sortedJson_value[memb][date] != null) {
                     let tempArr = [
                         sortedJson_key[memb],
                         '',
@@ -342,36 +346,36 @@ ${lossList}
                     ];
                     let time_start = sortedJson_value[memb][date][0];
                     let time_finish = sortedJson_value[memb][date][1];
-                    if(sortedJson_value[memb][date][1]-sortedJson_value[memb][date][0])
-                    tempArr.push(
-                        time_start,
-                        time_finish,
-                        time_finish-time_start>=9?"01:00":"00:30",
-                        '',
-                        '',
-                        '',
-                        ''
-                    );
+                    if (sortedJson_value[memb][date][1] - sortedJson_value[memb][date][0])
+                        tempArr.push(
+                            time_start,
+                            time_finish,
+                            time_finish - time_start >= 9 ? "01:00" : "00:30",
+                            '',
+                            '',
+                            '',
+                            ''
+                        );
                     rosterbody.push(tempArr);
-                };
-            };
-            let sortedRosterbody = rosterbody.sort((a, b)=>a[3] - b[3]);
-            sortedRosterbody.map((el,i)=>el.unshift(i+1))
+                }
+            }
+            let sortedRosterbody = rosterbody.sort((a, b) => a[3] - b[3]);
+            sortedRosterbody.map((el, i) => el.unshift(i + 1))
             // create html table for excel sheet
             let rosterTable_body_html = ``;
-            for(let b = 0; b < sortedRosterbody.length; b++){
+            for (let b = 0; b < sortedRosterbody.length; b++) {
                 let temp_html = ``;
-                for(let t = 0; t < Object.keys(sortedRosterbody[0]).length; t++){
-                    if(t===4 || t===5){
+                for (let t = 0; t < Object.keys(sortedRosterbody[0]).length; t++) {
+                    if (t === 4 || t === 5) {
                         temp_html += `<td>${numToHourMinuteConverter(Object.values(sortedRosterbody[b])[t])}</td>`;
-                    }else{
+                    } else {
                         temp_html += `<td>${Object.values(sortedRosterbody[b])[t]}</td>`;
                     }
-                };
+                }
                 rosterTable_body_html += `<tr>${temp_html}</tr>`;
-            };
+            }
             rosterTable_body_html = `<tbody>${rosterTable_body_html}</tbody>`;
-            roster.insertAdjacentHTML('beforeend',`
+            roster.insertAdjacentHTML('beforeend', `
                 <div class="rosterPage">
                     <div class="rosterHeader">FOH Roster</div>
                     <div class="rosterDate">근무일자 : ${getDateFromExcel(tableDate[date])}</div>
@@ -380,7 +384,7 @@ ${lossList}
                     </table>
                 </div>
             `);
-        };
+        }
     });
 };
 
