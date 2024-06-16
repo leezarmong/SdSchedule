@@ -147,7 +147,14 @@ Roster 에 반영됩니다.
 <등록되지 않은 멤버>
 ${lossList}
             `);
-            // Redirect to /addrenewal after alert is dismissed
+            // Open the popup window first
+            const width = 500;
+            const height = 600;
+            const left = (screen.width / 2) - (width / 2);
+            const top = (screen.height / 2) - (height / 2);
+            const popup = window.open('', 'addrenewal', `width=${width},height=${height},top=${top},left=${left}`);
+
+            // Delay the form creation and submission to keep the popup context
             setTimeout(() => {
                 // Create a form dynamically
                 let form = document.createElement('form');
@@ -173,14 +180,7 @@ ${lossList}
                     // Append the file input to the form
                     form.appendChild(fileInput);
 
-                    // Submit the form
-                     const width = 500;
-                    const height = 600;
-                    const left = (screen.width / 2) - (width / 2);
-                    const top = (screen.height / 2) - (height / 2);
-
-                    // Submit the form in a centered popup
-                    const popup = window.open('', 'addrenewal', `width=${width},height=${height},top=${top},left=${left}`);
+                    // Submit the form in the opened popup
                     form.target = 'addrenewal';
                     form.submit();
                 }
