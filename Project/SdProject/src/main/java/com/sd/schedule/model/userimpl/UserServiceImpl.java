@@ -54,6 +54,9 @@ public class UserServiceImpl implements UserService {
 		case "220.117.84.163":
 			ip = "재원";
 			break;
+		case "211.117.64.143":
+			ip = "코엑스";
+		break;
 		default:
 			break;
 
