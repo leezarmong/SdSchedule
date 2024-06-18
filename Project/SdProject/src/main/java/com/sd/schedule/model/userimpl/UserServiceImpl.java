@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	// 아이피 불러오기
+	@Override
 	public String getRemoteIP(HttpServletRequest request) {
 		String ip = request.getHeader("X-FORWARDED-FOR");
 
@@ -48,6 +49,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	//IP addr
+	@Override
 	public String getNameFromIP(String ip) {
         switch (ip) {
             case "127.0.0.1":
