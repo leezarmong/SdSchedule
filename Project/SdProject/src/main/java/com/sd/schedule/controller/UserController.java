@@ -2,10 +2,13 @@ package com.sd.schedule.controller;
 
 import java.time.LocalDateTime;
 
+
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +27,38 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class UserController {
 
+	
+	
+	
 	@Autowired
 	UserService userService;
+	
+	
+	//IP List
+	 private List<LoginRecord> loginRecords = new ArrayList<>();
+	 
+	 
+	 
+	 public class LoginRecord{
+		 
+		 private String name;
+		 private String date;
+		 
+		 public LoginRecord(String name , String date) {
+			 this.name=name;
+			 this.date=date;
+		 }
+		 
+		 public String getName() {
+			 return name;
+		 }
+		 
+		 public String getDate() {
+			 return date;
+		 }
+		 
+	 }
+	
 
 	// 로그인 페이지
 	@GetMapping("/loginpage")
@@ -37,7 +70,7 @@ public class UserController {
 	// 로그인
 	@PostMapping("/login")
 	public String login(UserVO vo, HttpSession session, BindingResult bindingResult, HttpServletResponse response,
-			HttpServletRequest request) {
+			HttpServletRequest request, Model model) {
 		UserVO user = userService.login(vo);
 		LocalDateTime now = LocalDateTime.now();
 
@@ -46,7 +79,16 @@ public class UserController {
 
 		// client IP 가져오기
 		String clientIP = userService.getRemoteIP(request);
-		System.out.println(user.getUser_id() + "님이 " + formattedDate + "에 로그인 했습니다. IP >> " + clientIP);
+//		System.out.println(user.getUser_id() + "님이 " + formattedDate + "에 로그인 했습니다. IP >> " + clientIP);
+		
+		// client IP 담기
+		String name = userService.getNameFromIP(clientIP);
+		
+		LoginRecord record = new LoginRecord(name, formattedDate);
+		loginRecords.add(record);
+		 model.addAttribute("loginRecords", loginRecords);
+		
+		
 
 		if (user != null) {
 			session.setAttribute("user", user);
@@ -60,6 +102,15 @@ public class UserController {
 			return "login/loginpage";
 		}
 	}
+	
+	
+	@PostMapping("/clear")
+	 public String clearIpList() {
+        loginRecords.clear();
+        return "redirect:adminpage";
+    }
+	
+	
 
 	// 로그인 시 확인, 유저 체크
 	@ResponseBody

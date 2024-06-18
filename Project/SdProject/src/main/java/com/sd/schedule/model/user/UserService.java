@@ -13,5 +13,8 @@ public interface UserService {
 	
 	// 아이피 불러오기
 	public String getRemoteIP(HttpServletRequest request);
+	
+	//IP addr
+	public String getNameFromIP(String ip);
 
 }
