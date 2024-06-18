@@ -48,10 +48,12 @@ public class UserController {
 	public class LoginRecord {
 	    private String name;
 	    private String date;
+	    private String user_id;
 	    
-	    public LoginRecord(String name, String date) {
+	    public LoginRecord(String name, String date, String user_id) {
 	        this.name = name;
 	        this.date = date;
+	        this.user_id = user_id;
 	    }
 	    
 	    public String getName() {
@@ -62,10 +64,14 @@ public class UserController {
 	        return date;
 	    }
 	    
-	    @Override
-	    public String toString() {
-	        return "LoginRecord{name='" + name + "', date='" + date + "'}";
+	    public String getUser_id() {
+	    	return user_id;
 	    }
+	    
+	    @Override
+		public String toString() {
+			return "LoginRecord [name=" + name + ", date=" + date + ", user_id=" + user_id + ", getName()=" + getName();
+		}
 	}
 	
 
@@ -80,6 +86,8 @@ public class UserController {
 	@PostMapping("/login")
 	public String login(UserVO vo, HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model) {
 	    UserVO user = userService.login(vo);
+	    String user_id = user.getUser_id();
+	    
 	    LocalDateTime now = LocalDateTime.now();
 
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일 EEEE HH시 mm분");
@@ -91,11 +99,11 @@ public class UserController {
 	    // client IP 담기
 	    String name = userService.getNameFromIP(clientIP);
 	    
-	    LoginRecord record = new LoginRecord(name, formattedDate);
+	    LoginRecord record = new LoginRecord(name, formattedDate, user_id);
 	    loginRecords.add(record);
 	    
 	    // ip 콘솔 출력
-//	    System.out.println("Login Records: " + loginRecords);
+	    System.out.println("Login Records: " + loginRecords);
 
 	    if (user != null) {
 	        session.setAttribute("user", user);
@@ -134,6 +142,7 @@ public class UserController {
 	    return "admin/adminpage";
 	}
 
+	//Login IP Addresses clear 
 	@PostMapping("/clear")
 	public String clearIpList() {
 	    loginRecords.clear();

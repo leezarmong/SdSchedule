@@ -190,8 +190,9 @@
 		<ul class="scrollable-list">
 		    <li th:each="record, iterStat : ${loginRecords}">
 		        <span th:text="${iterStat.count}">1</span>.
-		        <span th:text="${record.name}">Name</span> logged in on 
-		        <span th:text="${record.date}">Date</span>.
+		        <span th:text="${record.name}">Name</span> 님이
+		        <span th:text="${record.user_id}">user_id</span> 아이디로 
+		        <span th:text="${record.date}">Date</span> 에 로그인 했습니다.
 		    </li>
 		</ul>
 		<form action="/clear" method="post">
