@@ -103,7 +103,7 @@ public class UserController {
 	    loginRecords.add(record);
 	    
 	    // ip 콘솔 출력
-	    System.out.println("Login Records: " + loginRecords);
+//	    System.out.println("Login Records: " + loginRecords);
 
 	    if (user != null) {
 	        session.setAttribute("user", user);
