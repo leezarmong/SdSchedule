@@ -44,7 +44,7 @@ public class UserController {
 	//IP List
 	private List<LoginRecord> loginRecords = new ArrayList<>();
 	
-	//IPaddr
+	//IPaddr Class 
 	public class LoginRecord {
 	    private String name;
 	    private String date;
