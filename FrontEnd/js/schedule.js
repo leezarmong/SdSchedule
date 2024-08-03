@@ -147,6 +147,7 @@ Roster 에 반영됩니다.
 <등록되지 않은 멤버>
 ${lossList}
             `);
+            //J.W 데이터 최신화 전송 
             // Open the popup window first
             const width = 500;
             const height = 600;
