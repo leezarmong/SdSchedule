@@ -86,9 +86,9 @@
 .rosterPage{
     height: 305.9mm;
 }
-.rosterPage:last-child{
+/* .rosterPage:last-child{
     height: 200mm;
-}
+} */
 .rosterHeader{
     font-size: 40px;
     text-align: center;
@@ -99,11 +99,15 @@
     text-align: right;
     margin: 0 8px 8px;
 }
-.rosterTable{
-    margin-right: auto;
-    margin-left: auto;
+.rosterTable,
+.countTable{
+    margin-bottom: 8px;
+    border: 1px solid black;
+    text-align: center;
+    font-weight: 400;
 }
-.rosterTable,.rosterTable tr,.rosterTable th,.rosterTable td{
+.rosterTable tr,.rosterTable th,.rosterTable td,
+.countTable tr,.countTable th,.countTable td{
     border: 1px solid black;
     text-align: center;
     font-weight: 400;
@@ -121,6 +125,31 @@
 .rosterTable td:last-child{
     width: 120px;
 }
+.countTable th{
+    display: flex;
+    border: 0px;
+    padding: 0 8px;
+    position: relative;
+    width: 220px;
+}
+.countTable .countTime{
+    text-align: right;
+    position: absolute;
+    left: 90px;
+}
+.countTable td{
+    width: 1000px;
+    text-align: right;
+    padding: 0 12px;
+}
+.notes{
+    border: 1px solid black;
+    color: #3f3f4648;
+    font-weight: 900;
+    padding: 10px 16px;
+    font-size: 16px;
+}
+
 @media print {
     body {
         visibility: hidden;
