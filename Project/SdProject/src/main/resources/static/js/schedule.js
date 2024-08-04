@@ -3,6 +3,7 @@ import {
     halfMinuteConverter,
     numToHourMinuteConverter,
     getDateFromExcel,
+    getDayFromExcel,
     isNumber
 } from "./util.js";
 
@@ -18,19 +19,53 @@ const weekend = ["일","월","화","수","목","금","토"];
 
 // get member list from: db > java > html > js
 
-const memberList = [];
-const mNameElements = document.querySelectorAll('.hidden .mname');
-const mGradeElements = document.querySelectorAll('.hidden .mgrade');
+ const memberList = [];
+ const mNameElements = document.querySelectorAll('.hidden .mname');
+ const mGradeElements = document.querySelectorAll('.hidden .mgrade');
 
-mNameElements.forEach((nameElement, index) => {
-    const memberName = nameElement.innerText;
-    const memberGrade = mGradeElements[index].innerText;
+ mNameElements.forEach((nameElement, index) => {
+     const memberName = nameElement.innerText;
+     const memberGrade = mGradeElements[index].innerText;
 
     memberList.push({
         name: memberName,
-        grade: memberGrade
-    });
-});
+                 grade: memberGrade
+     });
+ });
+
+// 서버리스용 예제 데이터
+
+/*
+const memberList = [
+    {name: '김해수', grade: 'VSM'},
+    {name: '최인화', grade: 'MGR'},
+    {name: '유건희', grade: 'CT'},
+    {name: '이희정', grade: 'CT'},
+    {name: '강민지', grade: 'EMP'},
+    {name: '권태영', grade: 'PT'},
+    {name: '김경민', grade: 'PT'},
+    {name: '김무준', grade: 'PT'},
+    {name: '김세희', grade: 'PT'},
+    {name: '김영록', grade: 'PT'},
+    {name: '김은경', grade: 'PT'},
+    {name: '김지환', grade: 'PT'},
+    {name: '박대용', grade: 'PT'},
+    {name: '박현선', grade: 'PT'},
+    {name: '복금현', grade: 'PT'},
+    {name: '서준영', grade: 'PT'},
+    {name: '안지연', grade: 'PT'},
+    {name: '원동하', grade: 'PT'},
+    {name: '유영현', grade: 'PT'},
+    {name: '윤승관', grade: 'PT'},
+    {name: '이상건', grade: 'PT'},
+    {name: '이영현', grade: 'PT'},
+    {name: '이재원', grade: 'PT'},
+    {name: '전예준', grade: 'PT'},
+    {name: '조경서', grade: 'PT'},
+    {name: '조관우', grade: 'PT'},
+    {name: '홍지오', grade: 'PT'}
+];
+*/
 
 // convert schedule excel > json
 const excelToJson = async (callback) => {
@@ -363,16 +398,64 @@ ${lossList}
             sortedRosterbody.map((el, i) => el.unshift(i + 1))
             // create html table for excel sheet
             let rosterTable_body_html = ``;
+
+            // counting members of each times
+            let lunchTime = '';
+            let dinnerTime = '';
+            let countLunch = 0;
+            let countDinner = 0;
             for (let b = 0; b < sortedRosterbody.length; b++) {
                 let temp_html = ``;
                 for (let t = 0; t < Object.keys(sortedRosterbody[0]).length; t++) {
                     if (t === 4 || t === 5) {
-                        temp_html += `<td>${numToHourMinuteConverter(Object.values(sortedRosterbody[b])[t])}</td>`;
+                        temp_html += `<td>${numToHourMinuteConverter(sortedRosterbody[b][t])}</td>`;
                     } else {
-                        temp_html += `<td>${Object.values(sortedRosterbody[b])[t]}</td>`;
+                        temp_html += `<td>${sortedRosterbody[b][t]}</td>`;
                     }
                 }
                 rosterTable_body_html += `<tr>${temp_html}</tr>`;
+                
+                switch (getDayFromExcel(tableDate[date])) {
+                    case 0:
+                    case 6:
+                        // holiday & count dinner
+                        lunchTime = "12:00 - 14:30";
+                        dinnerTime = "18:00 - 20:00";
+                        if(
+                            sortedRosterbody[b][4] < 14.5 &&
+                            sortedRosterbody[b][5] > 12
+                        ){
+                            countLunch += 1;
+                        };
+                        if(
+                            sortedRosterbody[b][4] < 20 &&
+                            sortedRosterbody[b][5] > 18
+                        ){
+                            countDinner += 1;
+                        };
+                        break;
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                        // not holiday & count lunch
+                        lunchTime = "11:30 - 14:00";
+                        dinnerTime = "18:00 - 20:00";
+                        if(
+                            sortedRosterbody[b][4] < 14 &&
+                            sortedRosterbody[b][5] > 11.5
+                        ){
+                            countLunch += 1;
+                        };
+                        if(
+                            sortedRosterbody[b][4] < 20 &&
+                            sortedRosterbody[b][5] > 18
+                        ){
+                            countDinner += 1;
+                        };
+                        break;
+                }
             }
             rosterTable_body_html = `<tbody>${rosterTable_body_html}</tbody>`;
             roster.insertAdjacentHTML('beforeend', `
@@ -382,6 +465,17 @@ ${lossList}
                     <table class="rosterTable">
                         ${rosterTable_head_html}${rosterTable_body_html}
                     </table>
+                    <table class="countTable">
+                        <tr>
+                            <th>LUNCH<div class="countTime">| ${lunchTime}</div></th>
+                            <td>${countLunch} 명</td>
+                            <th>DINNER<div class="countTime">| ${dinnerTime}</div></th>
+                            <td>${countDinner} 명</td>
+                        </tr>
+                    </table>
+                    <div class="notes" style="height: calc(100% - 100px - 32px - (64px + ${32*sortedRosterbody.length}px + 4px) - 26px - 45px);">
+                        Notes.
+                    </div>
                 </div>
             `);
         }
