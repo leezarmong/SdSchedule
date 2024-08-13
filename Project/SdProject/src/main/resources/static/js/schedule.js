@@ -414,7 +414,11 @@ ${lossList}
                     }
                 }
                 rosterTable_body_html += `<tr>${temp_html}</tr>`;
-                
+                if(
+                    sortedRosterbody[b][1] !== '김은경' &&
+                    sortedRosterbody[b][1] !== '김장현'
+                ){
+
                 switch (getDayFromExcel(tableDate[date])) {
                     case 0:
                     case 6:
@@ -422,14 +426,14 @@ ${lossList}
                         lunchTime = "12:00 - 14:30";
                         dinnerTime = "18:00 - 20:00";
                         if(
-                            sortedRosterbody[b][4] < 14.5 &&
-                            sortedRosterbody[b][5] > 12
+                            sortedRosterbody[b][4] <= 12 &&
+                            sortedRosterbody[b][5] >= 14.5
                         ){
                             countLunch += 1;
                         };
                         if(
-                            sortedRosterbody[b][4] < 20 &&
-                            sortedRosterbody[b][5] > 18
+                            sortedRosterbody[b][4] <= 18 &&
+                            sortedRosterbody[b][5] >= 20
                         ){
                             countDinner += 1;
                         };
@@ -443,18 +447,19 @@ ${lossList}
                         lunchTime = "11:30 - 14:00";
                         dinnerTime = "18:00 - 20:00";
                         if(
-                            sortedRosterbody[b][4] < 14 &&
-                            sortedRosterbody[b][5] > 11.5
+                            sortedRosterbody[b][4] <= 11.5 &&
+                            sortedRosterbody[b][5] >= 14
                         ){
                             countLunch += 1;
                         };
                         if(
-                            sortedRosterbody[b][4] < 20 &&
-                            sortedRosterbody[b][5] > 18
+                            sortedRosterbody[b][4] <= 18 &&
+                            sortedRosterbody[b][5] >= 20
                         ){
                             countDinner += 1;
                         };
                         break;
+                }
                 }
             }
             rosterTable_body_html = `<tbody>${rosterTable_body_html}</tbody>`;
