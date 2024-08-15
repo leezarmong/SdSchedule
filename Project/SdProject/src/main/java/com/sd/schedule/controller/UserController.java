@@ -99,8 +99,11 @@ public class UserController {
 	    // client IP 담기
 	    String name = userService.getNameFromIP(clientIP);
 	    
+	    // 운영자 아이피는 제외 ( 재원 ) 
+	    if(!"127.0.0.1".equals(clientIP)&& !"220.117.84.163".equals(clientIP)) {
 	    LoginRecord record = new LoginRecord(name, formattedDate, user_id);
 	    loginRecords.add(record);
+	    }
 	    
 	    // ip 콘솔 출력
 //	    System.out.println("Login Records: " + loginRecords);

@@ -170,7 +170,15 @@
             <option value="CT">CT</option>
             <option value="EMP">EMP</option>
             <option value="PT">PT</option>
-        </select><br>
+        </select>
+        ALL: <input type="checkbox" id="checkA" style="margin-right: 10px;">
+	    F: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+	    G: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+	    M: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+	    E: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+	    D: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+	    <br><br>
+	    
         <input type="button" class="btn btn-primary" value="Insert" onclick="insert()">
         <input type="button" class="btn btn-danger" value="멤버 리뉴얼" onclick="renewal()">
 		 
@@ -200,11 +208,11 @@
                 </td>
                 <td th:text="${member.member_grade}"></td>
                  <td>
-				    F: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;" disabled>
-				    G: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;" disabled>
-				    M: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;" disabled>
-				    E: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;" disabled>
-				    D: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;" disabled>
+				    F: <input type="checkbox"  style="margin-right: 10px;" disabled>
+				    G: <input type="checkbox"  style="margin-right: 10px;" disabled>
+				    M: <input type="checkbox"  style="margin-right: 10px;" disabled>
+				    E: <input type="checkbox"  style="margin-right: 10px;" disabled>
+				    D: <input type="checkbox"  style="margin-right: 10px;" disabled>
 				</td>
             </tr>
         </tbody>
@@ -274,6 +282,11 @@
             var top = (screen.height - height) / 2;
             window.open('renewal', 'renewal', `width=${width},height=${height},top=${top},left=${left}`);
         }
+        
+        /* 체크박스 전체 */
+        $("#checkA").on('change',function(){
+        	$('.groupCheckbox').prop('checked',this.checked);
+        });
     </script>
 
     <!-- Bootstrap JS -->
