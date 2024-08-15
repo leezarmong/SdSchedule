@@ -453,14 +453,14 @@ ${lossList}
                         lunchTime = "11:30 - 14:00";
                         dinnerTime = "18:00 - 20:00";
                         if(
-                            sortedRosterbody[b][4] <= 11.5 &&
-                            sortedRosterbody[b][5] >= 14
+                            sortedRosterbody[b][7] <= 11.5 &&
+                            sortedRosterbody[b][8] >= 14
                         ){
                             countLunch += 1;
                         };
                         if(
-                            sortedRosterbody[b][4] <= 18 &&
-                            sortedRosterbody[b][5] >= 20
+                            sortedRosterbody[b][7] <= 18 &&
+                            sortedRosterbody[b][8] >= 20
                         ){
                             countDinner += 1;
                         };
