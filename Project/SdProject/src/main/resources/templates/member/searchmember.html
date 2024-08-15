@@ -176,6 +176,7 @@
                     <th>Member Name</th>
                     <th>Member Grade</th>
                     <th>Store</th>
+                    <th>Sation</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -204,6 +205,14 @@
                         <div th:if="${member.user_id == 'sd-hong'}">홍대점</div>
                         <div th:if="${member.user_id == 'test'}">test</div>
                     </td>
+                    <td>
+					    ALL: <input type="checkbox" id="checkA" style="margin-right: 10px;">
+					    F: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+					    G: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+					    M: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+					    E: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+					    D: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+					</td>
                     <td>
                         <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
                         <input type="hidden" class="member_no" th:value="${member.member_no}" />
@@ -251,6 +260,11 @@
                 location.href = 'logout';
             }
         }
+        
+        /* 체크박스 전체 */
+        $("#checkA").on('change',function(){
+        	$('.groupCheckbox').prop('checked',this.checked);
+        });
     </script>
 
     <!-- Bootstrap JS -->

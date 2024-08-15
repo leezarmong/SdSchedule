@@ -183,6 +183,7 @@
             <tr>
                 <th>Member Name</th>
                 <th>Member Grade</th>
+                <th>Member Station</th>
             </tr>
         </thead>
         <tbody th:if="${map.list.isEmpty()}">
@@ -198,6 +199,13 @@
                     </a>
                 </td>
                 <td th:text="${member.member_grade}"></td>
+                 <td>
+				    F: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;" disabled>
+				    G: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;" disabled>
+				    M: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;" disabled>
+				    E: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;" disabled>
+				    D: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;" disabled>
+				</td>
             </tr>
         </tbody>
     </table>
@@ -260,7 +268,7 @@
         
         /* 멤버 리뉴얼 renewal 팝업 */
         function renewal() {
-            var width = 500;
+            var width = 1000;
             var height = 600;
             var left = (screen.width - width) / 2;
             var top = (screen.height - height) / 2;

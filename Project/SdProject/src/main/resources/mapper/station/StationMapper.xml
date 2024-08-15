@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.sd.schedule.model.stationimpl.StationMapper">
+
+
+
+	<!-- 멤버 리스트 -->
+	<select id="memberList"
+		resultType="com.sd.schedule.model.member.MemberVO">
+		 select * from member where user_id = #{user_id} order by member_no
+	</select>
+	
+	
+	<!-- 불필요 멤버 전체 삭제 -->
+	<delete id="deleteMembers">
+		delete from member where member_name in
+		<foreach item="member" collection="list" open="(" separator="," close=")">
+			#{member.member_name}
+		</foreach>
+	</delete>
+	
+	
+	
+	<!-- 새로운 신규인원 새로 추가 -->
+   <!-- <insert id="insertMembers">
+    INSERT INTO member (member_name, member_no, member_grade, user_id)
+    VALUES
+    <foreach collection="list" item="member" separator=",">
+        (#{member.member_name}, MEMBER_SEQ.NEXTVAL, #{member.member_grade}, #{member.user_id})
+    </foreach>
+</insert> -->
+
+
+<select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">
+    <![CDATA[
+        SELECT *
+        FROM (
+            SELECT 
+                ROWNUM AS RN, A.*
+            FROM (
+                SELECT 
+                    * 
+                FROM 
+                    MEMBER NATURAL JOIN USERC
+                WHERE 
+                    USER_ID = #{vo.user_id}
+                ORDER BY 
+                    CASE 
+                        WHEN MEMBER_GRADE = 'SM' THEN 1 
+                        WHEN MEMBER_GRADE = 'VSM' THEN 2 
+                        WHEN MEMBER_GRADE = 'MGR' THEN 3 
+                        WHEN MEMBER_GRADE = 'CT' THEN 4 
+                        WHEN MEMBER_GRADE = 'EMP' THEN 5 
+                        WHEN MEMBER_GRADE = 'PT' THEN 6 
+                        ELSE 7 
+                    END, MEMBER_NO
+            ) A
+        ) 
+        WHERE 
+            RN BETWEEN #{start} AND #{end}
+        ORDER BY 
+            RN
+    ]]>
+</select>
+
+
+
+	
+	
+	
+
+	<!-- 멤버 입력 -->
+	<insert id="insertMember">
+		  insert into member(member_name, member_no, member_grade, user_id)
+   			 values(#{member_name}, MEMBER_SEQ.NEXTVAL, #{member_grade}, #{user_id})	
+	</insert>
+
+	<!-- 멤버 삭제 -->
+	<delete id="deleteMember">
+		delete from member where member_no=${member_no}
+	</delete>
+
+	<!-- 검색창 pager -->
+	<!-- 멤버 수 카운트 -->
+	<select id="countMember" resultType="java.lang.Integer">
+		 <![CDATA[
+        SELECT COUNT(*) FROM MEMBER
+        WHERE USER_ID = #{user_id}
+    ]]>
+	</select>
+
+
+	<!-- 이름 중복 검사 -->
+	<select id="countMemberByNameAndUserId" parameterType="map" resultType="java.lang.Integer">
+	    SELECT COUNT(*)
+	    FROM member
+	    WHERE member_name = #{member_name}
+	      AND user_id = #{user_id}
+	</select>
+
+
+	<!-- 멤버 수 불러오기(검색) -->
+	<!-- <select id="countSearch" resultType="java.lang.Integer">
+    	
+    	SELECT COUNT(*) 
+		FROM MEMBER
+		WHERE UPPER(MEMBER_NAME) LIKE UPPER('%'||#{name}||'%') 
+		OR LOWER(MEMBER_NAME) LIKE LOWER('%'||#{name}||'%')
+		
+	</select> -->
+	<select id="countSearch" resultType="java.lang.Integer">
+    <![CDATA[
+	    SELECT COUNT(*) 
+	    FROM MEMBER
+	    WHERE user_id = #{user_id}
+	    AND (UPPER(MEMBER_NAME) LIKE UPPER('%' || #{name} || '%') 
+	    OR LOWER(MEMBER_NAME) LIKE LOWER('%' || #{name} || '%'))
+    ]]>
+	</select>
+
+	<!-- 멤버 검색 -->
+	<select id="searchMember" resultType="com.sd.schedule.model.member.MemberVO">
+		 <![CDATA[
+    SELECT * FROM (
+        SELECT ROWNUM AS RN, A.* FROM (
+            SELECT * FROM MEMBER
+            WHERE user_id = #{user_id}
+            AND (UPPER(MEMBER_NAME) LIKE UPPER('%' || #{name} || '%') 
+            OR LOWER(MEMBER_NAME) LIKE LOWER('%' || #{name} || '%'))
+        ) A
+    ) WHERE RN BETWEEN #{start} AND #{end}
+    ]]>
+	</select>
+
+	<!-- 멤버 업데이트 -->
+	<update id="updateMember">
+		UPDATE MEMBER
+		SET
+		MEMBER_NAME = #{member_name},
+		MEMBER_GRADE = #{member_grade}
+		WHERE
+		MEMBER_NO = #{member_no}
+	</update>
+
+
+
+</mapper>

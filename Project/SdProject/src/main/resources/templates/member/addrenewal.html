@@ -19,6 +19,7 @@
                     <tr>
                         <th>멤버 이름</th>
                         <th>멤버 등급</th>
+                        <th>Sation</th>
                     </tr>
                 </thead>
 					
@@ -42,6 +43,14 @@
                                 <option value="PT" th:selected="true">PT</option>
                             </select>
                         </td>
+                         <td>
+					    ALL: <input type="checkbox" id="checkA" style="margin-right: 10px;">
+					    F: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+					    G: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+					    M: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+					    E: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+					    D: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+						</td>
                     </tr>
                 </tbody>
             </table>
@@ -94,6 +103,11 @@ function submitForm() {
         });
     }
 }
+
+/* 체크박스 전체 */
+$("#checkA").on('change',function(){
+	$('.groupCheckbox').prop('checked',this.checked);
+});
 </script>
 
 </body>

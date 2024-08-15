@@ -183,7 +183,7 @@ Roster 에 반영됩니다.
 ${lossList}
             `);
             // Open the popup window first
-            const width = 500;
+            const width = 1000;
             const height = 600;
             const left = (screen.width / 2) - (width / 2);
             const top = (screen.height / 2) - (height / 2);
