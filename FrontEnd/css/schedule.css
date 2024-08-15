@@ -113,6 +113,9 @@
     font-weight: 400;
     margin: 0;
 }
+.rosterTable th.line{
+    width: 10px;
+}
 .rosterTable tr{
     height: 32px;
 }

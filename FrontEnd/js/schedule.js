@@ -19,25 +19,25 @@ const weekend = ["일","월","화","수","목","금","토"];
 
 // get member list from: db > java > html > js
 
- const memberList = [];
- const mNameElements = document.querySelectorAll('.hidden .mname');
- const mGradeElements = document.querySelectorAll('.hidden .mgrade');
+//  const memberList = [];
+//  const mNameElements = document.querySelectorAll('.hidden .mname');
+//  const mGradeElements = document.querySelectorAll('.hidden .mgrade');
 
- mNameElements.forEach((nameElement, index) => {
-     const memberName = nameElement.innerText;
-     const memberGrade = mGradeElements[index].innerText;
+//  mNameElements.forEach((nameElement, index) => {
+//      const memberName = nameElement.innerText;
+//      const memberGrade = mGradeElements[index].innerText;
 
-    memberList.push({
-        name: memberName,
-                 grade: memberGrade
-     });
- });
+//     memberList.push({
+//         name: memberName,
+//                  grade: memberGrade
+//      });
+//  });
 
 // 서버리스용 예제 데이터
 
-/*
+
 const memberList = [
-    {name: '김해수', grade: 'VSM'},
+    {name: '김해수', grade: 'VSM', line: ''},
     {name: '최인화', grade: 'MGR'},
     {name: '유건희', grade: 'CT'},
     {name: '이희정', grade: 'CT'},
@@ -65,7 +65,6 @@ const memberList = [
     {name: '조관우', grade: 'PT'},
     {name: '홍지오', grade: 'PT'}
 ];
-*/
 
 // convert schedule excel > json
 const excelToJson = async (callback) => {
@@ -352,14 +351,18 @@ ${lossList}
             <thead>
                 <tr>
                     <th rowspan="2">NO</th>
-                    <th rowspan="2">성명</th>
-                    <th rowspan="2">Nick Name</th>
-                    <th rowspan="2">직무</th>
+                    <th rowspan="2" style="width: 110px">성명</th>
+                    <th colspan="5">포지션 / 라인</th>
                     <th colspan="3">스케줄</th>
                     <th colspan="3">실근무시간</th>
-                    <th rowspan="2">비고</th>
+                    <th rowspan="2" style="width: 180px">비고</th>
                 </tr>
                 <tr>
+                    <th rowspan="1" class="line">F</th>
+                    <th rowspan="1" class="line">G</th>
+                    <th rowspan="1" class="line">M</th>
+                    <th rowspan="1" class="line">E</th>
+                    <th rowspan="1" class="line">D</th>
                     <th rowspan="1">출근</th>
                     <th rowspan="1">퇴근</th>
                     <th rowspan="1">휴게</th>
@@ -376,6 +379,9 @@ ${lossList}
                 if (sortedJson_value[memb][date] != null) {
                     let tempArr = [
                         sortedJson_key[memb],
+                        '',
+                        '',
+                        '',
                         '',
                         ''
                     ];
@@ -394,7 +400,7 @@ ${lossList}
                     rosterbody.push(tempArr);
                 }
             }
-            let sortedRosterbody = rosterbody.sort((a, b) => a[3] - b[3]);
+            let sortedRosterbody = rosterbody.sort((a, b) => a[6] - b[6]);
             sortedRosterbody.map((el, i) => el.unshift(i + 1))
             // create html table for excel sheet
             let rosterTable_body_html = ``;
@@ -407,7 +413,7 @@ ${lossList}
             for (let b = 0; b < sortedRosterbody.length; b++) {
                 let temp_html = ``;
                 for (let t = 0; t < Object.keys(sortedRosterbody[0]).length; t++) {
-                    if (t === 4 || t === 5) {
+                    if (t === 7 || t === 8) {
                         temp_html += `<td>${numToHourMinuteConverter(sortedRosterbody[b][t])}</td>`;
                     } else {
                         temp_html += `<td>${sortedRosterbody[b][t]}</td>`;
@@ -426,14 +432,14 @@ ${lossList}
                         lunchTime = "12:00 - 14:30";
                         dinnerTime = "18:00 - 20:00";
                         if(
-                            sortedRosterbody[b][4] <= 12 &&
-                            sortedRosterbody[b][5] >= 14.5
+                            sortedRosterbody[b][7] <= 12 &&
+                            sortedRosterbody[b][8] >= 14.5
                         ){
                             countLunch += 1;
                         };
                         if(
-                            sortedRosterbody[b][4] <= 18 &&
-                            sortedRosterbody[b][5] >= 20
+                            sortedRosterbody[b][7] <= 18 &&
+                            sortedRosterbody[b][8] >= 20
                         ){
                             countDinner += 1;
                         };
