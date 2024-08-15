@@ -55,3 +55,18 @@ select * from member;
 select * from userc;
 
 insert into userc values ('test','001');
+
+
+-- station 테이블에 member_name  컬럼 추가하기 
+select * from station;
+
+
+alter table station add MEMBER_NAME varchar2(20) NOT NULL;
+SELECT member_name , FREI , GRILL , MAKE , EXPO , DISH 
+FROM station 
+NATURAL JOIN member 
+WHERE member_name IS NOT NULL;
+
+update userc set user_pass='1234' 
+where user_pass='0425';
+
