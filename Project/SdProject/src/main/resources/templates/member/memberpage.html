@@ -78,6 +78,44 @@
 			    background: #333;
 			    color: #fff;
 			}
+			
+			
+		/* 체크박스 */
+		/* Default styles for all checkboxes */
+    input[type="checkbox"] {
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #ccc;
+        border-radius: 3px;
+        position: relative;
+    }
+
+    /* Style for the checkmark */
+    input[type="checkbox"]:checked::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        background-color: #007bff; /* Default blue color */
+        transform: translate(-50%, -50%);
+        border-radius: 2px;
+    }
+
+    /* Specific style for the All-rounder checkbox */
+    #allRounder {
+        border-color: red; /* Red border */
+    }
+
+    /* Red checkmark for All-rounder checkbox */
+    #allRounder:checked::before {
+        background-color: red; /* Red checkmark */
+    }
+    
+    
+</style>
 
     </style>
 </head>
@@ -170,13 +208,13 @@
             <option value="CT">CT</option>
             <option value="EMP">EMP</option>
             <option value="PT">PT</option>
-        </select>
-        ALL: <input type="checkbox" id="checkA" style="margin-right: 10px;">
-	    F: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-	    G: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-	    M: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-	    E: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-	    D: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+        </select><br>
+        ALL: <input type="checkbox" id="allRounder" style="margin-right: 10px;">
+	    F: <input type="checkbox" class="groupCheckbox" value="F" style="margin-right: 10px;">
+	    G: <input type="checkbox" class="groupCheckbox" value="G" style="margin-right: 10px;">
+	    M: <input type="checkbox" class="groupCheckbox" value="M" style="margin-right: 10px;">
+	    E: <input type="checkbox" class="groupCheckbox" value="E" style="margin-right: 10px;">
+	    D: <input type="checkbox" class="groupCheckbox" value="D" style="margin-right: 10px;">
 	    <br><br>
 	    
         <input type="button" class="btn btn-primary" value="Insert" onclick="insert()">
@@ -208,18 +246,16 @@
 			        </td>
 			        <td th:text="${member.member_grade}"></td>
 			        <td>
-			        	All-rounder: 
-					    <input type="checkbox" 
+					    All-rounder: 
+					    <input type="checkbox" id="allRounder"
 					           th:checked="${member.frei == 'F' and member.grill == 'G' and member.make == 'M' and member.expo == 'E' and member.dish == 'D'}" 
-					           style="margin-right: 10px;" 
-					           disabled>
-					    F: <input type="checkbox" th:checked="${member.frei == 'F'}" style="margin-right: 10px;" disabled>
-					    G: <input type="checkbox" th:checked="${member.grill == 'G'}" style="margin-right: 10px;" disabled>
-					    M: <input type="checkbox" th:checked="${member.make == 'M'}" style="margin-right: 10px;" disabled>
-					    E: <input type="checkbox" th:checked="${member.expo == 'E'}" style="margin-right: 10px;" disabled>
-					    D: <input type="checkbox" th:checked="${member.dish == 'D'}" style="margin-right: 10px;" disabled>
+					           style="margin-right: 10px;" disabled>
+					    F: <input type="checkbox" id="frei" th:checked="${member.frei == 'F'}" style="margin-right: 10px;" disabled>
+					    G: <input type="checkbox" id="grill" th:checked="${member.grill == 'G'}" style="margin-right: 10px;" disabled>
+					    M: <input type="checkbox" id="make" th:checked="${member.make == 'M'}" style="margin-right: 10px;" disabled>
+					    E: <input type="checkbox" id="expo" th:checked="${member.expo == 'E'}" style="margin-right: 10px;" disabled>
+					    D: <input type="checkbox" id="dish" th:checked="${member.dish == 'D'}" style="margin-right: 10px;" disabled>
 					</td>
-
 			    </tr>
 			</tbody>
     </table>
@@ -290,7 +326,7 @@
         }
         
         /* 체크박스 전체 */
-        $("#checkA").on('change',function(){
+        $("#allRounder").on('change',function(){
         	$('.groupCheckbox').prop('checked',this.checked);
         });
     </script>
