@@ -1,10 +1,18 @@
 package com.sd.schedule.model.stationimpl;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+
+import com.sd.schedule.model.station.StationVO;
 
 
 
 @Mapper
 public interface StationMapper {
+	
+	
+	// 스테이션 리스트
+//		public List<StationVO> stationListByUserId(String user_id);
 
 }

@@ -9,6 +9,8 @@ public class StationVO {
 	private String make;
 	private String expo;
 	private String dish;
+	private String member_name;
+	private String user_id;
 	
 	
 	public String getFrei() {
@@ -41,18 +43,27 @@ public class StationVO {
 	public void setDish(String dish) {
 		this.dish = dish;
 	}
+	public String getMember_name() {
+		return member_name;
+	}
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
 	
 	
 	@Override
 	public String toString() {
 		return "StationVO [frei=" + frei + ", grill=" + grill + ", make=" + make + ", expo=" + expo + ", dish=" + dish
-				+ ", getFrei()=" + getFrei() + ", getGrill()=" + getGrill() + ", getMake()=" + getMake()
-				+ ", getExpo()=" + getExpo() + ", getDish()=" + getDish() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", member_name=" + member_name + ", user_id=" + user_id + ", getFrei()=" + getFrei() + ", getGrill()="
+				+ getGrill() + ", getMake()=" + getMake() + ", getExpo()=" + getExpo() + ", getDish()=" + getDish()
+				+ ", getMember_name()=" + getMember_name() + ", getUser_id()=" + getUser_id() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
-	
-	
-	
-	
 
 }

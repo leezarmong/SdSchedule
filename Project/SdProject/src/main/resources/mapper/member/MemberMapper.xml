@@ -24,18 +24,11 @@
 	
 	
 	
-	<!-- 새로운 신규인원 새로 추가 -->
-   <!-- <insert id="insertMembers">
-    INSERT INTO member (member_name, member_no, member_grade, user_id)
-    VALUES
-    <foreach collection="list" item="member" separator=",">
-        (#{member.member_name}, MEMBER_SEQ.NEXTVAL, #{member.member_grade}, #{member.user_id})
-    </foreach>
-</insert> -->
+
 
 
 <select id="getMemberList" resultType="com.sd.schedule.model.member.MemberVO">
-    <![CDATA[
+   <!--  <![CDATA[
         SELECT *
         FROM (
             SELECT 
@@ -63,7 +56,53 @@
             RN BETWEEN #{start} AND #{end}
         ORDER BY 
             RN
+    ]]> -->
+    
+     <![CDATA[
+    SELECT *
+    FROM (
+        SELECT 
+            ROWNUM AS RN, A.*
+        FROM (
+            SELECT 
+                M.MEMBER_NAME, 
+                M.MEMBER_GRADE, 
+                S.FREI, 
+                S.GRILL, 
+                S.MAKE, 
+                S.EXPO, 
+                S.DISH
+            FROM 
+                MEMBER M
+            JOIN 
+                USERC U 
+            ON 
+                M.USER_ID = U.USER_ID
+            LEFT JOIN 
+                STATION S 
+            ON 
+                M.MEMBER_NAME = S.MEMBER_NAME
+            WHERE 
+                U.USER_ID = #{vo.user_id}
+            ORDER BY 
+                CASE 
+                    WHEN M.MEMBER_GRADE = 'SM' THEN 1 
+                    WHEN M.MEMBER_GRADE = 'VSM' THEN 2 
+                    WHEN M.MEMBER_GRADE = 'MGR' THEN 3 
+                    WHEN M.MEMBER_GRADE = 'CT' THEN 4 
+                    WHEN M.MEMBER_GRADE = 'EMP' THEN 5 
+                    WHEN M.MEMBER_GRADE = 'PT' THEN 6 
+                    ELSE 7 
+                END, 
+                M.MEMBER_NO
+        ) A
+    ) 
+    WHERE 
+        RN BETWEEN #{start} AND #{end}
+    ORDER BY 
+        RN
     ]]>
+  
 </select>
 
 
@@ -123,7 +162,7 @@
 
 	<!-- 멤버 검색 -->
 	<select id="searchMember" resultType="com.sd.schedule.model.member.MemberVO">
-		 <![CDATA[
+		<!--  <![CDATA[
     SELECT * FROM (
         SELECT ROWNUM AS RN, A.* FROM (
             SELECT * FROM MEMBER
@@ -132,7 +171,37 @@
             OR LOWER(MEMBER_NAME) LIKE LOWER('%' || #{name} || '%'))
         ) A
     ) WHERE RN BETWEEN #{start} AND #{end}
-    ]]>
+    ]]> -->
+    
+    <![CDATA[
+    SELECT * 
+    FROM (
+        SELECT ROWNUM AS RN, A.* 
+        FROM (
+            SELECT 
+                M.MEMBER_NAME, 
+                M.MEMBER_GRADE, 
+                S.FREI, 
+                S.GRILL, 
+                S.MAKE, 
+                S.EXPO, 
+                S.DISH
+            FROM 
+                MEMBER M
+            LEFT JOIN 
+                STATION S 
+            ON 
+                M.MEMBER_NAME = S.MEMBER_NAME
+            WHERE 
+                M.USER_ID = #{user_id}
+            AND (
+                UPPER(M.MEMBER_NAME) LIKE UPPER('%' || #{name} || '%') 
+                OR LOWER(M.MEMBER_NAME) LIKE LOWER('%' || #{name} || '%')
+            )
+        ) A
+    ) 
+    WHERE RN BETWEEN #{start} AND #{end}
+]]>
 	</select>
 
 	<!-- 멤버 업데이트 -->

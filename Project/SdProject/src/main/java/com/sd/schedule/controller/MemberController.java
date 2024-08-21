@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sd.schedule.model.member.MemberService;
 import com.sd.schedule.model.member.MemberVO;
+import com.sd.schedule.model.station.StationService;
+import com.sd.schedule.model.station.StationVO;
 import com.sd.schedule.model.user.UserVO;
 import com.sd.schedule.pager.Pager;
 
@@ -37,33 +39,39 @@ public class MemberController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	StationService stationService;
 
 	// 멤버 리스트
 	@GetMapping("/memberpage")
 	public String memberpage(@RequestParam(defaultValue = "1") int curPage, MemberVO vo, Model model,
-			HttpSession session) {
+	                         HttpSession session) {
 
-		// select where 에서 user_id 기준 검색하기위해 session 에 저장된 user 의 정보를 get 하여
-		// user_id 의 정보를 가져온 후 setUser_id로 파라미터를 지정
-		UserVO user = (UserVO) session.getAttribute("user");
-		String user_id = user.getUser_id();
-		vo.setUser_id(user_id);
+	    // Retrieve the user_id from session
+	    UserVO user = (UserVO) session.getAttribute("user");
+	    String user_id = user.getUser_id();
+	    vo.setUser_id(user_id);
+	    
+	    // Get the count of members
+	    int count = memberService.countMember(vo);
+	    Pager pager = new Pager(count, curPage);
+	    int start = pager.getPageBegin();
+	    int end = pager.getPageEnd();
 
-		int count = memberService.countMember(vo);
-		Pager pager = new Pager(count, curPage);
-		int start = pager.getPageBegin();
-		int end = pager.getPageEnd();
+	    model.addAttribute("count", count);
+	    
+	    // Retrieve the member list
+	    List<MemberVO> list = memberService.getMemberList(vo, start, end);
+	    
+	    // Prepare the data to be passed to the view
+	    HashMap<String, Object> map = new HashMap<>();
+	    map.put("list", list);
+	    map.put("count", count);
+	    map.put("pager", pager);
+	    model.addAttribute("map", map);
 
-		model.addAttribute("count", count);
-
-		List<MemberVO> list = memberService.getMemberList(vo, start, end);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("count", count);
-		map.put("pager", pager);
-		model.addAttribute("map", map);
-
-		return "member/memberpage";
+	    return "member/memberpage";
 	}
 
 	// 멤버 추가

@@ -206,12 +206,17 @@
                         <div th:if="${member.user_id == 'test'}">test</div>
                     </td>
                     <td>
-					    ALL: <input type="checkbox" id="checkA" style="margin-right: 10px;">
-					    F: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-					    G: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-					    M: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-					    E: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-					    D: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+					    All-rounder: 
+					    <input type="checkbox" id="allRounder" 
+					           th:checked="${member.frei == 'F' and member.grill == 'G' and member.make == 'M' and member.expo == 'E' and member.dish == 'D'}" 
+					           style="margin-right: 10px;" 
+					           onclick="toggleAllCheckboxes()">
+					
+					    F: <input type="checkbox" class="station" id="frei" th:checked="${member.frei == 'F'}" style="margin-right: 10px;">
+					    G: <input type="checkbox" class="station" id="grill" th:checked="${member.grill == 'G'}" style="margin-right: 10px;">
+					    M: <input type="checkbox" class="station" id="make" th:checked="${member.make == 'M'}" style="margin-right: 10px;">
+					    E: <input type="checkbox" class="station" id="expo" th:checked="${member.expo == 'E'}" style="margin-right: 10px;">
+					    D: <input type="checkbox" class="station" id="dish" th:checked="${member.dish == 'D'}" style="margin-right: 10px;">
 					</td>
                     <td>
                         <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
@@ -262,9 +267,19 @@
         }
         
         /* 체크박스 전체 */
-        $("#checkA").on('change',function(){
-        	$('.groupCheckbox').prop('checked',this.checked);
-        });
+         function toggleAllCheckboxes() {
+		        var isChecked = $('#allRounder').is(':checked');
+		        
+		        $('.station').prop('checked', isChecked);
+		    }
+		
+		    $(document).ready(function() {
+		        // When any of the station checkboxes is changed, uncheck "All-rounder" if not all are checked
+		        $('.station').on('change', function() {
+		            var allChecked = $('.station').length === $('.station:checked').length;
+		            $('#allRounder').prop('checked', allChecked);
+		        });
+		    });
     </script>
 
     <!-- Bootstrap JS -->

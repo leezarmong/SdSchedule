@@ -70,3 +70,21 @@ WHERE member_name IS NOT NULL;
 update userc set user_pass='1234' 
 where user_pass='0425';
 
+
+select member_name , frei , grill , make , expo , dish from station natural join member where;
+
+ SELECT
+       
+        FREI, 
+        GRILL, 
+        MAKE, 
+        EXPO, 
+        DISH
+    FROM 
+        STATION 
+        NATURAL JOIN MEMBER
+    WHERE 
+        user_id = 'sd-coex';
+
+alter table station add USER_ID varchar2(20);
+

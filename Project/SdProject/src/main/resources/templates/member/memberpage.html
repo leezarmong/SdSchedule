@@ -199,23 +199,29 @@
                 <td colspan="3">등록된 멤버가 없습니다.</td>
             </tr>
         </tbody>
-        <tbody th:unless="${map.list.size() == 0}">
-            <tr th:each="member : ${map.list}">
-                <td>
-                    <a th:href="'searchMember?name=' + ${member.member_name}">
-                        <span th:text="${member.member_name}"></span>
-                    </a>
-                </td>
-                <td th:text="${member.member_grade}"></td>
-                 <td>
-				    F: <input type="checkbox"  style="margin-right: 10px;" disabled>
-				    G: <input type="checkbox"  style="margin-right: 10px;" disabled>
-				    M: <input type="checkbox"  style="margin-right: 10px;" disabled>
-				    E: <input type="checkbox"  style="margin-right: 10px;" disabled>
-				    D: <input type="checkbox"  style="margin-right: 10px;" disabled>
-				</td>
-            </tr>
-        </tbody>
+		     <tbody th:unless="${map.list.size() == 0}">
+			    <tr th:each="member : ${map.list}">
+			        <td>
+			            <a th:href="'searchMember?name=' + ${member.member_name}">
+			                <span th:text="${member.member_name}"></span>
+			            </a>
+			        </td>
+			        <td th:text="${member.member_grade}"></td>
+			        <td>
+			        	All-rounder: 
+					    <input type="checkbox" 
+					           th:checked="${member.frei == 'F' and member.grill == 'G' and member.make == 'M' and member.expo == 'E' and member.dish == 'D'}" 
+					           style="margin-right: 10px;" 
+					           disabled>
+					    F: <input type="checkbox" th:checked="${member.frei == 'F'}" style="margin-right: 10px;" disabled>
+					    G: <input type="checkbox" th:checked="${member.grill == 'G'}" style="margin-right: 10px;" disabled>
+					    M: <input type="checkbox" th:checked="${member.make == 'M'}" style="margin-right: 10px;" disabled>
+					    E: <input type="checkbox" th:checked="${member.expo == 'E'}" style="margin-right: 10px;" disabled>
+					    D: <input type="checkbox" th:checked="${member.dish == 'D'}" style="margin-right: 10px;" disabled>
+					</td>
+
+			    </tr>
+			</tbody>
     </table>
 
     <!-- pager -->
