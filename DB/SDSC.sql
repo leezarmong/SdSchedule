@@ -74,7 +74,7 @@ where user_pass='0425';
 select member_name , frei , grill , make , expo , dish from station natural join member where;
 
  SELECT
-       
+        member_name, 
         FREI, 
         GRILL, 
         MAKE, 
@@ -84,7 +84,10 @@ select member_name , frei , grill , make , expo , dish from station natural join
         STATION 
         NATURAL JOIN MEMBER
     WHERE 
-        user_id = 'sd-coex';
+        user_id = 'sd-coex' and member_name='이재원';
+        
+        select * from station;
 
 alter table station add USER_ID varchar2(20);
 
+select frei , grill , make ,expo , dish , member_name from station natural join member where user_id='sd-coex';
