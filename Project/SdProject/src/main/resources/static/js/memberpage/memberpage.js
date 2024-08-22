@@ -1,6 +1,6 @@
 		
 		
-	
+	/*
 	   function insert() {
     var member_name = $("#member_name").val();
     var member_grade = $("#member_grade").val();
@@ -39,6 +39,88 @@
             }
         });
     }
+}
+*/
+
+
+function insert() {
+    // member table variables
+    var member_name = $("#member_name").val();
+    var member_grade = $("#member_grade").val();
+    var user_id = $("#user_id").val();
+    
+    // station table variables
+    var frei = $("#frei").is(":checked") ? $("#frei").val() : null;
+    var grill = $("#grill").is(":checked") ? $("#grill").val() : null;
+    var make = $("#make").is(":checked") ? $("#make").val() : null;
+    var expo = $("#expo").is(":checked") ? $("#expo").val() : null;
+    var dish = $("#dish").is(":checked") ? $("#dish").val() : null;
+    
+    console.log("Member Name: " + member_name);
+    console.log("Grill: " + grill);
+
+    if (!member_name || !member_grade || member_grade === "null") {
+        alert("직원 이름 또는 직급을 선택 해 주세요.");
+        return; // Prevent further execution if validation fails
+    } 
+
+    // First, check if the member already exists
+    $.ajax({
+        type: "POST",
+        url: "check",
+        data: {
+            "member_name": member_name,
+            "user_id": user_id
+        },
+        success: function (data) {
+            if (data != 0) {
+                alert("해당 직원은 이미 존재합니다.");
+            } else {
+                // If the member does not exist, insert into the member table
+                $.ajax({
+                    type: "POST",
+                    url: "insert",  // Consider using a specific URL for member insert
+                    data: {
+                        "member_name": member_name,
+                        "member_grade": member_grade,
+                        "user_id": user_id 
+                    },
+                    success: function() {
+                        // After inserting into the member table, insert into the station table
+                        $.ajax({
+                            type: "POST",
+                            url: "insert",  // Consider using a specific URL for station insert
+                            data: {
+                                "frei": frei,
+                                "grill": grill,
+                                "make": make,
+                                "expo": expo,
+                                "dish": dish,
+                                "member_name": member_name,
+                                "user_id": user_id
+                            },
+                            success: function (data) {
+                                alert("입력 완료..!");
+                                window.location.href = "memberpage";
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Error inserting station data:", error);
+                                console.log("XHR Object:", xhr);
+                                console.log("Status:", status);
+                                console.log("Response Text:", xhr.responseText);
+                            }
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error inserting member data:", error);
+                    }
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error checking member existence:", error);
+        }
+    });
 }
 
 

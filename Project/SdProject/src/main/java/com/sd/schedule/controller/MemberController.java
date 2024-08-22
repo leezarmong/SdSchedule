@@ -76,10 +76,13 @@ public class MemberController {
 
 	// 멤버 추가
 	@PostMapping("/insert")
-	public String insert(MemberVO vo) {
+	public String insert(MemberVO vo, StationVO svo) {
 
+		//직원 
 		memberService.insertMember(vo);
-
+		
+		//station
+		stationService.insertStation(svo);
 		return "redirect:memberpage";
 	}
 

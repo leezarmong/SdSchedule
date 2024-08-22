@@ -22,5 +22,15 @@ public class StationServiceImpl implements StationService{
 //	public List<StationVO> stationListByUserId(String user_id) {
 //	    return stationMapper.stationListByUserId(user_id);
 //	}
+	
+	//스테이션 입력
+	public void insertStation (StationVO svo) {
+		if(svo.getMake() == null) svo.setMake("");
+		if(svo.getGrill() == null) svo.setGrill("");
+		if(svo.getFrei() == null) svo.setFrei("");
+		if(svo.getExpo() == null) svo.setExpo("");
+		if(svo.getDish() == null) svo.setDish("");
+		stationMapper.insertStation(svo);
+	}
 
 }

@@ -24,6 +24,12 @@
     </select> -->
 	
 	
+	<!-- 스테이션 입력 -->
+	<insert id="insertStation">
+	    INSERT INTO station (frei, grill, make, expo, dish, member_name, user_id)
+    	VALUES (#{frei}, #{grill}, #{make}, #{expo}, #{dish}, #{member_name}, #{user_id}) 
+	</insert>
+	
 	
 
 </mapper>

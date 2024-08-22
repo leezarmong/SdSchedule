@@ -90,4 +90,8 @@ select member_name , frei , grill , make , expo , dish from station natural join
 
 alter table station add USER_ID varchar2(20);
 
+
 select frei , grill , make ,expo , dish , member_name from station natural join member where user_id='sd-coex';
+select member_name, user_id, frei, grill, make, expo, dish from member natural join station where member_name='전예준';
+
+desc station;

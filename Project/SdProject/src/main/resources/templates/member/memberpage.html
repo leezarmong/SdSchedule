@@ -210,14 +210,17 @@
             <option value="PT">PT</option>
         </select><br>
         ALL: <input type="checkbox" id="allRounder" style="margin-right: 10px; cursor: pointer;">
-	    F: <input type="checkbox" class="groupCheckbox" value="F" style="margin-right: 10px; cursor: pointer;">
-	    G: <input type="checkbox" class="groupCheckbox" value="G" style="margin-right: 10px; cursor: pointer;">
-	    M: <input type="checkbox" class="groupCheckbox" value="M" style="margin-right: 10px; cursor: pointer;">
-	    E: <input type="checkbox" class="groupCheckbox" value="E" style="margin-right: 10px; cursor: pointer;">
-	    D: <input type="checkbox" class="groupCheckbox" value="D" style="margin-right: 10px; cursor: pointer;">
+	   F: <input type="checkbox" class="groupCheckbox" id="frei" value="F" style="margin-right: 10px; cursor: pointer;">
+		G: <input type="checkbox" class="groupCheckbox" id="grill" value="G" style="margin-right: 10px; cursor: pointer;">
+		M: <input type="checkbox" class="groupCheckbox" id="make" value="M" style="margin-right: 10px; cursor: pointer;">
+		E: <input type="checkbox" class="groupCheckbox" id="expo" value="E" style="margin-right: 10px; cursor: pointer;">
+		D: <input type="checkbox" class="groupCheckbox" id="dish" value="D" style="margin-right: 10px; cursor: pointer;">
+
 	    <br><br>
 	    
         <input type="button" class="btn btn-primary" value="Insert" onclick="insert()">
+							<!-- js 경로 <script src="./js/memberpage/memberpage.js"></script> -->
+							
         <input type="button" class="btn btn-danger" value="멤버 리뉴얼" onclick="renewal()">
 		 
        
@@ -249,12 +252,12 @@
 					    All-rounder: 
 					    <input type="checkbox" id="allRounder"
 					           th:checked="${member.frei == 'F' and member.grill == 'G' and member.make == 'M' and member.expo == 'E' and member.dish == 'D'}" 
-					           style="margin-right: 10px;" disabled>
-					    F: <input type="checkbox" id="frei" th:checked="${member.frei == 'F'}" style="margin-right: 10px;" disabled>
-					    G: <input type="checkbox" id="grill" th:checked="${member.grill == 'G'}" style="margin-right: 10px;" disabled>
-					    M: <input type="checkbox" id="make" th:checked="${member.make == 'M'}" style="margin-right: 10px;" disabled>
-					    E: <input type="checkbox" id="expo" th:checked="${member.expo == 'E'}" style="margin-right: 10px;" disabled>
-					    D: <input type="checkbox" id="dish" th:checked="${member.dish == 'D'}" style="margin-right: 10px;" disabled>
+					           style="margin-right: 10px; cursor: not-allowed;" disabled>
+					    F: <input type="checkbox" id="frei" th:checked="${member.frei == 'F'}" style="margin-right: 10px; cursor: not-allowed;" disabled>
+					    G: <input type="checkbox" id="grill" th:checked="${member.grill == 'G'}" style="margin-right: 10px; cursor: not-allowed;" disabled>
+					    M: <input type="checkbox" id="make" th:checked="${member.make == 'M'}" style="margin-right: 10px; cursor: not-allowed;" disabled>
+					    E: <input type="checkbox" id="expo" th:checked="${member.expo == 'E'}" style="margin-right: 10px; cursor: not-allowed;" disabled>
+					    D: <input type="checkbox" id="dish" th:checked="${member.dish == 'D'}" style="margin-right: 10px; cursor: not-allowed;" disabled>
 					</td>
 			    </tr>
 			</tbody>
