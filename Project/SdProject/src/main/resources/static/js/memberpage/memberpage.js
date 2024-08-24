@@ -44,6 +44,9 @@
 
 
 function insert() {
+    // Disable the button to prevent multiple clicks
+    $(".btn-primary").prop('disabled', true);
+
     // member table variables
     var member_name = $("#member_name").val();
     var member_grade = $("#member_grade").val();
@@ -57,71 +60,45 @@ function insert() {
     var dish = $("#dish").is(":checked") ? $("#dish").val() : null;
     
     console.log("Member Name: " + member_name);
-    console.log("Grill: " + grill);
+    
+    // Log values to ensure they're captured
+    console.log("frei: " + frei);
+    console.log("grill: " + grill);
+    console.log("make: " + make);
+    console.log("expo: " + expo);
+    console.log("dish: " + dish);
 
     if (!member_name || !member_grade || member_grade === "null") {
         alert("직원 이름 또는 직급을 선택 해 주세요.");
+        $(".btn-primary").prop('disabled', false);  // Re-enable button if validation fails
         return; // Prevent further execution if validation fails
     } 
 
-    // First, check if the member already exists
+    // Combine all data into a single AJAX request
     $.ajax({
         type: "POST",
-        url: "check",
+        url: "insert",  // Single URL for both member and station insert
         data: {
-            "member_name": member_name,
-            "user_id": user_id
+            member_name: member_name,
+            member_grade: member_grade,
+            user_id: user_id,
+            frei: frei,
+            grill: grill,
+            make: make,
+            expo: expo,
+            dish: dish
         },
         success: function (data) {
-            if (data != 0) {
-                alert("해당 직원은 이미 존재합니다.");
-            } else {
-                // If the member does not exist, insert into the member table
-                $.ajax({
-                    type: "POST",
-                    url: "insert",  // Consider using a specific URL for member insert
-                    data: {
-                        "member_name": member_name,
-                        "member_grade": member_grade,
-                        "user_id": user_id 
-                    },
-                    success: function() {
-                        // After inserting into the member table, insert into the station table
-                        $.ajax({
-                            type: "POST",
-                            url: "insert",  // Consider using a specific URL for station insert
-                            data: {
-                                "frei": frei,
-                                "grill": grill,
-                                "make": make,
-                                "expo": expo,
-                                "dish": dish,
-                                "member_name": member_name,
-                                "user_id": user_id
-                            },
-                            success: function (data) {
-                                alert("입력 완료..!");
-                                window.location.href = "memberpage";
-                            },
-                            error: function(xhr, status, error) {
-                                console.error("Error inserting station data:", error);
-                                console.log("XHR Object:", xhr);
-                                console.log("Status:", status);
-                                console.log("Response Text:", xhr.responseText);
-                            }
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error inserting member data:", error);
-                    }
-                });
-            }
+            alert("입력 완료..!");
+            window.location.href = "memberpage";
         },
         error: function(xhr, status, error) {
-            console.error("Error checking member existence:", error);
+            console.error("Error inserting data:", error);
+            $(".btn-primary").prop('disabled', false);  // Re-enable button on error
         }
     });
 }
+
 
 
         /* 멤버 삭제 */
@@ -131,13 +108,14 @@ function insert() {
 
             if (confirmDelete) {
                 // 클릭된 버튼이 속한 행에서 회원 번호를 가져옴
-                var memberNo = parseInt($(button).closest('tr').find('.member_no').val());
+                /*var member_name = parseInt($(button).closest('tr').find('.member_name').val());*/
+                 var member_name = $(button).closest('tr').find('.member_name').val();
 
                 $.ajax({
                     type: "POST",
                     url: "delete",
                     data: {
-                        "member_no": memberNo
+                        "member_name":member_name
                     },
                     success: function (data) {
                         alert("삭제완료..!");

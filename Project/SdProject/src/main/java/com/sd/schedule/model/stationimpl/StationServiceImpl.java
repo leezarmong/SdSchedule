@@ -32,5 +32,10 @@ public class StationServiceImpl implements StationService{
 		if(svo.getDish() == null) svo.setDish("");
 		stationMapper.insertStation(svo);
 	}
+	
+	//스테이션 삭제
+	public void deleteStation (String member_name) {
+		stationMapper.deleteStation(member_name);
+	}
 
 }

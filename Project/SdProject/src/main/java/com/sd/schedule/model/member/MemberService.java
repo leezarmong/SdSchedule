@@ -19,7 +19,7 @@ public interface MemberService {
 	public void insertMember (MemberVO vo);
 	
 	//멤버 삭제
-	public void deleteMember (int member_no);
+	public void deleteMember (String member_name);
 	
 	//멤버 수 카운트
 	public int countMember (MemberVO vo);

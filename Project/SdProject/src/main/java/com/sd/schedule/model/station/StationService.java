@@ -13,5 +13,8 @@ public interface StationService {
 	
 	//스테이션 입력
 	public void insertStation (StationVO svo);
+	
+	//스테이션 삭제
+	public void deleteStation (String member_name);
 
 }

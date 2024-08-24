@@ -119,7 +119,7 @@
 
 	<!-- 멤버 삭제 -->
 	<delete id="deleteMember">
-		delete from member where member_no=${member_no}
+		delete from member where member_name = #{member_name}
 	</delete>
 
 	<!-- 검색창 pager -->

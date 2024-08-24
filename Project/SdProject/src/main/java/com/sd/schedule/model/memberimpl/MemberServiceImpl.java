@@ -42,8 +42,8 @@ public class MemberServiceImpl implements MemberService {
 
 	// 멤버 삭제
 	@Override
-	public void deleteMember(int member_no) {
-		memberMapper.deleteMember(member_no);
+	public void deleteMember(String member_name) {
+		memberMapper.deleteMember(member_name);
 	}
 
 	// 멤버 수 카운트

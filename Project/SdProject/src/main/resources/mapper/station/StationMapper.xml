@@ -26,9 +26,25 @@
 	
 	<!-- 스테이션 입력 -->
 	<insert id="insertStation">
+	<![CDATA[
 	    INSERT INTO station (frei, grill, make, expo, dish, member_name, user_id)
-    	VALUES (#{frei}, #{grill}, #{make}, #{expo}, #{dish}, #{member_name}, #{user_id}) 
+    VALUES
+    (
+        #{frei,jdbcType=VARCHAR}, 
+        #{grill,jdbcType=VARCHAR}, 
+        #{make,jdbcType=VARCHAR}, 
+        #{expo,jdbcType=VARCHAR}, 
+        #{dish,jdbcType=VARCHAR}, 
+        #{member_name,jdbcType=VARCHAR}, 
+        #{user_id,jdbcType=VARCHAR}
+    )
+    	]]> 
 	</insert>
+	
+	<delete id="deleteStation">
+    delete from station where member_name = #{member_name}
+</delete>
+	
 	
 	
 

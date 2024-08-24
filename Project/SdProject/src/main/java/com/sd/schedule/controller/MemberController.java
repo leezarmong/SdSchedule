@@ -77,7 +77,7 @@ public class MemberController {
 	// 멤버 추가
 	@PostMapping("/insert")
 	public String insert(MemberVO vo, StationVO svo) {
-
+		
 		//직원 
 		memberService.insertMember(vo);
 		
@@ -104,9 +104,14 @@ public class MemberController {
 
 	// 멤버 삭제
 	@PostMapping("/delete")
-	public String delete(@RequestParam("member_no") int member_no) {
+	public String delete(String member_name) {
 
-		memberService.deleteMember(member_no);
+		System.out.println(member_name);
+		
+		stationService.deleteStation(member_name);
+		
+		memberService.deleteMember(member_name);
+		
 		return "redirect:memberpage";
 	}
 
