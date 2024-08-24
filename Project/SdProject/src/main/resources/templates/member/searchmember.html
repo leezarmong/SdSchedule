@@ -212,11 +212,11 @@
 					           style="margin-right: 10px; cursor: pointer;" 
 					           onclick="toggleAllCheckboxes()">
 					
-					    F: <input type="checkbox" class="station" id="frei" th:checked="${member.frei == 'F'}" style="margin-right: 10px; cursor: pointer;">
-					    G: <input type="checkbox" class="station" id="grill" th:checked="${member.grill == 'G'}" style="margin-right: 10px; cursor: pointer;">
-					    M: <input type="checkbox" class="station" id="make" th:checked="${member.make == 'M'}" style="margin-right: 10px; cursor: pointer;">
-					    E: <input type="checkbox" class="station" id="expo" th:checked="${member.expo == 'E'}" style="margin-right: 10px; cursor: pointer;">
-					    D: <input type="checkbox" class="station" id="dish" th:checked="${member.dish == 'D'}" style="margin-right: 10px; cursor: pointer;">
+					    F: <input type="checkbox" class="station" id="frei" value="F" th:checked="${member.frei == 'F'}" style="margin-right: 10px; cursor: pointer;">
+					    G: <input type="checkbox" class="station" id="grill" value="G" th:checked="${member.grill == 'G'}" style="margin-right: 10px; cursor: pointer;">
+					    M: <input type="checkbox" class="station" id="make" value="M" th:checked="${member.make == 'M'}" style="margin-right: 10px; cursor: pointer;">
+					    E: <input type="checkbox" class="station" id="expo" value="E" th:checked="${member.expo == 'E'}" style="margin-right: 10px; cursor: pointer;">
+					    D: <input type="checkbox" class="station" id="dish" value="D" th:checked="${member.dish == 'D'}" style="margin-right: 10px; cursor: pointer;">
 					</td>
                     <td>
                         <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 

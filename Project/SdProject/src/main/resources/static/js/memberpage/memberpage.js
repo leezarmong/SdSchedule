@@ -134,6 +134,12 @@ function insert() {
 			function update(button) {
 			    var member_name = $(button).closest('tr').find('.member_name').val();
 			    var member_grade = $(button).closest('tr').find('.member_grade').val();
+			      // station table variables
+			    var frei = $("#frei").is(":checked") ? $("#frei").val() : null;
+			    var grill = $("#grill").is(":checked") ? $("#grill").val() : null;
+			    var make = $("#make").is(":checked") ? $("#make").val() : null;
+			    var expo = $("#expo").is(":checked") ? $("#expo").val() : null;
+			    var dish = $("#dish").is(":checked") ? $("#dish").val() : null;
 			
 			    if (member_grade === "null") {
 			        alert("등급을 다시 선택 해 주세요.");
@@ -149,7 +155,12 @@ function insert() {
 			                data: {
 			                    "member_name": member_name,
 			                    "member_grade": member_grade,
-			                    "member_no": memberNo
+			                    "member_no": memberNo,
+			                     frei: frei,
+					            grill: grill,
+					            make: make,
+					            expo: expo,
+					            dish: dish
 			                },
 			                success: function (data) {
 			                    alert("업데이트 완료.. !");

@@ -41,9 +41,23 @@
     	]]> 
 	</insert>
 	
+	<!-- 스테이션 삭제 -->
 	<delete id="deleteStation">
     delete from station where member_name = #{member_name}
-</delete>
+	</delete>
+	
+	<!-- 스테이션 업데이트 -->
+	<update id="updateStation">
+		UPDATE STATION
+		SET
+		frei = #{frei},
+		grill = #{grill},
+		make = #{make},
+		expo = #{expo},
+		dish = #{dish}
+		WHERE
+		MEMBER_NAME = #{member_name}
+	</update>
 	
 	
 	

@@ -37,5 +37,15 @@ public class StationServiceImpl implements StationService{
 	public void deleteStation (String member_name) {
 		stationMapper.deleteStation(member_name);
 	}
+	
+	//스테이션 업데이트
+	public void updateStation (StationVO svo) {
+		if(svo.getMake() == null) svo.setMake("");
+		if(svo.getGrill() == null) svo.setGrill("");
+		if(svo.getFrei() == null) svo.setFrei("");
+		if(svo.getExpo() == null) svo.setExpo("");
+		if(svo.getDish() == null) svo.setDish("");
+		stationMapper.updateStation(svo);
+	}
 
 }

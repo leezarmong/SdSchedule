@@ -147,8 +147,9 @@ public class MemberController {
 
 	// 멤버 업데이트
 	@GetMapping("/updateMember")
-	public String updateMember(MemberVO vo) {
+	public String updateMember(MemberVO vo, StationVO svo) {
 		memberService.updateMember(vo);
+		stationService.updateStation(svo);
 		return "redirect:memberpage";
 	}
 

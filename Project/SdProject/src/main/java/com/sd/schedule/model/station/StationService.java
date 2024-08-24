@@ -16,5 +16,8 @@ public interface StationService {
 	
 	//스테이션 삭제
 	public void deleteStation (String member_name);
+	
+	//스테이션 업데이트
+	public void updateStation (StationVO svo);
 
 }
