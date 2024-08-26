@@ -45,11 +45,11 @@
                         </td>
                          <td>
 					    ALL: <input type="checkbox" id="checkA" style="margin-right: 10px;">
-					    F: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-					    G: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-					    M: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-					    E: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
-					    D: <input type="checkbox" class="groupCheckbox" style="margin-right: 10px;">
+					    F: <input type="checkbox" class="groupCheckbox" id="frei" value="F" style="margin-right: 10px;">
+					    G: <input type="checkbox" class="groupCheckbox" id="grill" value="G" style="margin-right: 10px;">
+					    M: <input type="checkbox" class="groupCheckbox" id="make" value="M" style="margin-right: 10px;">
+					    E: <input type="checkbox" class="groupCheckbox" id="expo" value="E" style="margin-right: 10px;">
+					    D: <input type="checkbox" class="groupCheckbox" id="dish" value="D" style="margin-right: 10px;">
 						</td>
                     </tr>
                 </tbody>
@@ -66,6 +66,14 @@
 <script>
 function submitForm() {
     var userId = $('#user_id').val();
+    
+    // station table variables
+    var frei = $("#frei").is(":checked") ? $("#frei").val() : null;
+    var grill = $("#grill").is(":checked") ? $("#grill").val() : null;
+    var make = $("#make").is(":checked") ? $("#make").val() : null;
+    var expo = $("#expo").is(":checked") ? $("#expo").val() : null;
+    var dish = $("#dish").is(":checked") ? $("#dish").val() : null;
+    
     var members = [];
     var isValid = true;
 
@@ -82,7 +90,12 @@ function submitForm() {
         members.push({
             member_name: memberName,
             member_grade: memberGrade,
-            user_id: userId
+            user_id: userId,
+            frei: frei,
+            grill: grill,
+            make: make,
+            expo: expo,
+            dish: dish
         });
     });
 
@@ -108,6 +121,8 @@ function submitForm() {
 $("#checkA").on('change',function(){
 	$('.groupCheckbox').prop('checked',this.checked);
 });
+
+
 </script>
 
 </body>
