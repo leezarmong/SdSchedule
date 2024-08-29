@@ -24,5 +24,6 @@ public interface StationMapper {
 	//스테이션 업데이트
 	public void updateStation (StationVO svo);
 	
-
+	//스테이션 이름 추출
+	public List<StationVO> selectStationsByMemberNames(List<String> memberNames);
 }

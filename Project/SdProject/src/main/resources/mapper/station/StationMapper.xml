@@ -59,6 +59,15 @@
 		MEMBER_NAME = #{member_name}
 	</update>
 	
+	<!-- 스테이션 이름 추출 -->
+	<select id="selectStationsByMemberNames" parameterType="list" resultType="com.sd.schedule.model.station.StationVO">
+		SELECT *
+	    FROM station
+	    WHERE member_name IN
+		    <foreach collection="list" item="name" open="(" separator="," close=")">
+		    #{name}
+		    </foreach>
+	</select>
 	
 	
 

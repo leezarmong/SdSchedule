@@ -210,7 +210,7 @@ public class MemberServiceImpl implements MemberService {
 		for (String name : excelMemberNames) {
 			boolean existsInDb = allMembers.stream() // API 의 일부 요소들을 처리할때사용 매핑에 도움을 줌.
 					.anyMatch(member -> member.getMember_name().equals(name));
-			// 만족하는 요소 체크
+			// 만족하는 요소 체크  람다 표현식
 			// DB 에서 가져온 allMmebers List 에서 Stream().antMath 를 실행
 			// 엑셀에러 추출한 name 과 같은지 확인후 existsInDb 가 아니면 membersToAdd 에 List 를 add 시킨다.
 			//

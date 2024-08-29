@@ -47,5 +47,13 @@ public class StationServiceImpl implements StationService{
 		if(svo.getDish() == null) svo.setDish("");
 		stationMapper.updateStation(svo);
 	}
+	
+	//스테이션 이름 추출
+	public List<StationVO> selectStationsByMemberNames(List<String> memberNames) {
+
+	    return stationMapper.selectStationsByMemberNames(memberNames);
+	}
+
+
 
 }

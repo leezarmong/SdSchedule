@@ -22,7 +22,8 @@ const weekend = ["일","월","화","수","목","금","토"];
   const memberList = [];
   const mNameElements = document.querySelectorAll('.hidden .mname');
   const mGradeElements = document.querySelectorAll('.hidden .mgrade');
-
+ 
+ 
   mNameElements.forEach((nameElement, index) => {
       const memberName = nameElement.innerText;
       const memberGrade = mGradeElements[index].innerText;
