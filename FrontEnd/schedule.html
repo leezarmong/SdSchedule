@@ -111,9 +111,10 @@
 	        <tbody>
 	            <tr th:each="station : ${stationList}">
 	            
-	            	<!-- 해당 필드가 존재할 때만 접근하도록 함 -->
-	            	<!-- member_name 은 보기 쉬우라고 출력하는것 지워도 됨. -->
-	             	<td th:text="${station?.member_name}"/>
+	            	<!-- '?' 연산 은 해당 필드가 존재할 때만 접근하도록 함 -->
+	            	<!-- station.member_name 와 member.member_name 의 교집 합을 위한 sname..? -->
+	             	<td class="sname" th:text="${station?.member_name}"/>
+	             	
 				    <td class="F" th:text="${station?.frei}"/>
 				    <td class="G" th:text="${station?.grill}"/>
 				    <td class="M" th:text="${station?.make}"/>
@@ -130,9 +131,8 @@
 		</div>
 	
 	
-	
+	<!-- BUTTON FOR EXPORT ROSTER EXCEL -->
 		<div id="roster">
-			<!-- BUTTON FOR EXPORT ROSTER EXCEL -->
 			<button type="button" id="rosterPrint"class="btn btn-secondary">
 				<i class="fa-solid fa-print fa-lg"></i>로스터 인쇄
 			</button>
