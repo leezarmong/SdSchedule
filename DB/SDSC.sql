@@ -94,6 +94,35 @@ alter table station add USER_ID varchar2(20);
 select frei , grill , make ,expo , dish , member_name from station natural join member where user_id='sd-coex';
 select member_name, user_id, frei, grill, make, expo, dish from member natural join station where member_name='전예준';
 
-select frei ,grill , make ,expo ,dish from station where member_name ='박현선';
+
+
+select * from station
+where user_id = 'sd-coex';
+
+
+
+
+SELECT frei, grill, make, expo, dish 
+FROM member 
+NATURAL JOIN station 
+WHERE member_name IN ('박현선', '전예준', '이재원');
+
+
+
+select frei ,grill , make ,expo ,dish from station where member_name IN ('','','','','','','','','','','',);
+
+
+
+select frei ,grill , make ,expo ,dish from member natural join station where member_name IN ('','','',',);
+
+
+
+
+
+
+
+
+
+
 
 desc station;
