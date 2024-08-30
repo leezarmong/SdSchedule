@@ -61,7 +61,7 @@
 	
 	<!-- 스테이션 이름 추출 -->
 	<select id="selectStationsByMemberNames" parameterType="list" resultType="com.sd.schedule.model.station.StationVO">
-		SELECT *
+		SELECT frei, grill, make, expo, dish, member_name
 	    FROM station
 	    WHERE member_name IN
 		    <foreach collection="list" item="name" open="(" separator="," close=")">

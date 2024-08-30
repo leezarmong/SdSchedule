@@ -105,8 +105,32 @@
 				<li class="mname" th:each="member : ${list}" th:text="${member.member_name}"></li>
 				<li class="mgrade" th:each="member : ${list}" th:text="${member.member_grade}"></li>
 			</ul>
+			
+			<!-- 임시 테이블 -->
+		 <table>
+	        <tbody>
+	            <tr th:each="station : ${stationList}">
+	            
+	            	<!-- 해당 필드가 존재할 때만 접근하도록 함 -->
+	            	<!-- member_name 은 보기 쉬우라고 출력하는것 지워도 됨. -->
+	             	<td th:text="${station?.member_name}"/>
+				    <td class="F" th:text="${station?.frei}"/>
+				    <td class="G" th:text="${station?.grill}"/>
+				    <td class="M" th:text="${station?.make}"/>
+				    <td class="E" th:text="${station?.expo}"/>
+				    <td class="D" th:text="${station?.dish}"/>
+				</tr>
+		        <tr th:if="${stationList.empty}">
+		        	<td colspan="5">No stations available</td>
+		 	   </tr>
+	 	   </tbody>
+	    </table>
+	<!-- 임시 테이블 -->
+	
 		</div>
-		
+	
+	
+	
 		<div id="roster">
 			<!-- BUTTON FOR EXPORT ROSTER EXCEL -->
 			<button type="button" id="rosterPrint"class="btn btn-secondary">

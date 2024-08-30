@@ -53,7 +53,6 @@ public class MainController {
 		model.addAttribute("list", list);
 		model.addAttribute("stationList",stationList);
 		
-		System.out.println("Station List: " + stationList);
 		
 		return "menu/schedule";
 	}
