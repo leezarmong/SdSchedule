@@ -105,7 +105,9 @@ where user_id = 'sd-coex';
 SELECT frei, grill, make, expo, dish 
 FROM member 
 NATURAL JOIN station 
-WHERE member_name IN ('박현선', '전예준', '이재원');
+WHERE member_name IN ('김은경');
+
+select member_name from member;
 
 
 
@@ -113,16 +115,22 @@ select frei ,grill , make ,expo ,dish from station where member_name IN ('','','
 
 
 
-select frei ,grill , make ,expo ,dish from member natural join station where member_name IN ('','','',',);
+select frei ,grill , make ,expo ,dish from member natural join station where member_name IN ('','','',',');
+
+
+
+SELECT
+    m.member_name AS member_name,
+    s.member_name AS station_name
+FROM
+    member m
+LEFT JOIN
+    station s
+ON
+    m.member_name = s.member_name;
+    
 
 
 
 
 
-
-
-
-
-
-
-desc station;

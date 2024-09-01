@@ -22,20 +22,31 @@ const weekend = ["일","월","화","수","목","금","토"];
   const memberList = [];
   const mNameElements = document.querySelectorAll('.hidden .mname');
   const mGradeElements = document.querySelectorAll('.hidden .mgrade');
+  const mNElements = document.querySelectorAll('.hidden .sname');
   const mFElements = document.querySelectorAll('.hidden .F');
   const mGElements = document.querySelectorAll('.hidden .G');
   const mMElements = document.querySelectorAll('.hidden .M');
   const mEElements = document.querySelectorAll('.hidden .E');
   const mDElements = document.querySelectorAll('.hidden .D');
 
-  mNameElements.forEach((nameElement, index) => {
+  mNameElements.forEach((nameElement, i) => {
       const memberName = nameElement.innerText;
-      const memberGrade = mGradeElements[index].innerText;
-      const memberF = mFElements[index].innerText;
-      const memberG = mGElements[index].innerText;
-      const memberM = mMElements[index].innerText;
-      const memberE = mEElements[index].innerText;
-      const memberD = mDElements[index].innerText;
+      const memberGrade = mGradeElements[i].innerText;
+   
+      
+     let tempArr = new Array;
+      for(let a = 0; a < mNElements.length; a++){
+        tempArr.push(mNElements[a].innerText);
+      }
+      console.log(tempArr)
+      let index = tempArr.indexOf(memberName);
+     
+     
+      const memberF = mFElements[index].innerText ? "F" : "";
+      const memberG = mGElements[index].innerText ? "G" : "";
+      const memberM = mMElements[index].innerText ? "M" : "";
+      const memberE = mEElements[index].innerText ? "E" : "";
+      const memberD = mDElements[index].innerText ? "D" : "";
 
      memberList.push({
          name: memberName,
@@ -388,16 +399,35 @@ ${lossList}
         for (let date = 0; date <= tableDate.length - 1; date++) {
             const rosterbody = [];
             for (let memb = 0; memb < sortedJson_value.length; memb++) {
+              
                 if (sortedJson_value[memb][date] != null) {
-                    let lineArr = memberList.find(el=>el.name === sortedJson_key[memb]).line;
+                    let lineArr = memberList.find(el=>el.name === sortedJson_key[memb]).position;
+                    
+                    console.log(sortedJson_key[memb])
+                    console.log(memberList.find(el=>el.name == sortedJson_key[memb]))
+                    console.log(memberList.find(el=>el.name === sortedJson_key[memb]))
+                    
+                    
+                    console.log(memberList);
+                    console.log(lineArr);
+                    
                     let tempArr = [
                         sortedJson_key[memb],
-                        lineArr.includes("F") ? "F" : "",
+                       /* lineArr.includes("F") ? "F" : "",
                         lineArr.includes("G") ? "G" : "",
                         lineArr.includes("M") ? "M" : "",
                         lineArr.includes("E") ? "E" : "",
-                        lineArr.includes("D") ? "D" : ""
+                        lineArr.includes("D") ? "D" : ""*/
+                        
+                        
+                        lineArr.indexOf("F") >= 0 ? "F" : "",
+                        lineArr.indexOf("G") >= 0 ? "G" : "",
+                        lineArr.indexOf("M") >= 0 ? "M" : "",
+                        lineArr.indexOf("E") >= 0 ? "E" : "",
+                        lineArr.indexOf("D") >= 0 ? "D" : ""
                     ];
+                    
+                    
                     let time_start = sortedJson_value[memb][date][0];
                     let time_finish = sortedJson_value[memb][date][1];
                     if (sortedJson_value[memb][date][1] - sortedJson_value[memb][date][0])

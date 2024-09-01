@@ -105,7 +105,6 @@
 				<li class="mname" th:each="member : ${list}" th:text="${member.member_name}"></li>
 				<li class="mgrade" th:each="member : ${list}" th:text="${member.member_grade}"></li>
 			</ul>
-			
 			<!-- 임시 테이블 -->
 		 <table>
 	        <tbody>
@@ -113,22 +112,27 @@
 	            
 	            	<!-- '?' 연산 은 해당 필드가 존재할 때만 접근하도록 함 -->
 	            	<!-- station.member_name 와 member.member_name 의 교집 합을 위한 sname..? -->
-	             	<td class="sname" th:text="${station?.member_name}"></td>
+	             	<td class="sname" th:text="${station?.member_name}"/>
 	             	
-				    <td class="F" th:text="${station?.frei}"></td>
-				    <td class="G" th:text="${station?.grill}"></td>
-				    <td class="M" th:text="${station?.make}"></td>
-				    <td class="E" th:text="${station?.expo}"></td>
-				    <td class="D" th:text="${station?.dish}"></td>
+				    <td class="F" th:text="${station?.frei}"/>
+				    <td class="G" th:text="${station?.grill}"/>
+				    <td class="M" th:text="${station?.make}"/>
+				    <td class="E" th:text="${station?.expo}"/>
+				    <td class="D" th:text="${station?.dish}"/>
 				</tr>
 		        <tr th:if="${stationList.empty}">
 		        	<td colspan="5">No stations available</td>
 		 	   </tr>
 	 	   </tbody>
 	    </table>
-	<!-- 임시 테이블 -->
+		<!-- 임시 테이블 -->		
 	
 		</div>
+
+
+		
+			
+	
 	
 	
 	<!-- BUTTON FOR EXPORT ROSTER EXCEL -->

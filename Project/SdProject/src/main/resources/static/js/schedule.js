@@ -22,51 +22,72 @@ const weekend = ["일","월","화","수","목","금","토"];
   const memberList = [];
   const mNameElements = document.querySelectorAll('.hidden .mname');
   const mGradeElements = document.querySelectorAll('.hidden .mgrade');
- 
- 
-  mNameElements.forEach((nameElement, index) => {
+  const mNElements = document.querySelectorAll('.hidden .sname');
+  const mFElements = document.querySelectorAll('.hidden .F');
+  const mGElements = document.querySelectorAll('.hidden .G');
+  const mMElements = document.querySelectorAll('.hidden .M');
+  const mEElements = document.querySelectorAll('.hidden .E');
+  const mDElements = document.querySelectorAll('.hidden .D');
+
+  mNameElements.forEach((nameElement, i) => {
       const memberName = nameElement.innerText;
-      const memberGrade = mGradeElements[index].innerText;
+      const memberGrade = mGradeElements[i].innerText;
+   
+      
+     let tempArr = new Array;
+      for(let a = 0; a < mNElements.length; a++){
+        tempArr.push(mNElements[a].innerText);
+      }
+      console.log(tempArr)
+      let index = tempArr.indexOf(memberName);
+     
+     
+      const memberF = mFElements[index].innerText ? "F" : "";
+      const memberG = mGElements[index].innerText ? "G" : "";
+      const memberM = mMElements[index].innerText ? "M" : "";
+      const memberE = mEElements[index].innerText ? "E" : "";
+      const memberD = mDElements[index].innerText ? "D" : "";
 
      memberList.push({
          name: memberName,
-                  grade: memberGrade
+         grade: memberGrade,
+         position: [memberF, memberG, memberM, memberE, memberD]
       });
   });
 
 // 서버리스용 예제 데이터
 
 
-/*const memberList = [
-    {name: '김해수', grade: 'VSM', line: ''},
-    {name: '최인화', grade: 'MGR'},
-    {name: '유건희', grade: 'CT'},
-    {name: '이희정', grade: 'CT'},
-    {name: '강민지', grade: 'EMP'},
-    {name: '권태영', grade: 'PT'},
-    {name: '김경민', grade: 'PT'},
-    {name: '김무준', grade: 'PT'},
-    {name: '김세희', grade: 'PT'},
-    {name: '김영록', grade: 'PT'},
-    {name: '김은경', grade: 'PT'},
-    {name: '김지환', grade: 'PT'},
-    {name: '박대용', grade: 'PT'},
-    {name: '박현선', grade: 'PT'},
-    {name: '복금현', grade: 'PT'},
-    {name: '서준영', grade: 'PT'},
-    {name: '안지연', grade: 'PT'},
-    {name: '원동하', grade: 'PT'},
-    {name: '유영현', grade: 'PT'},
-    {name: '윤승관', grade: 'PT'},
-    {name: '이상건', grade: 'PT'},
-    {name: '이영현', grade: 'PT'},
-    {name: '이재원', grade: 'PT'},
-    {name: '전예준', grade: 'PT'},
-    {name: '조경서', grade: 'PT'},
-    {name: '조관우', grade: 'PT'},
-    {name: '홍지오', grade: 'PT'}
-];
-*/
+// const memberList = [
+//     {name: '김해수', grade: 'VSM', line: ['F','G']},
+//     {name: '최인화', grade: 'MGR', line: ['F','G']},
+//     {name: '유건희', grade: 'CT', line: ['F','G']},
+//     {name: '이희정', grade: 'CT', line: ['F','G']},
+//     {name: '강민지', grade: 'EMP', line: ['F','G']},
+//     {name: '권태영', grade: 'PT', line: ['F','G']},
+//     {name: '김경민', grade: 'PT', line: ['F','G']},
+//     {name: '김무준', grade: 'PT', line: ['F','G']},
+//     {name: '김세희', grade: 'PT', line: ['F','G']},
+//     {name: '김영록', grade: 'PT', line: ['F','G']},
+//     {name: '김은경', grade: 'PT', line: ['F','G']},
+//     {name: '김지환', grade: 'PT', line: ['F','G']},
+//     {name: '박대용', grade: 'PT', line: ['F','G']},
+//     {name: '박현선', grade: 'PT', line: ['F','G']},
+//     {name: '복금현', grade: 'PT', line: ['F','G']},
+//     {name: '서준영', grade: 'PT', line: ['F','G']},
+//     {name: '안지연', grade: 'PT', line: ['F','G']},
+//     {name: '원동하', grade: 'PT', line: ['F','G']},
+//     {name: '유영현', grade: 'PT', line: ['F','G']},
+//     {name: '윤승관', grade: 'PT', line: ['F','G']},
+//     {name: '이상건', grade: 'PT', line: ['F','G']},
+//     {name: '이영현', grade: 'PT', line: ['F','G']},
+//     {name: '이재원', grade: 'PT', line: ['F','G']},
+//     {name: '전예준', grade: 'PT', line: ['F','G']},
+//     {name: '조경서', grade: 'PT', line: ['F','G']},
+//     {name: '조관우', grade: 'PT', line: ['F','G']},
+//     {name: '홍지오', grade: 'PT', line: ['F','G']}
+// ];
+
 // convert schedule excel > json
 const excelToJson = async (callback) => {
     let returnData;
@@ -171,6 +192,7 @@ const excelToJson = async (callback) => {
 Excel.onchange = () => {
     // 주급 계산 테이블 작성
     excelToJson(data => {
+        console.log(data)
         const Loss = data.Loss;
         if (Loss.length > 0) {
             let lossList = Loss.map(el => `"${el}"`).join(", ");
@@ -377,15 +399,35 @@ ${lossList}
         for (let date = 0; date <= tableDate.length - 1; date++) {
             const rosterbody = [];
             for (let memb = 0; memb < sortedJson_value.length; memb++) {
+              
                 if (sortedJson_value[memb][date] != null) {
+                    let lineArr = memberList.find(el=>el.name === sortedJson_key[memb]).position;
+                    
+                    console.log(sortedJson_key[memb])
+                    console.log(memberList.find(el=>el.name == sortedJson_key[memb]))
+                    console.log(memberList.find(el=>el.name === sortedJson_key[memb]))
+                    
+                    
+                    console.log(memberList);
+                    console.log(lineArr);
+                    
                     let tempArr = [
                         sortedJson_key[memb],
-                        '',
-                        '',
-                        '',
-                        '',
-                        ''
+                       /* lineArr.includes("F") ? "F" : "",
+                        lineArr.includes("G") ? "G" : "",
+                        lineArr.includes("M") ? "M" : "",
+                        lineArr.includes("E") ? "E" : "",
+                        lineArr.includes("D") ? "D" : ""*/
+                        
+                        
+                        lineArr.indexOf("F") >= 0 ? "F" : "",
+                        lineArr.indexOf("G") >= 0 ? "G" : "",
+                        lineArr.indexOf("M") >= 0 ? "M" : "",
+                        lineArr.indexOf("E") >= 0 ? "E" : "",
+                        lineArr.indexOf("D") >= 0 ? "D" : ""
                     ];
+                    
+                    
                     let time_start = sortedJson_value[memb][date][0];
                     let time_finish = sortedJson_value[memb][date][1];
                     if (sortedJson_value[memb][date][1] - sortedJson_value[memb][date][0])
