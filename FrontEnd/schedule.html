@@ -113,13 +113,13 @@
 	            
 	            	<!-- '?' 연산 은 해당 필드가 존재할 때만 접근하도록 함 -->
 	            	<!-- station.member_name 와 member.member_name 의 교집 합을 위한 sname..? -->
-	             	<td class="sname" th:text="${station?.member_name}"/>
+	             	<td class="sname" th:text="${station?.member_name}"></td>
 	             	
-				    <td class="F" th:text="${station?.frei}"/>
-				    <td class="G" th:text="${station?.grill}"/>
-				    <td class="M" th:text="${station?.make}"/>
-				    <td class="E" th:text="${station?.expo}"/>
-				    <td class="D" th:text="${station?.dish}"/>
+				    <td class="F" th:text="${station?.frei}"></td>
+				    <td class="G" th:text="${station?.grill}"></td>
+				    <td class="M" th:text="${station?.make}"></td>
+				    <td class="E" th:text="${station?.expo}"></td>
+				    <td class="D" th:text="${station?.dish}"></td>
 				</tr>
 		        <tr th:if="${stationList.empty}">
 		        	<td colspan="5">No stations available</td>
