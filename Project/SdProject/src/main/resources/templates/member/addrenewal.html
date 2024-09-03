@@ -19,17 +19,18 @@
                     <tr>
                         <th>멤버 이름</th>
                         <th>멤버 등급</th>
-                        <th>Sation</th>
+                        <th>Station</th>
                     </tr>
                 </thead>
 					
-					<!-- 추가할멤버가 없는 경우 -->
-                   <tbody th:if="${membersToAdd.isEmpty()}">
+                <!-- 추가할 멤버가 없는 경우 -->
+                <tbody th:if="${membersToAdd.isEmpty()}">
 		            <tr>
-		                <td colspan="2">추가할 멤버가 없습니다.</td>
+		                <td colspan="3">추가할 멤버가 없습니다.</td>
 		            </tr>
 		        </tbody>
-                <tbody th:each="member : ${membersToAdd}">
+
+                <tbody th:each="member, iterStat : ${membersToAdd}">
                     <tr>
                         <td id="member_name" th:text="${member}">멤버 이름</td>
                         <td>
@@ -43,21 +44,23 @@
                                 <option value="PT" th:selected="true">PT</option>
                             </select>
                         </td>
-                         <td>
-					    ALL: <input type="checkbox" id="checkA" style="margin-right: 10px;">
-					    F: <input type="checkbox" class="groupCheckbox" id="frei" value="F" style="margin-right: 10px;">
-					    G: <input type="checkbox" class="groupCheckbox" id="grill" value="G" style="margin-right: 10px;">
-					    M: <input type="checkbox" class="groupCheckbox" id="make" value="M" style="margin-right: 10px;">
-					    E: <input type="checkbox" class="groupCheckbox" id="expo" value="E" style="margin-right: 10px;">
-					    D: <input type="checkbox" class="groupCheckbox" id="dish" value="D" style="margin-right: 10px;">
-						</td>
+                        <td>
+                            ALL: <input type="checkbox" class="checkAll" style="margin-right: 10px;">
+                            F: <input type="checkbox" class="groupCheckbox" name="station[${iterStat.index}]" value="F" style="margin-right: 10px;">
+                            G: <input type="checkbox" class="groupCheckbox" name="station[${iterStat.index}]" value="G" style="margin-right: 10px;">
+                            M: <input type="checkbox" class="groupCheckbox" name="station[${iterStat.index}]" value="M" style="margin-right: 10px;">
+                            E: <input type="checkbox" class="groupCheckbox" name="station[${iterStat.index}]" value="E" style="margin-right: 10px;">
+                            D: <input type="checkbox" class="groupCheckbox" name="station[${iterStat.index}]" value="D" style="margin-right: 10px;">
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-          <div th:if="${!membersToAdd.isEmpty()}">
-        <button type="button" class="btn btn-primary" onclick="submitForm()" style="margin-bottom: 20px;">등록하기</button>
+
+        <div th:if="${!membersToAdd.isEmpty()}">
+            <button type="button" class="btn btn-primary" onclick="submitForm()" style="margin-bottom: 20px;">등록하기</button>
         </div>
+        
         <!-- 세션 user_id를 위한 숨겨진 입력 -->
         <input type="hidden" id="user_id" th:value="${session.user.user_id}" /> 
     </form>
@@ -66,18 +69,11 @@
 <script>
 function submitForm() {
     var userId = $('#user_id').val();
-    
-    // station table variables
-    var frei = $("#frei").is(":checked") ? $("#frei").val() : null;
-    var grill = $("#grill").is(":checked") ? $("#grill").val() : null;
-    var make = $("#make").is(":checked") ? $("#make").val() : null;
-    var expo = $("#expo").is(":checked") ? $("#expo").val() : null;
-    var dish = $("#dish").is(":checked") ? $("#dish").val() : null;
-    
     var members = [];
     var isValid = true;
 
     $('#memberForm tbody tr').each(function() {
+        var memberId = $(this).index(); // Index of the current row
         var memberName = $(this).find('td#member_name').text();
         var memberGrade = $(this).find('select.member_grade').val();
 
@@ -86,6 +82,12 @@ function submitForm() {
             isValid = false;
             return false; 
         }
+
+        var frei = $(this).find('.groupCheckbox[value="F"]').is(":checked") ? "F" : null;
+        var grill = $(this).find('.groupCheckbox[value="G"]').is(":checked") ? "G" : null;
+        var make = $(this).find('.groupCheckbox[value="M"]').is(":checked") ? "M" : null;
+        var expo = $(this).find('.groupCheckbox[value="E"]').is(":checked") ? "E" : null;
+        var dish = $(this).find('.groupCheckbox[value="D"]').is(":checked") ? "D" : null;
 
         members.push({
             member_name: memberName,
@@ -117,12 +119,18 @@ function submitForm() {
     }
 }
 
-/* 체크박스 전체 */
-$("#checkA").on('change',function(){
-	$('.groupCheckbox').prop('checked',this.checked);
+
+/* 체크박스 전체 선택 및 해제 */
+$(".checkAll").on('change', function() {
+    var isChecked = $(this).is(':checked');
+    $(this).closest('tr').find('.groupCheckbox').prop('checked', isChecked);
 });
 
-
+/* 개별 체크박스 상태에 따라 ALL 체크박스 상태 변경 */
+$(".groupCheckbox").on('change', function() {
+    var allChecked = $(this).closest('tr').find('.groupCheckbox').length === $(this).closest('tr').find('.groupCheckbox:checked').length;
+    $(this).closest('tr').find('.checkAll').prop('checked', allChecked);
+});
 </script>
 
 </body>

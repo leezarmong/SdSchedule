@@ -123,14 +123,40 @@ SELECT
     m.member_name AS member_name,
     s.member_name AS station_name
 FROM
-    member m
-LEFT JOIN
     station s
+LEFT JOIN
+    member m
+    
 ON
     m.member_name = s.member_name;
     
+    
+    
+    
+    
+    
+    SELECT
+    m.member_name AS member_name,
+    s.member_name AS station_name
+FROM
+    member m
+LEFT JOIN
+    station s
+    
+ON
+    m.member_name = s.member_name;
+    
+    
 
 
+select member_name from member
+where user_id='test';
 
+
+delete from member
+where member_name in ('멤버1','멤버2');
+
+select * from station where user_id='test';
+select * from member where user_id='test';
 
 

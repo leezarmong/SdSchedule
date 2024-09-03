@@ -2,9 +2,11 @@ package com.sd.schedule.model.stationimpl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sd.schedule.model.member.MemberVO;
 import com.sd.schedule.model.station.StationService;
 import com.sd.schedule.model.station.StationVO;
 
@@ -53,6 +55,12 @@ public class StationServiceImpl implements StationService{
 
 	    return stationMapper.selectStationsByMemberNames(memberNames);
 	}
+	
+	
+	//불필요 멤버 전체 삭제
+		public void deleteStations(@Param("list") List<MemberVO> members) {
+			stationMapper.deleteStations(members);
+		}
 
 
 

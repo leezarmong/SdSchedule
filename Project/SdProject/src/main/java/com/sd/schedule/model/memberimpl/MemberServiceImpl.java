@@ -15,12 +15,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sd.schedule.model.member.MemberService;
 import com.sd.schedule.model.member.MemberVO;
+import com.sd.schedule.model.stationimpl.StationMapper;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberMapper memberMapper;
+	
+	@Autowired
+	private StationMapper stationMapper;
 
 	// 멤버 리스트
 	@Override
@@ -148,6 +152,7 @@ public class MemberServiceImpl implements MemberService {
 
 		if (!membersToDelete.isEmpty()) { // 삭제해야 할 멤버 리스트가 비어있지 않다면 삭제
 			memberMapper.deleteMembers(membersToDelete);
+			stationMapper.deleteStations(membersToDelete); // station table 도 같이 삭제
 		}
 
 		return membersToDeleteNames;

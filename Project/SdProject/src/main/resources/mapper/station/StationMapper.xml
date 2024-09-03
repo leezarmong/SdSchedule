@@ -60,15 +60,39 @@
 	</update>
 	
 	<!-- 스테이션 이름 추출 -->
-	<select id="selectStationsByMemberNames" parameterType="list" resultType="com.sd.schedule.model.station.StationVO">
+	<!-- <select id="selectStationsByMemberNames" parameterType="list" resultType="com.sd.schedule.model.station.StationVO">
 		SELECT frei, grill, make, expo, dish, member_name
 	    FROM station
 	    WHERE member_name IN
 		    <foreach collection="list" item="name" open="(" separator="," close=")">
 		    #{name}
 		    </foreach>
-	</select>
+	</select> -->
 	
-	
+	<select id="selectStationsByMemberNames" parameterType="list" resultType="com.sd.schedule.model.station.StationVO">
+    SELECT frei, grill, make, expo, dish, member_name
+    FROM station
+    <where>
+        <if test="list != null and list.size() > 0">
+            member_name IN
+            <foreach collection="list" item="name" open="(" separator="," close=")">
+                #{name}
+            </foreach>
+        </if>
+        <if test="list == null or list.size() == 0">
+            1 = 0
+        </if>
+    </where></select>
+    
+    
+    <!-- 불필요 멤버 전체 삭제 -->
+	<delete id="deleteStations">
+		delete from station where member_name in
+		<foreach item="member" collection="list" open="(" separator="," close=")">
+			#{member.member_name}
+		</foreach>
+	</delete>
+    
+    
 
 </mapper>
