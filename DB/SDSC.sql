@@ -159,4 +159,14 @@ where member_name in ('멤버1','멤버2');
 select * from station where user_id='test';
 select * from member where user_id='test';
 
+select * from member;
+
+-- 내용 한번에 지우기 
+TRUNCATE TABLE member;
+
+TRUNCATE TABLE station;
+
+
+-- 서버에 배포할시 station 테이블은 익스포트 ( 내용이 없는상테에서 ) 하고
+-- ec2 oracle 에서 truncate table member; 를 사용하여 최신화 하자. 
 
