@@ -281,6 +281,12 @@ public class MemberController {
 	                member.setMake(null);
 	                member.setExpo(null);
 	                member.setDish(null);
+	                
+	                	/*
+	                	 * 두개의 테이블 에 공통적으로 들어가야될 member_name 과 user_id 가 있으며
+	                	 * 스테이션에 따라 반복적으로 insert 가 되는것을 방지하기위해 statoinInsert 후 이 두개를 뺀 나머지를
+	                	 * null 로 초기화 해준다.
+	                	 * */
 	            }
 
 	            // Member 테이블에 멤버 데이터 삽입

@@ -22,7 +22,7 @@ order by RN;
 select * from USERC natural join member where user_id = 'a';
 
 
-
+desc member;
 
 create table USERC(
 USER_ID varchar2(20),
@@ -170,3 +170,8 @@ TRUNCATE TABLE station;
 -- 서버에 배포할시 station 테이블은 익스포트 ( 내용이 없는상테에서 ) 하고
 -- ec2 oracle 에서 truncate table member; 를 사용하여 최신화 하자. 
 
+
+-- sdsc 유저에 생성 되어있는 테이블 보기 .
+SELECT table_name FROM all_tables WHERE owner = 'SDSC';
+
+desc member;
