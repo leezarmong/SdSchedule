@@ -376,10 +376,10 @@ ${lossList}
                 <tr>
                     <th rowspan="2" style="width: 50px">NO</th>
                     <th rowspan="2" style="width: 200px">성명</th>
-                    <th colspan="5" style="width: 100px">포지션 / 라인</th>
-                    <th colspan="3" style="width: 500px">스케줄</th>
-                    <th colspan="3" style="width: 500px">실근무시간</th>
-                    <th rowspan="2" style="width: 400px">비고</th>
+                    <th colspan="5" style="width: 150px">포지션 / 라인</th>
+                    <th colspan="3" style="width: 300px">스케줄</th>
+                    <th colspan="3" style="width: 650px">실근무시간</th>
+                    <th rowspan="2" style="width: 350px">비고</th>
                 </tr>
                 <tr>
                     <th rowspan="1" class="line">F</th>

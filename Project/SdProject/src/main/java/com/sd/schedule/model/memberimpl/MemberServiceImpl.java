@@ -129,7 +129,6 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 		// 엑셀에서 추출한 멤버 이름 출력
-//	    System.out.println("엑셀에서 추출한 멤버 이름: " + excelMemberNames);
 
 		List<MemberVO> allMembers = memberMapper.memberList(user_id); // DB에서 가져온 이전 멤버들
 		List<MemberVO> membersToDelete = new ArrayList<>(); // 삭제해야 할 멤버 리스트
@@ -145,10 +144,9 @@ public class MemberServiceImpl implements MemberService {
 		}
 
 		// 삭제해야 할 멤버 리스트 출력
-		System.out.println("삭제해야 할 멤버 이름: ");
-		for (MemberVO member : membersToDelete) {
-			System.out.println(member.getMember_name());
-		}
+//		for (MemberVO member : membersToDelete) {
+//			System.out.println(member.getMember_name());
+//		}
 
 		if (!membersToDelete.isEmpty()) { // 삭제해야 할 멤버 리스트가 비어있지 않다면 삭제
 			memberMapper.deleteMembers(membersToDelete);
@@ -224,8 +222,6 @@ public class MemberServiceImpl implements MemberService {
 			}
 		}
 
-		// 추가해야 할 멤버 이름 출력
-		System.out.println("추가해야 할 멤버 이름: " + membersToAdd);
 
 		return membersToAdd;
 	}

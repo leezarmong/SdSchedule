@@ -52,6 +52,7 @@ public class MainController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("stationList",stationList);
+	
 		
 		
 		return "menu/schedule";

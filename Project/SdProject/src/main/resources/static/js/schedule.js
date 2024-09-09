@@ -55,37 +55,38 @@ const weekend = ["일","월","화","수","목","금","토"];
       });
   });
 
+
+
 // 서버리스용 예제 데이터
-
-
 // const memberList = [
-//     {name: '김해수', grade: 'VSM', line: ['F','G']},
-//     {name: '최인화', grade: 'MGR', line: ['F','G']},
-//     {name: '유건희', grade: 'CT', line: ['F','G']},
-//     {name: '이희정', grade: 'CT', line: ['F','G']},
-//     {name: '강민지', grade: 'EMP', line: ['F','G']},
-//     {name: '권태영', grade: 'PT', line: ['F','G']},
-//     {name: '김경민', grade: 'PT', line: ['F','G']},
-//     {name: '김무준', grade: 'PT', line: ['F','G']},
-//     {name: '김세희', grade: 'PT', line: ['F','G']},
-//     {name: '김영록', grade: 'PT', line: ['F','G']},
-//     {name: '김은경', grade: 'PT', line: ['F','G']},
-//     {name: '김지환', grade: 'PT', line: ['F','G']},
-//     {name: '박대용', grade: 'PT', line: ['F','G']},
-//     {name: '박현선', grade: 'PT', line: ['F','G']},
-//     {name: '복금현', grade: 'PT', line: ['F','G']},
-//     {name: '서준영', grade: 'PT', line: ['F','G']},
-//     {name: '안지연', grade: 'PT', line: ['F','G']},
-//     {name: '원동하', grade: 'PT', line: ['F','G']},
-//     {name: '유영현', grade: 'PT', line: ['F','G']},
-//     {name: '윤승관', grade: 'PT', line: ['F','G']},
-//     {name: '이상건', grade: 'PT', line: ['F','G']},
-//     {name: '이영현', grade: 'PT', line: ['F','G']},
-//     {name: '이재원', grade: 'PT', line: ['F','G']},
-//     {name: '전예준', grade: 'PT', line: ['F','G']},
-//     {name: '조경서', grade: 'PT', line: ['F','G']},
-//     {name: '조관우', grade: 'PT', line: ['F','G']},
-//     {name: '홍지오', grade: 'PT', line: ['F','G']}
+//     {name: '김장현', grade: 'VSM', position: ['F']},
+//     {name: '김해수', grade: 'VSM', position: ['F']},
+//     {name: '최인화', grade: 'MGR', position: ['F','G']},
+//     {name: '유건희', grade: 'CT', position: ['F','G','M']},
+//     {name: '이희정', grade: 'CT', position: ['F','G','M','E']},
+//     {name: '강민지', grade: 'EMP', position: ['F','G','M','E','D']},
+//     {name: '권태영', grade: 'PT', position: ['F']},
+//     {name: '김경민', grade: 'PT', position: ['F','G']},
+//     {name: '김무준', grade: 'PT', position: ['F','G','M']},
+//     {name: '김세희', grade: 'PT', position: ['F','G','M','E']},
+//     {name: '김영록', grade: 'PT', position: ['F','G','M','E','D']},
+//     {name: '김은경', grade: 'PT', position: ['F']},
+//     {name: '김지환', grade: 'PT', position: ['F','G']},
+//     {name: '박대용', grade: 'PT', position: ['F','G','M']},
+//     {name: '박현선', grade: 'PT', position: ['F','G','M','E']},
+//     {name: '복금현', grade: 'PT', position: ['F','G','M','E','D']},
+//     {name: '서준영', grade: 'PT', position: ['F']},
+//     {name: '안지연', grade: 'PT', position: ['F','G']},
+//     {name: '원동하', grade: 'PT', position: ['F','G','M']},
+//     {name: '유영현', grade: 'PT', position: ['F','G','M','E']},
+//     {name: '윤승관', grade: 'PT', position: ['F','G','M','E','D']},
+//     {name: '이상건', grade: 'PT', position: ['F']},
+//     {name: '이영현', grade: 'PT', position: ['F','G']},
+//     {name: '이재원', grade: 'PT', position: ['F','G','M']},
+//     {name: '전예준', grade: 'PT', position: ['F','G','M','E']},
+//     {name: '조경서', grade: 'PT', position: ['F','G','M','E','D']},
+//     {name: '조관우', grade: 'PT', position: ['F']},
+//     {name: '홍지오', grade: 'PT', position: ['F','G']}
 // ];
 
 // convert schedule excel > json
@@ -373,12 +374,12 @@ ${lossList}
         let rosterTable_head_html = `
             <thead>
                 <tr>
-                    <th rowspan="2">NO</th>
-                    <th rowspan="2" style="width: 110px">성명</th>
-                    <th colspan="5">포지션 / 라인</th>
-                    <th colspan="3">스케줄</th>
-                    <th colspan="3">실근무시간</th>
-                    <th rowspan="2" style="width: 180px">비고</th>
+                    <th rowspan="2" style="width: 50px">NO</th>
+                    <th rowspan="2" style="width: 200px">성명</th>
+                    <th colspan="5" style="width: 150px">포지션 / 라인</th>
+                    <th colspan="3" style="width: 300px">스케줄</th>
+                    <th colspan="3" style="width: 650px">실근무시간</th>
+                    <th rowspan="2" style="width: 350px">비고</th>
                 </tr>
                 <tr>
                     <th rowspan="1" class="line">F</th>
@@ -413,13 +414,6 @@ ${lossList}
                     
                     let tempArr = [
                         sortedJson_key[memb],
-                       /* lineArr.includes("F") ? "F" : "",
-                        lineArr.includes("G") ? "G" : "",
-                        lineArr.includes("M") ? "M" : "",
-                        lineArr.includes("E") ? "E" : "",
-                        lineArr.includes("D") ? "D" : ""*/
-                        
-                        
                         lineArr.indexOf("F") >= 0 ? "F" : "",
                         lineArr.indexOf("G") >= 0 ? "G" : "",
                         lineArr.indexOf("M") >= 0 ? "M" : "",

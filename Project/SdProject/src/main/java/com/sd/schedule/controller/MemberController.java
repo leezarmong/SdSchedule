@@ -105,8 +105,6 @@ public class MemberController {
 	// 멤버 삭제
 	@PostMapping("/delete")
 	public String delete(String member_name) {
-
-		System.out.println(member_name);
 		
 		stationService.deleteStation(member_name);
 		
@@ -200,63 +198,6 @@ public class MemberController {
 	}
 	
 	// //새로운 신규인원 새로 추가
-//	@PostMapping("/addMembersInsert")
-//	public String addMembersInsert(@RequestBody List<MemberVO> members) {
-//	    try {
-//	    	
-//	    	/*
-//	    	 * 
-//	    	 * 애초에 js 에서 members 배열 형식으로 들어오기때문에 때어내기 힘든 부분이 있었음.
-//	    	 * members 배열로 만든 이유는 front 에서 팝업 형식으로 출력한 이름 에 관련된 데이터를 addMembersInsert 이라는 경로로
-//	    	 * 쉽게 JSON 형식으로 가져와 back 과 연결하기 위해서 였음.
-//	    	 * 
-//	    	 * 이문제를 해결하기위해 배열에서 하나씩 꺼내오는 형식을사용 하기로 함.
-//	    	 * 
-//	    	 * */
-//	    	if(members != null && !members.isEmpty()) {
-//	    		// members 파라미터 가 널이 아니거나 비어있지 않은 경우 if 를 실행.
-//	    		
-//	    		MemberVO firstMember = members.get(0);
-//	    		//파라미터로 들어오게된 members 를 첫번째 인덱스로 지정후 memberVO 를 인스턴스 한다.
-//	    		
-//	    		StationVO svo = new StationVO();
-//	    		 svo.setFrei(firstMember.getFrei());
-//	             svo.setGrill(firstMember.getGrill());
-//	             svo.setMake(firstMember.getMake());
-//	             svo.setExpo(firstMember.getExpo());
-//	             svo.setDish(firstMember.getDish());
-//	             svo.setUser_id(firstMember.getUser_id());
-//	             svo.setMember_name(firstMember.getMember_name());
-//	    		
-//	           //station
-//	 			stationService.insertStation(svo);
-//	    		
-//	 			
-//	 			
-//	 			for (MemberVO member : members) {
-//	                member.setFrei(null);
-//	                member.setGrill(null);
-//	                member.setMake(null);
-//	                member.setExpo(null);
-//	                member.setDish(null);
-//	                member.setMember_name(member.getMember_name());  
-//	                member.setUser_id(member.getUser_id());
-//	            }
-//	 		
-//	 			//memberInsert
-//	        memberService.insertMembers(members);
-//	    	}
-//			
-//			
-//	        log.info("Received members for insertion: {}", members);
-//	    } catch (Exception e) {
-//	        log.error("Error inserting members", e);
-//	        return "error"; // 에러 페이지로 리디렉션할 수도 있습니다.
-//	    }
-//	    return "redirect:/memberpage";
-//	}
-	
-	
 	@PostMapping("/addMembersInsert")
 	public String addMembersInsert(@RequestBody List<MemberVO> members) {
 	    try {
