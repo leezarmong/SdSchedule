@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sd.schedule.model.member.MemberVO;
+import com.sd.schedule.model.memberimpl.MemberMapper;
 import com.sd.schedule.model.station.StationService;
 import com.sd.schedule.model.station.StationVO;
 
@@ -18,6 +19,9 @@ public class StationServiceImpl implements StationService{
 	
 	@Autowired
 	StationMapper stationMapper;
+	
+	@Autowired
+	MemberMapper memberMapper;
 	
 	
 	// 스테이션 리스트
@@ -32,7 +36,7 @@ public class StationServiceImpl implements StationService{
 		if(svo.getFrei() == null) svo.setFrei("");
 		if(svo.getExpo() == null) svo.setExpo("");
 		if(svo.getDish() == null) svo.setDish("");
-		stationMapper.insertStation(svo);
+		memberMapper.insertStation(svo);
 	}
 	
 	//스테이션 삭제

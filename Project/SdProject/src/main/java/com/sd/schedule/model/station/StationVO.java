@@ -11,6 +11,7 @@ public class StationVO {
 	private String dish;
 	private String member_name;
 	private String user_id;
+	private int member_no; // 멤버 번호
 	
 	
 	public String getFrei() {
@@ -55,15 +56,23 @@ public class StationVO {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	
-	
+	public int getMember_no() {
+		return member_no;
+	}
+	public void setMember_no(int member_no) {
+		this.member_no = member_no;
+	}
 	@Override
 	public String toString() {
 		return "StationVO [frei=" + frei + ", grill=" + grill + ", make=" + make + ", expo=" + expo + ", dish=" + dish
-				+ ", member_name=" + member_name + ", user_id=" + user_id + ", getFrei()=" + getFrei() + ", getGrill()="
-				+ getGrill() + ", getMake()=" + getMake() + ", getExpo()=" + getExpo() + ", getDish()=" + getDish()
-				+ ", getMember_name()=" + getMember_name() + ", getUser_id()=" + getUser_id() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", member_name=" + member_name + ", user_id=" + user_id + ", member_no=" + member_no + ", getFrei()="
+				+ getFrei() + ", getGrill()=" + getGrill() + ", getMake()=" + getMake() + ", getExpo()=" + getExpo()
+				+ ", getDish()=" + getDish() + ", getMember_name()=" + getMember_name() + ", getUser_id()="
+				+ getUser_id() + ", getMember_no()=" + getMember_no() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
-
+	
+	
+	
+	
 }

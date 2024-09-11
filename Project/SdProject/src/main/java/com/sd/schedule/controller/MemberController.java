@@ -78,11 +78,9 @@ public class MemberController {
 	@PostMapping("/insert")
 	public String insert(MemberVO vo, StationVO svo) {
 		
-		//직원 
-		memberService.insertMember(vo);
 		
-		//station
-		stationService.insertStation(svo);
+		memberService.insertOneMemberAndStaiton(vo, svo);
+		
 		return "redirect:memberpage";
 	}
 
@@ -198,12 +196,55 @@ public class MemberController {
 	}
 	
 	// //새로운 신규인원 새로 추가
-	@PostMapping("/addMembersInsert")
-	public String addMembersInsert(@RequestBody List<MemberVO> members) {
+//	@PostMapping("/addMembersInsert")
+//	public String addMembersInsert(@RequestBody List<MemberVO> members) {
+//	    try {
+//	        if (members != null && !members.isEmpty()) {
+//	            for (MemberVO member : members) {
+//	                // 각 멤버에 대해 StationVO 객체 생성
+//	                StationVO svo = new StationVO();
+//	                svo.setFrei(member.getFrei());
+//	                svo.setGrill(member.getGrill());
+//	                svo.setMake(member.getMake());
+//	                svo.setExpo(member.getExpo());
+//	                svo.setDish(member.getDish());
+//	                svo.setUser_id(member.getUser_id());
+//	                svo.setMember_name(member.getMember_name());
+//
+//	                // Station 테이블에 데이터 삽입
+//	                stationService.insertStation(svo);
+//
+//	                // member에 station 관련 정보는 null로 초기화
+//	                member.setFrei(null);
+//	                member.setGrill(null);
+//	                member.setMake(null);
+//	                member.setExpo(null);
+//	                member.setDish(null);
+//	                
+//	                	/*
+//	                	 * 두개의 테이블 에 공통적으로 들어가야될 member_name 과 user_id 가 있으며
+//	                	 * 스테이션에 따라 반복적으로 insert 가 되는것을 방지하기위해 statoinInsert 후 이 두개를 뺀 나머지를
+//	                	 * null 로 초기화 해준다.
+//	                	 * */
+//	            }
+//
+//	            // Member 테이블에 멤버 데이터 삽입
+//	            memberService.insertMembers(members);
+//	        }
+//
+//	        log.info("Received members for insertion: {}", members);
+//	    } catch (Exception e) {
+//	        log.error("Error inserting members", e);
+//	        return "error"; // 에러 페이지로 리디렉션할 수도 있습니다.
+//	    }
+//	    return "redirect:/memberpage";
+//	}
+	
+	@PostMapping("/addMembersInsert")public String addMembersInsert(@RequestBody List<MemberVO> members) {
 	    try {
 	        if (members != null && !members.isEmpty()) {
 	            for (MemberVO member : members) {
-	                // 각 멤버에 대해 StationVO 객체 생성
+	                // Create StationVO object based on MemberVO fields
 	                StationVO svo = new StationVO();
 	                svo.setFrei(member.getFrei());
 	                svo.setGrill(member.getGrill());
@@ -213,31 +254,15 @@ public class MemberController {
 	                svo.setUser_id(member.getUser_id());
 	                svo.setMember_name(member.getMember_name());
 
-	                // Station 테이블에 데이터 삽입
-	                stationService.insertStation(svo);
-
-	                // member에 station 관련 정보는 null로 초기화
-	                member.setFrei(null);
-	                member.setGrill(null);
-	                member.setMake(null);
-	                member.setExpo(null);
-	                member.setDish(null);
-	                
-	                	/*
-	                	 * 두개의 테이블 에 공통적으로 들어가야될 member_name 과 user_id 가 있으며
-	                	 * 스테이션에 따라 반복적으로 insert 가 되는것을 방지하기위해 statoinInsert 후 이 두개를 뺀 나머지를
-	                	 * null 로 초기화 해준다.
-	                	 * */
+	                // Call the service method to insert both MemberVO and StationVO with the same member_no
+	                memberService.insertMemberAndStation(member, svo);
 	            }
-
-	            // Member 테이블에 멤버 데이터 삽입
-	            memberService.insertMembers(members);
 	        }
 
 	        log.info("Received members for insertion: {}", members);
 	    } catch (Exception e) {
 	        log.error("Error inserting members", e);
-	        return "error"; // 에러 페이지로 리디렉션할 수도 있습니다.
+	        return "error"; // Error handling logic
 	    }
 	    return "redirect:/memberpage";
 	}

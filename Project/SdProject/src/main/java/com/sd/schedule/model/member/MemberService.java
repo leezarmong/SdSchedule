@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sd.schedule.model.station.StationVO;
+
 public interface MemberService {
 	
 	//멤버 리스트
@@ -14,9 +16,17 @@ public interface MemberService {
 	//멤버 리스트(페이)
 	public List<MemberVO> getMemberList(MemberVO vo, int start, int end);
 	
+
 	
-	//멤버 입력
-	public void insertMember (MemberVO vo);
+	//시퀀스 불러오기
+	public int getNextMemberSeq();
+	
+	
+	//멤버 스테이션 동시 입력
+	void insertMemberAndStation(MemberVO vo, StationVO svo);
+	
+	// 멤버와 스테이션 한명일 경우
+	public void insertOneMemberAndStaiton (MemberVO vo , StationVO svo);
 	
 	//멤버 삭제
 	public void deleteMember (String member_name);
@@ -44,6 +54,8 @@ public interface MemberService {
 	
 	//새로운 신규인원 새로 추가
 	public void insertMembers(List<MemberVO> members);
+
+	
 	
 	
 

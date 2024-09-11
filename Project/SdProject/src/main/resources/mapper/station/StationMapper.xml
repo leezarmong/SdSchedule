@@ -7,39 +7,10 @@
 
 
 
-	<!-- 스테이션 리스트 -->
-   <!--  <select id="stationListByUserId" resultType="com.sd.schedule.model.station.StationVO">
-        SELECT
-        member_name, 
-        FREI, 
-        GRILL, 
-        MAKE, 
-        EXPO, 
-        DISH
-    FROM 
-        STATION 
-        NATURAL JOIN MEMBER
-    WHERE 
-        user_id = #{user_id, jdbcType=VARCHAR} 
-    </select> -->
+
 	
+	<!-- 스테이션 입력 은 같은 시퀀스를 사용하기위해 member로 이동 됨..-->
 	
-	<!-- 스테이션 입력 -->
-	<insert id="insertStation">
-	<![CDATA[
-	    INSERT INTO station (frei, grill, make, expo, dish, member_name, user_id)
-    VALUES
-    (
-        #{frei,jdbcType=VARCHAR}, 
-        #{grill,jdbcType=VARCHAR}, 
-        #{make,jdbcType=VARCHAR}, 
-        #{expo,jdbcType=VARCHAR}, 
-        #{dish,jdbcType=VARCHAR}, 
-        #{member_name,jdbcType=VARCHAR}, 
-        #{user_id,jdbcType=VARCHAR}
-    )
-    	]]> 
-	</insert>
 	
 	<!-- 스테이션 삭제 -->
 	<delete id="deleteStation">
@@ -50,13 +21,14 @@
 	<update id="updateStation">
 		UPDATE STATION
 		SET
+		MEMBER_NAME = #{member_name},
 		frei = #{frei},
 		grill = #{grill},
 		make = #{make},
 		expo = #{expo},
 		dish = #{dish}
 		WHERE
-		MEMBER_NAME = #{member_name}
+		MEMBER_NO = #{member_no}
 	</update>
 	
 	<!-- 스테이션 이름 추출 -->

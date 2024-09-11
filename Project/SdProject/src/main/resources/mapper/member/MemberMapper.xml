@@ -104,18 +104,56 @@
     ]]>
   
 </select>
-
-
-
-	
-	
 	
 
-	<!-- 멤버 입력 -->
+
+	<!-- 시퀀스 값을 먼저 가져옴 -->
+	<!-- 이제 member table 과 station table 에 기준이 member_no 로 기준이 바뀌었기 때문에 시퀀스를 불러오는 방향으로 할것..  -->
+	<select id="getNextMemberSeq" resultType="int">
+	    SELECT MEMBER_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	<!-- member 테이블에 데이터 삽입 -->
 	<insert id="insertMember">
-		  insert into member(member_name, member_no, member_grade, user_id)
-   			 values(#{member_name}, MEMBER_SEQ.NEXTVAL, #{member_grade}, #{user_id})	
+	    INSERT INTO member(member_name, member_no, member_grade, user_id)
+	    VALUES(#{member_name}, #{member_no}, #{member_grade}, #{user_id})
 	</insert>
+	
+	<!-- station 테이블에 데이터 삽입 -->
+	<insert id="insertStation">
+	   <![CDATA[
+		    INSERT INTO station (frei, grill, make, expo, dish, member_name, member_no, user_id)
+		    VALUES
+		    (
+		        #{frei,jdbcType=VARCHAR}, 
+		        #{grill,jdbcType=VARCHAR}, 
+		        #{make,jdbcType=VARCHAR}, 
+		        #{expo,jdbcType=VARCHAR}, 
+		        #{dish,jdbcType=VARCHAR},
+		        #{member_name,jdbcType=VARCHAR},  
+		        #{member_no,jdbcType=INTEGER}, 
+		        #{user_id,jdbcType=VARCHAR}
+		    )
+		]]>
+	</insert>
+
+	
+	
+	<!-- <insert id="insertStation">
+	<![CDATA[
+	    INSERT INTO station (frei, grill, make, expo, dish, member_name, user_id)
+    VALUES
+    (
+        #{frei,jdbcType=VARCHAR}, 
+        #{grill,jdbcType=VARCHAR}, 
+        #{make,jdbcType=VARCHAR}, 
+        #{expo,jdbcType=VARCHAR}, 
+        #{dish,jdbcType=VARCHAR}, 
+        #{member_name,jdbcType=VARCHAR}, 
+        #{user_id,jdbcType=VARCHAR}
+    )
+    	]]> 
+	</insert> -->
 
 	<!-- 멤버 삭제 -->
 	<delete id="deleteMember">
@@ -173,6 +211,8 @@
     ) WHERE RN BETWEEN #{start} AND #{end}
     ]]> -->
     
+    
+    <!-- member_no 가 빠져 있어서 안되는거였음 다녀와서 member_no 추가해주자. ㅇㅋ?  -->
     <![CDATA[
     SELECT * 
     FROM (
@@ -180,7 +220,8 @@
         FROM (
             SELECT 
                 M.MEMBER_NAME, 
-                M.MEMBER_GRADE, 
+                M.MEMBER_GRADE,
+                M.MEMBER_NO, 
                 S.FREI, 
                 S.GRILL, 
                 S.MAKE, 

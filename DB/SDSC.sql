@@ -175,3 +175,28 @@ TRUNCATE TABLE station;
 SELECT table_name FROM all_tables WHERE owner = 'SDSC';
 
 desc member;
+
+
+
+-- Test Update 
+
+update station set member_name='이재원짱'
+where member_name='이재원';
+
+
+update station set member_name='이재원'
+where member_name='이재원짱';
+
+
+SELECT MEMBER_SEQ.NEXTVAL FROM DUAL;
+
+
+--1
+TRUNCATE TABLE member;
+
+TRUNCATE TABLE station;
+
+--2
+alter table station add test number(20) not null;
+
+alter table station add MEMBER_NO number(20) not null

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.sd.schedule.model.member.MemberVO;
+import com.sd.schedule.model.station.StationVO;
 
 
 
@@ -19,8 +20,15 @@ public interface MemberMapper {
 	public List<MemberVO> getMemberList(MemberVO vo, int start, int end);
 	
 	
+	
+	//시퀀스 불러오기
+	public int getNextMemberSeq();
+	 
 	//멤버 입력
 	public void insertMember (MemberVO vo);
+	
+	//스테이션 입력
+	public void insertStation (StationVO svo);
 	
 	//멤버 삭제
 	public void deleteMember (String member_name);

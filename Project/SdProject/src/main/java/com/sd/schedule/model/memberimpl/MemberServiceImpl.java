@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sd.schedule.model.member.MemberService;
 import com.sd.schedule.model.member.MemberVO;
+import com.sd.schedule.model.station.StationVO;
 import com.sd.schedule.model.stationimpl.StationMapper;
 
 @Service
@@ -37,13 +38,51 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberVO> getMemberList(MemberVO vo, int start, int end) {
 		return memberMapper.getMemberList(vo, start, end);
 	}
-
-	// 멤버 입력
+	
+	
+	
+	// 시퀀스 가져오기
 	@Override
-	public void insertMember(MemberVO vo) {
-		memberMapper.insertMember(vo);
+	public int getNextMemberSeq() {
+		return memberMapper.getNextMemberSeq();
 	}
 
+
+	
+	// 멤버와 스테이션 한명일 경우
+	@Override
+	public void insertOneMemberAndStaiton (MemberVO vo , StationVO svo) {
+		int member_no = memberMapper.getNextMemberSeq();
+		
+		vo.setMember_no(member_no);
+		svo.setMember_no(member_no);
+		
+		memberMapper.insertMember(vo);
+		memberMapper.insertStation(svo);
+	}
+	
+	
+	// 멤버 와 스테이션 입력 
+	@Override
+	public void insertMemberAndStation (MemberVO vo , StationVO svo) {
+		int member_no = memberMapper.getNextMemberSeq();
+		
+		vo.setMember_no(member_no);
+		svo.setMember_no(member_no);
+		
+		memberMapper.insertStation(svo);
+		
+		vo.setDish(null);
+		vo.setExpo(null);
+		vo.setFrei(null);
+		vo.setGrill(null);
+		vo.setMake(null);
+		
+		memberMapper.insertMember(vo);
+		
+	}
+	
+	
 	// 멤버 삭제
 	@Override
 	public void deleteMember(String member_name) {
@@ -283,5 +322,6 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 	// mapper 의 foreach 가 계속적인 오류로 인해 service 에서 foreac 적용하여 단일 member 로 하나씩 치환
+
 
 }
