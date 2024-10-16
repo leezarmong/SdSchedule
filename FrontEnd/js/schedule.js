@@ -19,75 +19,75 @@ const weekend = ["일","월","화","수","목","금","토"];
 
 // get member list from: db > java > html > js
 
-//   const memberList = [];
-//   const mNameElements = document.querySelectorAll('.hidden .mname');
-//   const mGradeElements = document.querySelectorAll('.hidden .mgrade');
-//   const mNElements = document.querySelectorAll('.hidden .sname');
-//   const mFElements = document.querySelectorAll('.hidden .F');
-//   const mGElements = document.querySelectorAll('.hidden .G');
-//   const mMElements = document.querySelectorAll('.hidden .M');
-//   const mEElements = document.querySelectorAll('.hidden .E');
-//   const mDElements = document.querySelectorAll('.hidden .D');
+  const memberList = [];
+  const mNameElements = document.querySelectorAll('.hidden .mname');
+  const mGradeElements = document.querySelectorAll('.hidden .mgrade');
+  const mNElements = document.querySelectorAll('.hidden .sname');
+  const mFElements = document.querySelectorAll('.hidden .F');
+  const mGElements = document.querySelectorAll('.hidden .G');
+  const mMElements = document.querySelectorAll('.hidden .M');
+  const mEElements = document.querySelectorAll('.hidden .E');
+  const mDElements = document.querySelectorAll('.hidden .D');
 
-//   mNameElements.forEach((nameElement, i) => {
-//       const memberName = nameElement.innerText;
-//       const memberGrade = mGradeElements[i].innerText;
+  mNameElements.forEach((nameElement, i) => {
+      const memberName = nameElement.innerText;
+      const memberGrade = mGradeElements[i].innerText;
    
       
-//      let tempArr = new Array;
-//       for(let a = 0; a < mNElements.length; a++){
-//         tempArr.push(mNElements[a].innerText);
-//       }
-//       console.log(tempArr)
-//       let index = tempArr.indexOf(memberName);
+     let tempArr = new Array;
+      for(let a = 0; a < mNElements.length; a++){
+        tempArr.push(mNElements[a].innerText);
+      }
+      console.log(tempArr)
+      let index = tempArr.indexOf(memberName);
      
      
-//       const memberF = mFElements[index].innerText ? "F" : "";
-//       const memberG = mGElements[index].innerText ? "G" : "";
-//       const memberM = mMElements[index].innerText ? "M" : "";
-//       const memberE = mEElements[index].innerText ? "E" : "";
-//       const memberD = mDElements[index].innerText ? "D" : "";
+      const memberF = mFElements[index].innerText ? "F" : "";
+      const memberG = mGElements[index].innerText ? "G" : "";
+      const memberM = mMElements[index].innerText ? "M" : "";
+      const memberE = mEElements[index].innerText ? "E" : "";
+      const memberD = mDElements[index].innerText ? "D" : "";
 
-//      memberList.push({
-//          name: memberName,
-//          grade: memberGrade,
-//          position: [memberF, memberG, memberM, memberE, memberD]
-//       });
-//   });
+     memberList.push({
+         name: memberName,
+         grade: memberGrade,
+         position: [memberF, memberG, memberM, memberE, memberD]
+      });
+  });
 
 
 
 // 서버리스용 예제 데이터
-const memberList = [
-    {name: '김장현', grade: 'VSM', position: ['F']},
-    {name: '김해수', grade: 'VSM', position: ['F']},
-    {name: '최인화', grade: 'MGR', position: ['F','G']},
-    {name: '유건희', grade: 'CT', position: ['F','G','M']},
-    {name: '이희정', grade: 'CT', position: ['F','G','M','E']},
-    {name: '강민지', grade: 'EMP', position: ['F','G','M','E','D']},
-    {name: '권태영', grade: 'PT', position: ['F']},
-    {name: '김경민', grade: 'PT', position: ['F','G']},
-    {name: '김무준', grade: 'PT', position: ['F','G','M']},
-    {name: '김세희', grade: 'PT', position: ['F','G','M','E']},
-    {name: '김영록', grade: 'PT', position: ['F','G','M','E','D']},
-    {name: '김은경', grade: 'PT', position: ['F']},
-    {name: '김지환', grade: 'PT', position: ['F','G']},
-    {name: '박대용', grade: 'PT', position: ['F','G','M']},
-    {name: '박현선', grade: 'PT', position: ['F','G','M','E']},
-    {name: '복금현', grade: 'PT', position: ['F','G','M','E','D']},
-    {name: '서준영', grade: 'PT', position: ['F']},
-    {name: '안지연', grade: 'PT', position: ['F','G']},
-    {name: '원동하', grade: 'PT', position: ['F','G','M']},
-    {name: '유영현', grade: 'PT', position: ['F','G','M','E']},
-    {name: '윤승관', grade: 'PT', position: ['F','G','M','E','D']},
-    {name: '이상건', grade: 'PT', position: ['F']},
-    {name: '이영현', grade: 'PT', position: ['F','G']},
-    {name: '이재원', grade: 'PT', position: ['F','G','M']},
-    {name: '전예준', grade: 'PT', position: ['F','G','M','E']},
-    {name: '조경서', grade: 'PT', position: ['F','G','M','E','D']},
-    {name: '조관우', grade: 'PT', position: ['F']},
-    {name: '홍지오', grade: 'PT', position: ['F','G']}
-];
+// const memberList = [
+//     {name: '김장현', grade: 'VSM', position: ['F']},
+//     {name: '김해수', grade: 'VSM', position: ['F']},
+//     {name: '최인화', grade: 'MGR', position: ['F','G']},
+//     {name: '유건희', grade: 'CT', position: ['F','G','M']},
+//     {name: '이희정', grade: 'CT', position: ['F','G','M','E']},
+//     {name: '강민지', grade: 'EMP', position: ['F','G','M','E','D']},
+//     {name: '권태영', grade: 'PT', position: ['F']},
+//     {name: '김경민', grade: 'PT', position: ['F','G']},
+//     {name: '김무준', grade: 'PT', position: ['F','G','M']},
+//     {name: '김세희', grade: 'PT', position: ['F','G','M','E']},
+//     {name: '김영록', grade: 'PT', position: ['F','G','M','E','D']},
+//     {name: '김은경', grade: 'PT', position: ['F']},
+//     {name: '김지환', grade: 'PT', position: ['F','G']},
+//     {name: '박대용', grade: 'PT', position: ['F','G','M']},
+//     {name: '박현선', grade: 'PT', position: ['F','G','M','E']},
+//     {name: '복금현', grade: 'PT', position: ['F','G','M','E','D']},
+//     {name: '서준영', grade: 'PT', position: ['F']},
+//     {name: '안지연', grade: 'PT', position: ['F','G']},
+//     {name: '원동하', grade: 'PT', position: ['F','G','M']},
+//     {name: '유영현', grade: 'PT', position: ['F','G','M','E']},
+//     {name: '윤승관', grade: 'PT', position: ['F','G','M','E','D']},
+//     {name: '이상건', grade: 'PT', position: ['F']},
+//     {name: '이영현', grade: 'PT', position: ['F','G']},
+//     {name: '이재원', grade: 'PT', position: ['F','G','M']},
+//     {name: '전예준', grade: 'PT', position: ['F','G','M','E']},
+//     {name: '조경서', grade: 'PT', position: ['F','G','M','E','D']},
+//     {name: '조관우', grade: 'PT', position: ['F']},
+//     {name: '홍지오', grade: 'PT', position: ['F','G']}
+// ];
 
 // convert schedule excel > json
 const excelToJson = async (callback) => {
